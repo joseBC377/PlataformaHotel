@@ -1,4 +1,4 @@
-package com.example.hotel.repository;
+package com.example.hotel.repositories;
 
 import java.util.List;
 

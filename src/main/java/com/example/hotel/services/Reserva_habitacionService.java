@@ -6,7 +6,7 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.example.hotel.entities.Reserva_habitacion;
-import com.example.hotel.repository.Reserva_habitacionRepository;
+import com.example.hotel.repositories.Reserva_habitacionRepository;
 
 import lombok.AllArgsConstructor;
 

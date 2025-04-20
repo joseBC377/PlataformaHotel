@@ -20,7 +20,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import com.example.hotel.entities.Reserva;
-import com.example.hotel.repository.ReservaRepository;
+import com.example.hotel.repositories.ReservaRepository;
 import com.example.hotel.services.ReservaService;
 
 public class ReservaServiceTest {
