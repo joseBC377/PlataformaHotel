@@ -14,10 +14,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.example.hotel.Controllers.UsuarioRestController;
-import com.example.hotel.Services.UsuarioService;
+import com.example.hotel.controllers.UsuarioRestController;
 import com.example.hotel.entities.Rol;
 import com.example.hotel.entities.Usuario;
+import com.example.hotel.services.UsuarioService;
 
 @WebMvcTest(UsuarioRestController.class)
 @AutoConfigureMockMvc
