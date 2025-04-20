@@ -19,7 +19,7 @@ public class UsuarioService {
         return repository.findAll();
     }
 
-    public Usuario sellectId(Integer id) {
+    public Usuario selectId(Integer id) {
         return repository.findById(id).orElseThrow(() -> new RuntimeException("No existe el id: " + id));
     }
 
@@ -39,5 +39,7 @@ public class UsuarioService {
             throw new RuntimeException("El usuario "+id+ " no exite");
         }
         repository.deleteById(id);
+        System.out.println("Uusuario eliminado "+id);
+
     }
 }
