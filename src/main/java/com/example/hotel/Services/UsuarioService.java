@@ -1,4 +1,4 @@
-package com.example.hotel.Services;
+package com.example.hotel.services;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.example.hotel.entities.Usuario;
-import com.example.hotel.repository.UsuarioRepository;
+import com.example.hotel.repositories.UsuarioRepository;
 
 import lombok.AllArgsConstructor;
 

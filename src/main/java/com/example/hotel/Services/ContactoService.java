@@ -1,11 +1,11 @@
-package com.example.hotel.Services;
+package com.example.hotel.services;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
 import com.example.hotel.entities.Contacto;
-import com.example.hotel.repository.ContactoRepository;
+import com.example.hotel.repositories.ContactoRepository;
 
 import lombok.AllArgsConstructor;
 
