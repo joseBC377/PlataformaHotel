@@ -27,7 +27,7 @@ public class UsuarioService {
         return repository.save(usuario);
     }
 
-    public Usuario updateUsuario(Usuario usuario) {
+    public Usuario updateUsuario(Integer id, Usuario usuario) {
         if (!repository.existsById(usuario.getId())) {
             throw new RuntimeException("No se puede actualizar el usuario no existe");
         }
@@ -39,7 +39,5 @@ public class UsuarioService {
             throw new RuntimeException("El usuario "+id+ " no exite");
         }
         repository.deleteById(id);
-        System.out.println("Uusuario eliminado "+id);
-
     }
 }
