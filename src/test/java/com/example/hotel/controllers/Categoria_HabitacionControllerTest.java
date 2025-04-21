@@ -1,6 +1,8 @@
 package com.example.hotel.controllers;
+
+import com.example.hotel.Controllers.Categoria_HabitacionRestController;
+import com.example.hotel.Services.Categoria_HabitacionService;
 import com.example.hotel.entities.Categoria_Habitacion;
-import com.example.hotel.services.Categoria_HabitacionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
