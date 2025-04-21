@@ -34,5 +34,6 @@ public class UsuarioRepositoriesTest {
         // Verificar que el usuario no sea nulo y tenga id
         assertNotNull(usuarioGuardado.getId());
         assertEquals("Test", usuarioGuardado.getNombre());
+        //actualizacion
     }
 }
