@@ -1,4 +1,4 @@
-package com.example.hotel.api;
+package com.example.hotel.Controllers;
 
 import java.util.List;
 
@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.example.hotel.Services.Categoria_HabitacionService;
 import com.example.hotel.entities.Categoria_Habitacion;
-import com.example.hotel.services.Categoria_HabitacionService;
 
 import lombok.AllArgsConstructor;
 

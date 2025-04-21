@@ -1,13 +1,9 @@
-package com.example.hotel.services;
-
+package com.example.hotel.Services;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.stereotype.Service;
 import com.example.hotel.entities.Categoria_Habitacion;
 import com.example.hotel.repositories.Categoria_HabitacionRepository;
-
-
 import lombok.AllArgsConstructor;
 
 //Inyeccion de dependencias

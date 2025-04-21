@@ -29,7 +29,7 @@ public class Categoria_Habitacion {
     private String descripcion;
     
     @Column(nullable = false, length = 150)
-    private String capacidad;
+    private Integer capacidad;
    
     @Column(nullable = false, length = 150)
     private Integer precio;
