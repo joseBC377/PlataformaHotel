@@ -8,7 +8,8 @@ import java.util.Optional;
 
 import com.example.hotel.entities.Categoria_Habitacion;
 import com.example.hotel.repositories.Categoria_HabitacionRepository;
-import com.example.hotel.Services.Categoria_HabitacionService;
+import com.example.hotel.services.Categoria_HabitacionService;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
