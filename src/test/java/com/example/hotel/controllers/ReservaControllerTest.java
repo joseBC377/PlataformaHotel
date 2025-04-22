@@ -5,7 +5,6 @@ import static org.mockito.Mockito.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import com.example.hotel.entities.Reserva;
-import com.example.hotel.services.ReservaService;
+import com.example.hotel.Controllers.ReservaRestController;
+import com.example.hotel.Services.ReservaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebMvcTest(ReservaRestController.class)

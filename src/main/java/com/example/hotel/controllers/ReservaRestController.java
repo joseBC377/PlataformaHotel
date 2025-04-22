@@ -1,4 +1,4 @@
-package com.example.hotel.controllers;
+package com.example.hotel.Controllers;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hotel.entities.Reserva;
-import com.example.hotel.services.ReservaService;
+import com.example.hotel.Services.ReservaService;
 
 @RestController
 @RequestMapping("api/reservas")

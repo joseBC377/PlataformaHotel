@@ -1,20 +1,25 @@
-package com.example.hotel.services;
+package com.example.hotel.Services;
+
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.stereotype.Service;
+
 import com.example.hotel.entities.Habitacion;
 import com.example.hotel.repositories.HabitacionRepository;
+
 import lombok.AllArgsConstructor;
-//Inyeccion de dependencias
+
 @Service
 @AllArgsConstructor
 public class HabitacionService {
 
     private final HabitacionRepository repository;
-    
-    public List<Habitacion>selectAllHabitacions(){
+  
+    public List<Habitacion> selectAllHabitacions() {
         return repository.findAll();
     }
+
     public Optional<Habitacion> getHabitacionById(Integer id) {
         return repository.findById(id);
     }
@@ -28,6 +33,7 @@ public class HabitacionService {
             existing.setNombre(habitacion.getNombre());
             existing.setDescripcion(habitacion.getDescripcion());
             existing.setEstado(habitacion.getEstado());
+            existing.setCategoria_Habitacion(habitacion.getCategoria_Habitacion());
             return repository.save(existing);
         });
     }

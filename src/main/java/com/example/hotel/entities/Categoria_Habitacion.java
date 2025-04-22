@@ -36,5 +36,4 @@ public class Categoria_Habitacion {
 
     @Column(nullable = false, length = 150)
     private String imagen;
-   
 }

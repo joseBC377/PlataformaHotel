@@ -1,10 +1,10 @@
-package com.example.hotel.controllers;
+package com.example.hotel.Controllers;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hotel.entities.Usuario;
-import com.example.hotel.services.UsuarioService;
+import com.example.hotel.Services.UsuarioService;
 
 import lombok.AllArgsConstructor;
 
