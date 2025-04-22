@@ -1,0 +1,50 @@
+*   [33m1090dc4[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m Merge pull request #6 from joseBC377/Habitacion_Categoria
+[31m|[m[32m\[m  
+[31m|[m * [33m3d7ef17[m[33m ([m[1;31morigin/Habitacion_Categoria[m[33m)[m actualizado
+[31m|[m[31m/[m  
+*   [33mbf8bfe7[m Merge pull request #5 from joseBC377/Habitacion_Categoria
+[33m|[m[34m\[m  
+[33m|[m *   [33m24888dc[m Resolví conflictos al hacer merge con main
+[33m|[m [35m|[m[33m\[m  
+[33m|[m [35m|[m[33m/[m  
+[33m|[m[33m/[m[35m|[m   
+* [35m|[m   [33m94df265[m Merge pull request #4 from joseBC377/Reserva-Reserva_habitacion
+[1;31m|[m[1;32m\[m [35m\[m  
+[1;31m|[m * [35m|[m [33mbdbf210[m[33m ([m[1;31morigin/Reserva-Reserva_habitacion[m[33m)[m renombre de carpetas
+* [1;32m|[m [35m|[m [33ma459881[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/Usuario_Contacto[m[33m)[m agregar carpetass
+* [1;32m|[m [35m|[m [33m1de1d23[m prueba
+* [1;32m|[m [35m|[m [33m03d01ae[m prueba repository
+* [1;32m|[m [35m|[m   [33m88104b1[m Merge branch 'main' into Usuario_Contacto
+[1;33m|[m[1;34m\[m [1;32m\[m [35m\[m  
+[1;33m|[m * [1;32m|[m [35m|[m [33m56ec47b[m Merge pull request #2 from joseBC377/Reserva-Reserva_habitacion
+[1;33m|[m [1;35m|[m[1;32m\[m[1;32m|[m [35m|[m 
+[1;33m|[m [1;35m|[m * [35m|[m [33m6385a4b[m renombre de carpeta
+[1;33m|[m [1;35m|[m * [35m|[m [33m628e1f6[m Metodología TDD, pruebas unitarias de reserva
+[1;33m|[m [1;35m|[m * [35m|[m [33m80b0131[m se agrego el puerto
+[1;33m|[m [1;35m|[m * [35m|[m [33m0b5c3da[m request mapping corregido
+[1;33m|[m [1;35m|[m * [35m|[m [33mbf2c142[m endpoint de reserva habitacion listo
+[1;33m|[m [1;35m|[m * [35m|[m [33mb6e456f[m reserva habitacion repository listo, pero activar el findby de habitacion
+[1;33m|[m [1;35m|[m * [35m|[m [33m75e6a1e[m reserva habitacion service lista
+[1;33m|[m [1;35m|[m * [35m|[m [33m636bb1c[m en la entidad reserva activar el atributo habitacion cuando exista su entidad
+[1;33m|[m [1;35m|[m * [35m|[m [33mb7d6d51[m reserva repository y service listo
+[1;33m|[m [1;35m|[m * [35m|[m [33m0d9ce7e[m endpoint Reserva listo
+[1;33m|[m [1;35m|[m * [35m|[m [33m346cc10[m Entidad Reserva listo
+[1;33m|[m [1;35m|[m[1;35m/[m [35m/[m  
+[1;33m|[m * [35m|[m   [33m4d52b43[m[33m ([m[1;31morigin/Pago_ReservaServicio[m[33m, [m[1;32mPago_ReservaServicio[m[33m)[m Merge pull request #1 from joseBC377/Usuario_Contacto
+[1;33m|[m [31m|[m[32m\[m [35m\[m  
+* [31m|[m [32m|[m [35m|[m [33mf09f54a[m actualizaciontdd
+* [31m|[m [32m|[m [35m|[m [33m397dc3e[m Cambio-nombre-ficheros
+* [31m|[m [32m|[m [35m|[m [33m2ab07bc[m pruebastddcontrollerusuario
+* [31m|[m [32m|[m [35m|[m [33mb87a329[m Service-Controller-Repository-UsuarioContacto
+* [31m|[m [32m|[m [35m|[m [33m1d79612[m Inercion-contacto-service
+* [31m|[m [32m|[m [35m|[m [33ma96eeee[m Implementacion-usuarioService
+[32m|[m [31m|[m[32m/[m [35m/[m  
+[32m|[m[32m/[m[31m|[m [35m|[m   
+* [31m|[m [35m|[m [33md967dbc[m Completo-contacto
+* [31m|[m [35m|[m [33m6742f8e[m Entidad-Usurio
+[31m|[m[31m/[m [35m/[m  
+* [35m|[m [33m2bcf452[m comienzo del proyecto
+* [35m|[m [33me1466b6[m primer commit
+ [35m/[m  
+* [33m89ae037[m archivos modificados
+* [33ma77218f[m Primer commit en la rama Habitacion_Categoria
