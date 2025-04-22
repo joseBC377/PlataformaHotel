@@ -16,7 +16,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import com.example.hotel.entities.Reserva;
-import com.example.hotel.services.ReservaService;
+import com.example.hotel.Controllers.ReservaRestController;
+import com.example.hotel.Services.ReservaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebMvcTest(ReservaRestController.class)
