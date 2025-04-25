@@ -4,9 +4,6 @@ import com.example.hotel.controllers.ReservaServicioId;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
@@ -18,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Reserva_Servicio {
+public class Reserva_Servicio { 
 
     //Esto le dice a JPA que la clave primaria de Reserva_Servicio está compuesta y que se define 
     //en ReservaServicioId.
@@ -35,5 +32,6 @@ public class Reserva_Servicio {
     @JoinColumn(name = "id_servicio", nullable = false)
     private Servicio servicio;
 
+    
 
 }
