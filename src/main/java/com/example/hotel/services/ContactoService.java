@@ -1,4 +1,4 @@
-package com.example.hotel.Services;
+package com.example.hotel.services;
 
 import java.util.List;
 

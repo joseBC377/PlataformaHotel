@@ -1,14 +1,13 @@
 package com.example.hotel.controllers;
-
-import com.example.hotel.Controllers.Categoria_HabitacionRestController;
-import com.example.hotel.Services.Categoria_HabitacionService;
 import com.example.hotel.entities.Categoria_Habitacion;
+import com.example.hotel.services.Categoria_HabitacionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
 import java.util.Optional;
@@ -23,7 +22,8 @@ public class Categoria_HabitacionControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    
+    @MockitoBean
+
     private Categoria_HabitacionService service;
 
     private Categoria_Habitacion categoria;

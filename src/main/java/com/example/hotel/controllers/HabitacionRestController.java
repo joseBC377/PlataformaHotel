@@ -1,4 +1,4 @@
-package com.example.hotel.Controllers;
+package com.example.hotel.controllers;
 
 import java.util.List;
 
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hotel.entities.Habitacion;
-import com.example.hotel.Services.HabitacionService;
+import com.example.hotel.services.HabitacionService;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;

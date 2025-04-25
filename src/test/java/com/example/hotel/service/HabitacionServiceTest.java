@@ -4,9 +4,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import java.util.List;
 import java.util.Optional;
-import com.example.hotel.Services.HabitacionService;
 import com.example.hotel.entities.Habitacion;
 import com.example.hotel.repositories.HabitacionRepository;
+import com.example.hotel.services.HabitacionService;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
