@@ -23,7 +23,7 @@ public class Reserva_ServicioService {
         return repository.save(reservaServicio);
     }
 
-    public List<Reserva_Servicio> listar() {
+    public List<Reserva_Servicio> listarTodas() {
         return repository.findAll();
     }
 

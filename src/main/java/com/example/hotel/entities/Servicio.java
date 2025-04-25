@@ -21,7 +21,7 @@ public class Servicio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idServicio;
+    private Integer id_servicio;
     
     @NotNull
     @NotBlank(message="Ingrese un nombre")

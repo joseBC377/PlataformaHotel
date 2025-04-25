@@ -20,13 +20,14 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class Reserva_Servicio {
 
-
+    //Esto le dice a JPA que la clave primaria de Reserva_Servicio está compuesta y que se define 
+    //en ReservaServicioId.
     @EmbeddedId
     private ReservaServicioId id;
 
     @ManyToOne
     @MapsId("reserva") // el nombre del campo en ReservaServicioId
-    @JoinColumn(name = "id_reserva", nullable = false)
+    @JoinColumn(name = "id", nullable = false) //El id tiene que ser el mismo con la otra tabla porque puede aber confusion
     private Reserva reserva;
 
     @ManyToOne
