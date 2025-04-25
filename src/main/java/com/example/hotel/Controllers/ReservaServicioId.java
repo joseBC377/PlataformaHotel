@@ -5,7 +5,9 @@ import java.util.Objects;
 
 import jakarta.persistence.Embeddable;
 
-@Embeddable
+@Embeddable //Indica que esta no es una entidad independiente sino que se incrsuta en otra identidad
+//en este caso dentro de Reserva_Servicio como su clave PK, esto lo que le dice es:
+//Oye la clave primaria de esta entidad es una combinacion de estos 2 campos
 public class ReservaServicioId implements Serializable {
 
     private Integer reserva;
@@ -43,7 +45,8 @@ public class ReservaServicioId implements Serializable {
     }
 
     
-
+    //para comparar si dos claves son iguales.
+    //Si dos objetos son iguales según equals(), deben tener el mismo código hash, en pocas palabras si 2 filas son iguales , si son iguales te mandara un error que no se puede, para no crear registros duplicados.
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -54,6 +57,10 @@ public class ReservaServicioId implements Serializable {
     }
 
 
+    
+    //El valor del código hash no debe cambiar mientras el objeto esté en la colección.
+    //Segun hashCode , sirve para que los objetos puedan guardarse correctamente en estructuras como HashSet o HashMap
+    //Siempre que sobreescribas equals(), también debes sobreescribir hashCode(), o podrías tener errores muy difíciles de detectar
     @Override
     public int hashCode() {
         return Objects.hash(reserva, servicio);
