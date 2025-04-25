@@ -23,6 +23,7 @@ public class Categoria_HabitacionControllerTest {
     private MockMvc mockMvc;
 
     @MockitoBean
+
     private Categoria_HabitacionService service;
 
     private Categoria_Habitacion categoria;
