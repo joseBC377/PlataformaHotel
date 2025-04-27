@@ -1,5 +1,4 @@
 package com.example.hotel.controllers;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -10,8 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -28,7 +27,7 @@ public class PagoControllerTest {
     @Autowired
     private MockMvc mockMvc; //Permite probar mis controladores , sin necesidad de levantar un servidor real es decir simulamos solicitures http  (GET,POST,PUT,DELETE)
 
-    @MockBean
+    @MockitoBean
     private PagoService service;
 
     @Test
