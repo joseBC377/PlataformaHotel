@@ -18,12 +18,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hotel.entities.Reserva_habitacion;
 import com.example.hotel.services.Reserva_habitacionService;
+
+import lombok.AllArgsConstructor;
 @RestController
 @RequestMapping("api/reservas/habitaciones")
+@AllArgsConstructor
 public class Reserva_habitacionRestController {
-    
-    @Autowired
-    private Reserva_habitacionService service;
+        private Reserva_habitacionService service;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Reserva_habitacion> selectAllReservas_habitacion() {

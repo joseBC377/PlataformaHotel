@@ -1,7 +1,7 @@
 package com.example.hotel.controllers;
+
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,97 +22,99 @@ import com.example.hotel.repositories.Reserva_ServicioRepository;
 import com.example.hotel.repositories.ServicioRepository;
 import com.example.hotel.services.Reserva_ServicioService;
 
+import lombok.AllArgsConstructor;
+
 @RestController
 @RequestMapping(value = "api/ReservaServicio", produces = MediaType.APPLICATION_JSON_VALUE)
+@AllArgsConstructor
 public class Reserva_ServicioController {
 
-    @Autowired
-    private ReservaRepository reservaRepository;
+        private ReservaRepository reservaRepository;
+        private ServicioRepository servicioRepository;
+        private Reserva_ServicioRepository reservaServicioRepository;
 
-    @Autowired
-    private ServicioRepository servicioRepository;
+        private final Reserva_ServicioService reservaServicioService;
 
-    @Autowired
-    private Reserva_ServicioRepository reservaServicioRepository;
+        @GetMapping("lista")
+        public List<Reserva_Servicio> selectReserva_Servicios() {
+                return reservaServicioService.listarTodas();
+        }
 
-    private final Reserva_ServicioService reservaServicioService;
+        @PostMapping("insertar")
+        public ResponseEntity<Reserva_Servicio> insertarReservaServicio(@RequestBody Reserva_Servicio reservaServicio) {
+                // Obtener las entidades reales desde la base de datos
+                Reserva reserva = reservaRepository.findById(reservaServicio.getReserva().getId()) // obtengo el objeto
+                                                                                                   // reserva ,despues
+                                                                                                   // el getId captura
+                                                                                                   // el id de ese
+                                                                                                   // objeto reserva
+                                .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
 
-    public Reserva_ServicioController(Reserva_ServicioService reservaServicioService) {
-        this.reservaServicioService = reservaServicioService;
-    }
+                Servicio servicio = servicioRepository.findById(reservaServicio.getServicio().getId_servicio())
+                                .orElseThrow(() -> new RuntimeException("Servicio no encontrado"));
 
-    @GetMapping("lista")
-    public List<Reserva_Servicio> selectReserva_Servicios() {
-        return reservaServicioService.listarTodas();
-    }
+                reservaServicio.setReserva(reserva); // Recupero un objeto reserva de la database es decir la variable
+                                                     // reserva me devuele un objeto que busque
+                reservaServicio.setServicio(servicio);
 
-    @PostMapping("insertar")
-    public ResponseEntity<Reserva_Servicio> insertarReservaServicio(@RequestBody Reserva_Servicio reservaServicio) {
-        // Obtener las entidades reales desde la base de datos
-        Reserva reserva = reservaRepository.findById(reservaServicio.getReserva().getId()) // obtengo el objeto reserva ,despues el getId captura el id de ese objeto reserva
-                .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
+                // Crear y setear el ID compuesto
+                ReservaServicioId id = new ReservaServicioId(reserva.getId(), servicio.getId_servicio());
+                reservaServicio.setId(id);
 
-        Servicio servicio = servicioRepository.findById(reservaServicio.getServicio().getId_servicio())
-                .orElseThrow(() -> new RuntimeException("Servicio no encontrado"));
+                Reserva_Servicio guardado = reservaServicioService.guardar(reservaServicio);
+                return ResponseEntity.status(HttpStatus.CREATED).body(guardado);
+        }
 
-        reservaServicio.setReserva(reserva); // Recupero un objeto reserva de la database es decir la variable reserva me devuele un objeto que busque
-        reservaServicio.setServicio(servicio);
+        @PutMapping("editar/{idReserva}/{idServicio}")
+        public ResponseEntity<Reserva_Servicio> editarReservaServicio(
+                        @PathVariable Integer idReserva,
+                        @PathVariable Integer idServicio,
+                        @RequestBody Reserva_Servicio nuevaRelacion) {
 
-        // Crear y setear el ID compuesto
-        ReservaServicioId id = new ReservaServicioId(reserva.getId(), servicio.getId_servicio());
-        reservaServicio.setId(id);
+                // El ID actual que modificaremos
+                ReservaServicioId idActual = new ReservaServicioId(idReserva, idServicio);
 
-        Reserva_Servicio guardado = reservaServicioService.guardar(reservaServicio);
-        return ResponseEntity.status(HttpStatus.CREATED).body(guardado);
-    }
+                // Reserva_Servicio existente = reservaServicioRepository.findById(idActual)
+                // .orElseThrow(() -> new RuntimeException("Relación no encontrada"));
+                if (!reservaServicioRepository.existsById(idActual)) {
+                        throw new RuntimeException("Relación no encontrada");
+                }
+                // Obtener los nuevos objetos desde el JSON (pueden ser diferentes a los del
+                // path)
+                Reserva nuevaReserva = reservaRepository.findById(nuevaRelacion.getReserva().getId())
+                                .orElseThrow(() -> new RuntimeException("Nueva reserva no encontrada"));
 
-    @PutMapping("editar/{idReserva}/{idServicio}")
-    public ResponseEntity<Reserva_Servicio> editarReservaServicio(
-            @PathVariable Integer idReserva,
-            @PathVariable Integer idServicio,
-            @RequestBody Reserva_Servicio nuevaRelacion) {
+                Servicio nuevoServicio = servicioRepository.findById(nuevaRelacion.getServicio().getId_servicio())
+                                .orElseThrow(() -> new RuntimeException("Nuevo servicio no encontrado"));
 
-        // El ID actual que  modificaremos
-        ReservaServicioId idActual = new ReservaServicioId(idReserva, idServicio);
+                // Eliminar la relación vieja
+                reservaServicioRepository.deleteById(idActual);
 
-        Reserva_Servicio existente = reservaServicioRepository.findById(idActual)
-                .orElseThrow(() -> new RuntimeException("Relación no encontrada"));
+                // Crear nueva relación , porque no podemos quedarnos con el IdCompuesto y que
+                // los datos nomas cambien porque forman parte del Id Completo todo
+                ReservaServicioId nuevoId = new ReservaServicioId(nuevaReserva.getId(), nuevoServicio.getId_servicio());
+                nuevaRelacion.setId(nuevoId);
+                nuevaRelacion.setReserva(nuevaReserva);
+                nuevaRelacion.setServicio(nuevoServicio);
 
-        // Obtener los nuevos objetos desde el JSON (pueden ser diferentes a los del path)
-        Reserva nuevaReserva = reservaRepository.findById(nuevaRelacion.getReserva().getId())
-                .orElseThrow(() -> new RuntimeException("Nueva reserva no encontrada"));
+                Reserva_Servicio guardado = reservaServicioRepository.save(nuevaRelacion);
 
-        Servicio nuevoServicio = servicioRepository.findById(nuevaRelacion.getServicio().getId_servicio())
-                .orElseThrow(() -> new RuntimeException("Nuevo servicio no encontrado"));
+                return ResponseEntity.ok(guardado);
+        }
 
-        // Eliminar la relación vieja
-        reservaServicioRepository.deleteById(idActual);
+        @DeleteMapping("eliminar/{idReserva}/{idServicio}")
+        public ResponseEntity<Void> eliminarReservaServicio(
+                        @PathVariable Integer idReserva,
+                        @PathVariable Integer idServicio) {
 
-        // Crear nueva relación , porque no podemos quedarnos con el IdCompuesto y que los datos nomas cambien porque forman parte del Id Completo todo
-        ReservaServicioId nuevoId = new ReservaServicioId(nuevaReserva.getId(), nuevoServicio.getId_servicio());
-        nuevaRelacion.setId(nuevoId);
-        nuevaRelacion.setReserva(nuevaReserva);
-        nuevaRelacion.setServicio(nuevoServicio);
+                // Buscar la relación en la base de datos
+                Reserva_Servicio reservaServicio = reservaServicioRepository
+                                .findById(new ReservaServicioId(idReserva, idServicio))
+                                .orElseThrow(() -> new RuntimeException("Relación no encontrada"));
 
-        Reserva_Servicio guardado = reservaServicioRepository.save(nuevaRelacion);
-
-        return ResponseEntity.ok(guardado);
-    }
-
-
-    @DeleteMapping("eliminar/{idReserva}/{idServicio}")
-    public ResponseEntity<Void> eliminarReservaServicio(
-            @PathVariable Integer idReserva,
-            @PathVariable Integer idServicio) {
-
-        // Buscar la relación en la base de datos
-        Reserva_Servicio reservaServicio = reservaServicioRepository
-                .findById(new ReservaServicioId(idReserva, idServicio))
-                .orElseThrow(() -> new RuntimeException("Relación no encontrada"));
-
-        // Eliminar la relación
-        reservaServicioRepository.delete(reservaServicio);
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-    }
+                // Eliminar la relación
+                reservaServicioRepository.delete(reservaServicio);
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
 
 }
