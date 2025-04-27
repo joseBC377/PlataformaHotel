@@ -36,9 +36,8 @@ public class Reserva_habitacion {
     @JoinColumn(name = "id_reserva", nullable = true)
     private Reserva reserva;
 
-//------activar habitacion cuando se cree sus entidad
-    // @ManyToOne
-    // @JoinColumn(name = "id_habitacion", nullable = true)
-    // private Habitacion habitacion;
+    @ManyToOne
+    @JoinColumn(name = "id_habitacion", nullable = true)
+    private Habitacion habitacion;
 
 }
