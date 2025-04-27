@@ -1,5 +1,4 @@
 package com.example.hotel.controllers;
-
 import java.util.List;
 
 import org.springframework.http.MediaType;
@@ -20,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @RestController
 @RequestMapping(value = "api/pago", produces = MediaType.APPLICATION_JSON_VALUE)
+
 public class PagoController {
 
 

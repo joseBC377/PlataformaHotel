@@ -1,5 +1,4 @@
 package com.example.hotel.controllers;
-
 import java.util.List;
 
 import org.springframework.http.MediaType;

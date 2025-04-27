@@ -2,11 +2,10 @@ package com.example.hotel.entities;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
-import org.hibernate.annotations.ManyToAny;
+// import com.fasterxml.jackson.annotation.JsonIgnore;
+// import org.hibernate.annotations.ManyToAny;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -52,7 +51,7 @@ public class Pago {
 
     @ManyToOne
     //@JsonIgnore //para que no se muestre en mi json lo de reserva
-    @JoinColumn(name = "id_reserva", nullable = true)
+    @JoinColumn(name = "id_reserva", nullable = false)
     private Reserva reserva;
 
 
