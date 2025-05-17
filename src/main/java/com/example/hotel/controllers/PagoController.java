@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hotel.entities.Pago;
 import com.example.hotel.services.PagoService;
+import com.example.hotel.util.Pago_ReservaInfo;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +41,21 @@ public class PagoController {
     public Pago insertPago(@RequestBody Pago pago) {
         return service.insert(pago);
     }
+
+    //Post para guardar tanto la reserva como el pago
+    @PostMapping( value = "/completo" ,consumes = MediaType.APPLICATION_JSON_VALUE)
+    public String insertarReservaConPago(@RequestBody Pago_ReservaInfo pago_ReservaInfo) {
+
+        try {
+            service.crearReservaPago(pago_ReservaInfo);
+            return "Reserva con pago creado";
+
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+        
+    }
+    
 
     @GetMapping("lista/{idPago}")
     public Pago selectPagoId(@PathVariable Integer idPago) {

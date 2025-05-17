@@ -50,7 +50,7 @@ public class Pago {
     private LocalDateTime fecha_pago;
 
     @ManyToOne
-    //@JsonIgnore //para que no se muestre en mi json lo de reserva
+    //@JsonIgnoreProperties("pago") //para que no se muestre en mi json lo de reserva
     @JoinColumn(name = "id_reserva", nullable = false)
     private Reserva reserva;
 
