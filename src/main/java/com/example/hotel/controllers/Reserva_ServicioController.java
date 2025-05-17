@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hotel.entities.Reserva;
+import com.example.hotel.entities.ReservaServicioId;
 import com.example.hotel.entities.Reserva_Servicio;
 import com.example.hotel.entities.Servicio;
 import com.example.hotel.repositories.ReservaRepository;
@@ -43,11 +44,7 @@ public class Reserva_ServicioController {
         @PostMapping("insertar")
         public ResponseEntity<Reserva_Servicio> insertarReservaServicio(@RequestBody Reserva_Servicio reservaServicio) {
                 // Obtener las entidades reales desde la base de datos
-                Reserva reserva = reservaRepository.findById(reservaServicio.getReserva().getId()) // obtengo el objeto
-                                                                                                   // reserva ,despues
-                                                                                                   // el getId captura
-                                                                                                   // el id de ese
-                                                                                                   // objeto reserva
+                Reserva reserva = reservaRepository.findById(reservaServicio.getReserva().getId()) // obtengo el objeto reserva ,despues el getId captura el id de ese objeto reserva
                                 .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
 
                 Servicio servicio = servicioRepository.findById(reservaServicio.getServicio().getId_servicio())
@@ -90,8 +87,7 @@ public class Reserva_ServicioController {
                 // Eliminar la relación vieja
                 reservaServicioRepository.deleteById(idActual);
 
-                // Crear nueva relación , porque no podemos quedarnos con el IdCompuesto y que
-                // los datos nomas cambien porque forman parte del Id Completo todo
+                // Crear nueva relación , porque no podemos quedarnos con el IdCompuesto y que los datos nomas cambien porque forman parte del Id Completo todo
                 ReservaServicioId nuevoId = new ReservaServicioId(nuevaReserva.getId(), nuevoServicio.getId_servicio());
                 nuevaRelacion.setId(nuevoId);
                 nuevaRelacion.setReserva(nuevaReserva);

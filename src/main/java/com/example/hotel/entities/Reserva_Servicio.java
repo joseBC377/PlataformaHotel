@@ -1,7 +1,5 @@
 package com.example.hotel.entities;
 
-import com.example.hotel.controllers.ReservaServicioId;
-
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
