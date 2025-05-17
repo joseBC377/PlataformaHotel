@@ -39,4 +39,12 @@ public class UsuarioService {
         }
         repository.deleteById(id);
     }
+    
+
+    //Para el spring security (Seguridad)
+    public Usuario findByCorreo(String correo){
+        return repository.findByCorreo(correo).orElseThrow();
+    }
+
+
 }
