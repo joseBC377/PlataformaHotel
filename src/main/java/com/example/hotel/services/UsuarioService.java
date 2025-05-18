@@ -41,7 +41,7 @@ public class UsuarioService {
     }
     
 
-    //Para el spring security (Seguridad)
+    //PARA EL SPRING SECURITY (Seguridad)
     public Usuario findByCorreo(String correo){
         return repository.findByCorreo(correo).orElseThrow();
     }
