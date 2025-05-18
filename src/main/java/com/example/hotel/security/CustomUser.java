@@ -30,5 +30,5 @@ public class CustomUser implements UserDetails {
     public String getUsername() {
         return usuario.getCorreo();
     }
-
+    
 }

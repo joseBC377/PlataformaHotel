@@ -18,7 +18,7 @@ public class SecurityConfig {
 
     private final CustomUserService service;
 
-    //Codificar la contraseña
+    //encripta la contraseña ingresada para ser comparada con la de la database 
     @Bean
     BCryptPasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
@@ -28,8 +28,8 @@ public class SecurityConfig {
     @Bean
     DaoAuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(service);
-        provider.setPasswordEncoder(passwordEncoder());
+        provider.setUserDetailsService(service); //Obtiene al usuario
+        provider.setPasswordEncoder(passwordEncoder()); //Compara cotraseñas codificadas
         return provider;
 
     }
@@ -38,18 +38,15 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception{
         return http.authorizeHttpRequests(
-            auth -> auth.requestMatchers("/api/usuario/publico").permitAll()
-            .requestMatchers("/api/usuario/privado").hasAnyAuthority("ADMIN")
-            .anyRequest().authenticated())
+            auth -> auth.requestMatchers("/api/usuario/publico").permitAll() //No pido autenticacion porque permitAll
+            .requestMatchers("/api/usuario/privado").hasAnyAuthority("ADMIN") //te pide autenticacion y para que ingreses debes de tener como rol ADMIN
+            .anyRequest().permitAll()) //Cualquier otra ruta tambien libre
         //.httpBasic(Customizer.withDefaults()) //POR DEFECTO EN EL NAVEGADO SALE UN LOGIN BASCIO
         //.build();
 
         .formLogin(Customizer.withDefaults())
         .build();
     }
-
-
     
-
 
 }
