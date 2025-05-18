@@ -39,4 +39,12 @@ public class UsuarioService {
         }
         repository.deleteById(id);
     }
+    
+
+    //PARA EL SPRING SECURITY (Seguridad)
+    public Usuario findByCorreo(String correo){
+        return repository.findByCorreo(correo).orElseThrow();
+    }
+
+
 }

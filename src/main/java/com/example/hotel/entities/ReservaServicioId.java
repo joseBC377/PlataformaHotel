@@ -1,4 +1,4 @@
-package com.example.hotel.controllers;
+package com.example.hotel.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
