@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping(value = "api/usuario", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -50,4 +52,19 @@ public class UsuarioRestController {
         service.deleteUsuario(id);
         return ResponseEntity.ok("Usuario eliminado correctamente Id :" + id);
     }
+
+
+    //----Paginas de acceso para usuarios publicos y privados----
+
+    @GetMapping("/publico")
+    public String paginaPublica () {
+        return "Pagina publica";
+    }
+
+    @GetMapping("/privado")
+    public String paginaPrivada () {
+        return "Hola ingresastes a la pagina privada";
+    }    
+
+
 }

@@ -1,7 +1,13 @@
 package com.example.hotel.security;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 
 import lombok.RequiredArgsConstructor;
 
@@ -9,6 +15,38 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final CustomUserService service;
+
+    //Codificar la contraseña
+    @Bean
+    BCryptPasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
+    //Esta es la parte importante donde hara el proceso de autenticacion
+    @Bean
+    DaoAuthenticationProvider authenticationProvider(){
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setUserDetailsService(service);
+        provider.setPasswordEncoder(passwordEncoder());
+        return provider;
+
+    }
+
+
+    @Bean
+    SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception{
+        return http.authorizeHttpRequests(
+            auth -> auth.requestMatchers("/api/usuario/publico").permitAll()
+            .requestMatchers("/api/usuario/privado").hasAnyAuthority("ADMIN")
+            .anyRequest().authenticated())
+        //.httpBasic(Customizer.withDefaults()) //POR DEFECTO EN EL NAVEGADO SALE UN LOGIN BASCIO
+        //.build();
+
+        .formLogin(Customizer.withDefaults())
+        .build();
+    }
 
 
     
