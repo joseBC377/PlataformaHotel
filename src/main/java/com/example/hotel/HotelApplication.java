@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.example.hotel.entities.Rol;
 import com.example.hotel.entities.Usuario;
 import com.example.hotel.repositories.UsuarioRepository;
+import com.example.hotel.util.Rol;
 
 @SpringBootApplication
 public class HotelApplication {

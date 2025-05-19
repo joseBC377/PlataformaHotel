@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.boot.test.context.SpringBootTest;
 
-import com.example.hotel.entities.Rol;
 import com.example.hotel.entities.Usuario;
+import com.example.hotel.util.Rol;
 
 import jakarta.transaction.Transactional;
 

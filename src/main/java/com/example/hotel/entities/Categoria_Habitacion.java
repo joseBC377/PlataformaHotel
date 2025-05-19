@@ -2,6 +2,11 @@ package com.example.hotel.entities;
 
 import java.math.BigDecimal;
 
+// import java.util.List;
+// import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+// import jakarta.persistence.OneToMany;
+// import jakarta.persistence.CascadeType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -38,5 +43,11 @@ public class Categoria_Habitacion {
 
     @Column(nullable = false, length = 255)
     private String imagen;
+
+    //Añadir carga de llave foranea de habitacion
+    // @OneToMany(mappedBy = "categoria_Habitacion", cascade = CascadeType.ALL,orphanRemoval = true)
+    // @JsonIgnoreProperties("categoria_Habitacion")
+    // private List<Habitacion> habitacion;
+
    
 }

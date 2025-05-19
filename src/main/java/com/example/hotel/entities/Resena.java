@@ -1,5 +1,6 @@
 package com.example.hotel.entities;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -27,7 +28,7 @@ public class Resena {
     private  Integer id;
 
     @Column(nullable = false, length = 150)
-    private Integer calificacion;
+    private BigDecimal calificacion;
 
     @Column(nullable = false, length = 150)
     private LocalDate fecha;
@@ -37,7 +38,7 @@ public class Resena {
     private Usuario usuario;
 
     @ManyToOne
-    @JoinColumn(name = "id_habitacion", nullable = true)
+    @JoinColumn(name = "id_habitacion")
     private Habitacion habitacion;
 
 }

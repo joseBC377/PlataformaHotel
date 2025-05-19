@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,16 +25,16 @@ public class Servicio {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Integer id_servicio;
 
-    @Column(unique=true, nullable= false, length=  100 )
+    @Column(unique=true, nullable= false, length=  50 )
     private String nombre;
-
-    @Column(nullable = false, length = 150)
+    @Lob
+    @Column(columnDefinition ="TEXT"  ,nullable = false)
     private String descripcion;
    
-    @Column(nullable = false, length = 150)
+    @Column(nullable = false)
     private BigDecimal precio;
 
-    @Column(nullable = false, length = 150)
+    @Column(nullable = false, length = 255)
     private String imagen;
    
 }
