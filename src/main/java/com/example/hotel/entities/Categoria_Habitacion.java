@@ -1,10 +1,13 @@
 package com.example.hotel.entities;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,17 +27,16 @@ public class Categoria_Habitacion {
 
     @Column(unique=true, nullable= false, length=  100 )
     private String nombre;
-
-    @Column(nullable = false, length = 150)
+    @Lob
+    @Column(columnDefinition ="TEXT",nullable = false, length = 150)
     private String descripcion;
     
     @Column(nullable = false, length = 150)
     private Integer capacidad;
    
-    @Column(nullable = false, length = 150)
-    private Integer precio;
+    private BigDecimal precio;
 
-    @Column(nullable = false, length = 150)
+    @Column(nullable = false, length = 255)
     private String imagen;
    
 }

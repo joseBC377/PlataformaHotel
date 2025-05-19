@@ -3,6 +3,7 @@ package com.example.hotel.service;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,7 +36,7 @@ public class Categoria_HabitacionServiceTest {
         categoria.setNombre("Suite");
         categoria.setDescripcion("Habitación de lujo con vista al mar");
         categoria.setCapacidad(4);
-        categoria.setPrecio((int) 200.0);
+        categoria.setPrecio(new BigDecimal("10.2"));
         categoria.setImagen("suite.jpg");
     }
 

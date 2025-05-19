@@ -47,7 +47,7 @@ private String apellido;
 private String correo;
 
 @Lob
-@Column(nullable = false)
+@Column(columnDefinition = "TEXT" , nullable = false)
 @NotBlank(message = "Ingrese mensaje")
 private String mensaje;
 
