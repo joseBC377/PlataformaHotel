@@ -2,6 +2,14 @@ package com.example.hotel.entities;
 
 
 
+
+import com.example.hotel.util.Rol;
+
+// import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+// import java.util.List;
+// import jakarta.persistence.OneToMany;
+// import jakarta.persistence.CascadeType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -62,4 +70,10 @@ public class Usuario {
     @Column(nullable = false)
     @NotNull(message = "Ingrese rol")
     private Rol rol;
+
+    //prueba de tablas de contacto
+    // @OneToMany(mappedBy = "usuario", cascade =CascadeType.ALL, orphanRemoval = true )
+    // @JsonIgnoreProperties("usuario")
+    // private List<Contacto> contacto;
+
 }

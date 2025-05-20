@@ -22,7 +22,7 @@ public class Reserva_Servicio {
 
     @ManyToOne
     @MapsId("reserva") // el nombre del campo en ReservaServicioId
-    @JoinColumn(name = "id", nullable = false) //El id tiene que ser el mismo con la otra tabla porque puede aber confusion
+    @JoinColumn(name = "id_reserva", nullable = false) //El id tiene que ser el mismo con la otra tabla porque puede aber confusion
     private Reserva reserva;
 
     @ManyToOne

@@ -3,6 +3,7 @@ package com.example.hotel.service;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -34,7 +35,7 @@ public class ResenaServiceTest {
         MockitoAnnotations.openMocks(this);
         Usuario usuario= new Usuario();
         Habitacion habitacion= new Habitacion();
-        resena = new Resena(1, 5, LocalDate.now(), usuario, habitacion);
+        resena = new Resena(1, new BigDecimal("2.1"), LocalDate.now(), usuario, habitacion);
     }
 
     @Test

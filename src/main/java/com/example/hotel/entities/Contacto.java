@@ -1,5 +1,8 @@
 package com.example.hotel.entities;
 
+// import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+// import jakarta.persistence.FetchType;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -47,13 +50,13 @@ private String apellido;
 private String correo;
 
 @Lob
-@Column(nullable = false)
+@Column(columnDefinition = "TEXT" , nullable = false)
 @NotBlank(message = "Ingrese mensaje")
 private String mensaje;
 
 //cualquiera puede mandar un correo sin ser cliente
 @ManyToOne
 @JoinColumn(name = "id_usuario", nullable = true)
-private Usuario id_usuario;
+private Usuario usuario;
 //Un usuario puede hacer varios contactanos
 }

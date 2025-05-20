@@ -1,4 +1,4 @@
-package com.example.hotel.entities;
+package com.example.hotel.util;
 
 public enum Rol {
  ADMIN,
