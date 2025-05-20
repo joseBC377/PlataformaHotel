@@ -30,10 +30,10 @@ public class Categoria_Habitacion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Integer id;
 
-    @Column(unique=true, nullable= false, length=  100 )
+    @Column(unique=true, nullable= false, length=  50 )
     private String nombre;
     @Lob
-    @Column(columnDefinition ="TEXT",nullable = false, length = 150)
+    @Column(columnDefinition ="TEXT",nullable = false)
     private String descripcion;
     
     @Column(nullable = false, length = 150)
