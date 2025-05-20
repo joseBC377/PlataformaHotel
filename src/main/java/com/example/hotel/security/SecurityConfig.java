@@ -18,35 +18,49 @@ public class SecurityConfig {
 
     private final CustomUserService service;
 
-    //encripta la contraseña ingresada para ser comparada con la de la database 
+    // encripta la contraseña ingresada para ser comparada con la de la database
     @Bean
-    BCryptPasswordEncoder passwordEncoder(){
+    BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    //Esta es la parte importante donde hara el proceso de autenticacion
+    // Esta es la parte importante donde hara el proceso de autenticacion
     @Bean
-    DaoAuthenticationProvider authenticationProvider(){
+    DaoAuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(service); //Obtiene al usuario
-        provider.setPasswordEncoder(passwordEncoder()); //Compara cotraseñas codificadas
+        provider.setUserDetailsService(service); // Obtiene al usuario
+        provider.setPasswordEncoder(passwordEncoder()); // Compara cotraseñas codificadas
         return provider;
 
     }
 
+    // @Bean
+    // SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception{
+    // return http.authorizeHttpRequests(
+    // auth -> auth.requestMatchers("/api/usuario/publico").permitAll() //No pido
+    // //autenticacion porque permitAll
+    // .requestMatchers("/api/usuario/privado").hasAnyAuthority("ADMIN") //te pide
+    // //autenticacion y para que ingreses debes de tener como rol ADMIN
+    // .anyRequest().permitAll()) //Cualquier otra ruta tambien libre
+    // .httpBasic(Customizer.withDefaults()) //POR DEFECTO EN EL NAVEGADO SALE UN
+    // .build();
+    // //LOGIN BASCIO
+    //}
+
+    //.formLogin(Customizer.withDefaults())
+    //.build();
+    
 
     @Bean
-    SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception{
-        return http.authorizeHttpRequests(
-            auth -> auth.requestMatchers("/api/usuario/publico").permitAll() //No pido autenticacion porque permitAll
-            .requestMatchers("/api/usuario/privado").hasAnyAuthority("ADMIN") //te pide autenticacion y para que ingreses debes de tener como rol ADMIN
-            .anyRequest().permitAll()) //Cualquier otra ruta tambien libre
-        //.httpBasic(Customizer.withDefaults()) //POR DEFECTO EN EL NAVEGADO SALE UN LOGIN BASCIO
-        //.build();
-
-        .formLogin(Customizer.withDefaults())
-        .build();
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    return http
+    .csrf(csrf -> csrf.disable())
+    .authorizeHttpRequests(auth -> auth
+    .requestMatchers("/api/usuario/publico").permitAll()
+    .requestMatchers("/api/usuario/privado").hasAuthority("ADMIN")
+    .anyRequest().authenticated())
+    .httpBasic(Customizer.withDefaults())
+    .build();
     }
-    
 
 }
