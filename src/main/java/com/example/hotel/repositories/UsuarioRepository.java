@@ -16,12 +16,23 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
     Optional <Usuario> findByCorreo(String correo);
     //Querys nativos
     @Query(value = "SELECT * FROM usuario WHERE rol = 'CLIENT';", nativeQuery = true)
-    List<Usuario>TodosClient();
+    List<Usuario>TodosClientQuery();
 
     @Query(value = "SELECT DISTINCT u.* FROM usuario u JOIN reserva r ON r.id_usuario = u.id;", nativeQuery = true)
-    List<Usuario>TodosUsuarioReserva();
+    List<Usuario>TodosUsuarioReservaQuery();
     
     @Query(value = "SELECT rol, COUNT(*) FROM usuario GROUP BY rol;", nativeQuery = true)
+    List<ConteoRol> contarUsuariosRolQuery();
+
+    //jpql si quieres poner con seleccion de id se agrega el @Param("id") long id al constructor
+
+    @Query(value = "SELECT u FROM Usuario u WHERE u.rol = 'CLIENT'")
+    List<Usuario>TodosClient();
+
+    @Query(value = "SELECT DISTINCT u FROM Usuario u JOIN u.reserva r")
+    List<Usuario>TodosUsuarioReserva();
+    
+    @Query(value = "SELECT new com.example.hotel.util.ConteoRol(u.rol, COUNT(u)) FROM Usuario u GROUP BY u.rol")
     List<ConteoRol> contarUsuariosRol();
 
 

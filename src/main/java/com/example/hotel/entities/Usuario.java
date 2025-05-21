@@ -3,7 +3,12 @@ package com.example.hotel.entities;
 
 
 
+import java.util.List;
+
 import com.example.hotel.util.Rol;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.CascadeType;
 
 // import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 // import java.util.List;
@@ -17,6 +22,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -76,4 +82,7 @@ public class Usuario {
     // @JsonIgnoreProperties("usuario")
     // private List<Contacto> contacto;
 
+    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL,orphanRemoval = true)
+    @JsonIgnoreProperties("usuario")
+    private List<Reserva> reserva;
 }

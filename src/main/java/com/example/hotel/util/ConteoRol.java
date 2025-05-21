@@ -1,5 +1,5 @@
 package com.example.hotel.util;
 
-public record ConteoRol(String rol, Long cantidad) {
+public record ConteoRol(Rol rol, Long cantidad) {
 
 }
