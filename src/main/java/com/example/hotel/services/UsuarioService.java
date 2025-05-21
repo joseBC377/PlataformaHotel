@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.hotel.entities.Usuario;
 import com.example.hotel.repositories.UsuarioRepository;
+import com.example.hotel.util.ConteoRol;
 
 import lombok.AllArgsConstructor;
 
@@ -13,6 +14,18 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UsuarioService {
     private final UsuarioRepository repository;
+
+    public List<Usuario> selectAllClient() {
+        return repository.TodosClient();
+    }
+
+    public List<Usuario> TodosUsuarioReserva() {
+        return repository.TodosUsuarioReserva();
+    }
+
+    public List<ConteoRol> contarUsuariosRol() {
+        return repository.contarUsuariosRol();
+    }
 
     public List<Usuario> selectAll() {
         return repository.findAll();
