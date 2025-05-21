@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hotel.entities.Usuario;
 import com.example.hotel.services.UsuarioService;
+import com.example.hotel.util.ConteoRol;
 
 import lombok.AllArgsConstructor;
 
@@ -24,6 +25,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 @AllArgsConstructor
 public class UsuarioRestController {
     private final UsuarioService service;
+
+    @GetMapping(value = "todosCliente")
+    public List<Usuario> selectAllClient() {
+        return service.selectAllClient();
+    }
+    
+    @GetMapping(value = "TodosUsuarioReserva")
+    public List<Usuario> TodosUsuarioReserva() {
+        return service.TodosUsuarioReserva();
+    }
+
+    @GetMapping(value = "contarUsuariosRol")
+    public List<ConteoRol> contarUsuariosRol() {
+        return service.contarUsuariosRol();
+    }
 
     @GetMapping(value = "lista")
     public List<Usuario> seletAllUsers() {

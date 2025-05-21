@@ -36,7 +36,7 @@ public class Categoria_Habitacion {
     @Column(columnDefinition ="TEXT",nullable = false)
     private String descripcion;
     
-    @Column(nullable = false, length = 150)
+    @Column(nullable = false)
     private Integer capacidad;
    
     private BigDecimal precio;
