@@ -1,4 +1,4 @@
-package com.example.hotel.security;
+package com.example.hotel.services;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.example.hotel.entities.Usuario;
-import com.example.hotel.services.UsuarioService;
+import com.example.hotel.security.CustomUser;
 
 import lombok.RequiredArgsConstructor;
 
