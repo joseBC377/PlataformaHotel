@@ -35,6 +35,4 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
     @Query(value = "SELECT new com.example.hotel.util.ConteoRol(u.rol, COUNT(u)) FROM Usuario u GROUP BY u.rol")
     List<ConteoRol> contarUsuariosRol();
 
-
-
 }
