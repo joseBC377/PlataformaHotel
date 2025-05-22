@@ -5,8 +5,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.example.hotel.entities.CustomUser;
 import com.example.hotel.entities.Usuario;
-import com.example.hotel.security.CustomUser;
 
 import lombok.RequiredArgsConstructor;
 

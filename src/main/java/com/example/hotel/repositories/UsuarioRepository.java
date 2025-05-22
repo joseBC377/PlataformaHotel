@@ -14,6 +14,7 @@ import com.example.hotel.util.ConteoRol;
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
 
     Optional <Usuario> findByCorreo(String correo);
+    
     //Querys nativos
     @Query(value = "SELECT * FROM usuario WHERE rol = 'CLIENT';", nativeQuery = true)
     List<Usuario>TodosClientQuery();
