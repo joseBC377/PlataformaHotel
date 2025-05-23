@@ -24,6 +24,11 @@ public class JwtService {
     private final JwtConfig jwtConfig;
     private final SecretKey secretKey;
 
+    
+    public String generateToken (UserDetails userDetails){
+        return generateToken(new HashMap<>(),userDetails);
+    }
+
 
     //Se agrega datos extras al token como roles , permisos ,  el generateToken de arriva llama internamente a este metodo
     public String generateToken(Map<String, Object> extraClaims,
@@ -101,6 +106,8 @@ public class JwtService {
         System.out.println("Milisegundos restantes: "+
         (claims.getExpiration().getTime()- System.currentTimeMillis()));
     }
+
+    
 
     
     

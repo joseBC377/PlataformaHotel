@@ -1,5 +1,7 @@
 package com.example.hotel.services;
 
+import java.util.HashMap;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,8 +42,14 @@ public class AuthenticationService {
                 .rol(Rol.CLIENT)
                 .build();
         usuarioRepository.save(user);
-        var jwtToken = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefreshToken(user);
+
+        // ENVOLVEMOS el usuario en un CustomUser (que implementa UserDetails)
+        CustomUser customUser = new CustomUser(user);
+
+        //Usamos el metodo correcto con los argumentos esperados
+        var jwtToken = jwtService.generateToken(new HashMap<>(),customUser);
+        var refreshToken = jwtService.generateRefreshToken(customUser);
+
         return new AuthenticationResponse(jwtToken, refreshToken);
     }
 
@@ -50,8 +58,11 @@ public class AuthenticationService {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.email(), request.password()));
         var user = usuarioRepository.findByCorreo(request.email()).orElseThrow();
-        var jwtToken = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefreshToken(user);
+        
+        CustomUser customUser = new CustomUser(user);
+
+        var jwtToken = jwtService.generateToken(new HashMap<>(),customUser);
+        var refreshToken = jwtService.generateRefreshToken(customUser);
         return new AuthenticationResponse(jwtToken, refreshToken);
 
     }
@@ -63,8 +74,11 @@ public class AuthenticationService {
         String userEmail = jwtService.extractUsername(request.refreshToken());
         if (userEmail != null) {
             var user = usuarioRepository.findByCorreo(userEmail).orElseThrow();
-            if (jwtService.isTookenValid(request.refreshToken(), user)) {
-                var accessToken = jwtService.generateToken(user);
+
+            CustomUser customUser = new CustomUser(user);
+
+            if (jwtService.isTookenValid(request.refreshToken(), customUser)) {
+                var accessToken = jwtService.generateToken(new HashMap<>(),customUser);
                 return new AuthenticationResponse(accessToken, request.refreshToken());
             }
         }
