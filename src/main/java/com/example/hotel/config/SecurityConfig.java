@@ -8,8 +8,11 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.example.hotel.services.CustomUserService;
 
@@ -54,9 +57,8 @@ public class SecurityConfig {
     // .requestMatchers("/api/usuario/privado").hasAnyAuthority("ADMIN") //te pide
     // //autenticacion y para que ingreses debes de tener como rol ADMIN
     // .anyRequest().permitAll()) //Cualquier otra ruta tambien libre
-    // .httpBasic(Customizer.withDefaults()) //POR DEFECTO EN EL NAVEGADO SALE UN
+    // .httpBasic(Customizer.withDefaults()) //POR DEFECTO EN EL NAVEGADO SALE UN LOGIN BASICO
     // .build();
-    // //LOGIN BASCIO
     //}
 
     //.formLogin(Customizer.withDefaults())
@@ -64,15 +66,17 @@ public class SecurityConfig {
     
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    return http
-    .csrf(csrf -> csrf.disable())
-    .authorizeHttpRequests(auth -> auth
-    .requestMatchers("/api/usuario/publico").permitAll()
-    .requestMatchers("/api/usuario/privado").hasAuthority("ADMIN")
-    .anyRequest().authenticated())
-    .httpBasic(Customizer.withDefaults())
-    .build();
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+            .csrf(AbstractHttpConfigurer::disable)
+            .authorizeHttpRequests(auth -> auth
+            .requestMatchers("/api/v1/auth/**").permitAll()
+            .requestMatchers("/api/usuario/publico").permitAll()
+            .requestMatchers("/api/usuario/privado").hasAuthority("ADMIN")
+            .anyRequest().authenticated())
+        .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);            
+        return http.build();
     }
 
 }

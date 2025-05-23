@@ -27,7 +27,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
     
-    
+    //Encarga de verificar el token JWT en cada peticion HTTP y autenticar al usuario si el token es valido
     @Override
     protected void doFilterInternal(
             @NonNull HttpServletRequest request,
@@ -36,7 +36,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         )
             throws ServletException, IOException {
             final String authHeader = request.getHeader("Authorization");
-            if (authHeader == null || !authHeader.startsWith("Bearer") ) {
+            if (authHeader == null || !authHeader.startsWith("Bearer") ) { //verifica si el encabezado es nulo o mal formado , si no hay token o no empieza con Bearer  no hace nada y deja que siga la solicitud
                 filterChain.doFilter(request, response);
                 return;
             }
@@ -44,9 +44,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             final String jwt = authHeader.substring(7);
             final String userEmail = jwtService.extractUsername(jwt);
 
+            //Extrae el JWT y el correo(username)
             if (userEmail != null && SecurityContextHolder.getContext().getAuthentication()==null) {
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
-                if (jwtService.isTookenValid(jwt, userDetails)) {
+                if (jwtService.isTookenValid(jwt, userDetails)) { //Comprueba que el usuario no este autenticado ,para autenticarlo
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                     authToken.setDetails(
                         new WebAuthenticationDetailsSource().buildDetails(request)
