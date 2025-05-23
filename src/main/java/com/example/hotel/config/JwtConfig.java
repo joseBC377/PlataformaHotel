@@ -18,18 +18,19 @@ public class JwtConfig {
     private String secretKey; 
     private String tokenPrefix;
     private Integer tokenExpirationAfterDays; //En dias
-    private Integer refreshTokenExpirationAfterDays; //En dias
+    private Integer refreshTokenExpirationAfterDays; //En dias  , este token es de refrezco es decir cuando expira el token principal ,con este token de refrezco solicita uno nuevo sin tener que volver a iniciar sesion
 
-    //Metodos para obtener la expiracion  en milisegundos (El nombre del metodo puede ser cualquiera solo tiene que ser igual cuando se llama en JwtService)
+    // Acces token, Metodos para obtener la expiracion  en milisegundos (El nombre del metodo puede ser cualquiera solo tiene que ser igual cuando se llama en JwtService)
     public long getTokenExpirationInMillis(){
         return tokenExpirationAfterDays * 24 * 60 * 60 * 1000;
     }
 
+    //Refrech token 
     public long getRefreshTokenExpirationInMillis(){
         return refreshTokenExpirationAfterDays * 24 * 60 * 60 * 1000;
     }
 
-
+    //El secret key conocido como clave secreta ,se usa para firmar y verificar el token
     @Bean
     SecretKey secretKey(){
         return Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
