@@ -85,4 +85,9 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL,orphanRemoval = true)
     @JsonIgnoreProperties("usuario")
     private List<Reserva> reserva;
+
+    public static Object builder() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'builder'");
+    }
 }
