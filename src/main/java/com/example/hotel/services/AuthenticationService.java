@@ -5,6 +5,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.example.hotel.entities.CustomUser;
 import com.example.hotel.entities.Usuario;
 import com.example.hotel.repositories.UsuarioRepository;
 import com.example.hotel.util.AuthenticationRequest;
@@ -25,7 +26,8 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    //EL AuthenticationResponse VIENE DE util,  AuthenticationResponse
+
+    // EL AuthenticationResponse VIENE DE util, AuthenticationResponse
 
     // El RegisterRequest viene del paquete util , RegisterRequest
     public AuthenticationResponse register(RegisterRequest request) {
@@ -42,7 +44,7 @@ public class AuthenticationService {
         return new AuthenticationResponse(jwtToken, refreshToken);
     }
 
-    //El AuthenticationRequest viene del paquete util
+    // El AuthenticationRequest viene del paquete util
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.email(), request.password()));
@@ -53,19 +55,18 @@ public class AuthenticationService {
 
     }
 
-    //El RefreshTokenRequest viene del paquete util ,
-    //proceso de renovacion del access token usando el refresh token
-    public AuthenticationResponse refreshToken (RefreshTokenRequest request){
+    // El RefreshTokenRequest viene del paquete util ,
+    // proceso de renovacion del access token usando el refresh token
+    public AuthenticationResponse refreshToken(RefreshTokenRequest request) {
         String userEmail = jwtService.extractUsername(request.refreshToken());
         if (userEmail != null) {
             var user = usuarioRepository.findByCorreo(userEmail).orElseThrow();
-            if (jwtService.isTookenValid(request.refreshToken(),user)) {
+            if (jwtService.isTookenValid(request.refreshToken(), user)) {
                 var accessToken = jwtService.generateToken(user);
-                return new AuthenticationResponse(accessToken,request.refreshToken());
+                return new AuthenticationResponse(accessToken, request.refreshToken());
             }
         }
         throw new RuntimeException("Token de refrezco invalido");
     }
-
 
 }

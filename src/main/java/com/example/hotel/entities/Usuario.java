@@ -30,12 +30,14 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity // permite al JPA convertir la clase a base de datos
 @Table(name = "USUARIO")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Usuario {
@@ -86,8 +88,4 @@ public class Usuario {
     @JsonIgnoreProperties("usuario")
     private List<Reserva> reserva;
 
-    public static Object builder() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'builder'");
-    }
 }

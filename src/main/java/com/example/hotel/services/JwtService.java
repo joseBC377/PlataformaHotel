@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.example.hotel.config.JwtConfig;
+import com.example.hotel.entities.Usuario;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -23,13 +24,9 @@ public class JwtService {
     private final JwtConfig jwtConfig;
     private final SecretKey secretKey;
 
-    //Con este metodo generamos un token de acceso (Access token)
-    public String generateToken(UserDetails userDetails) {
-        return generateToken(new HashMap<>(), userDetails);
-    }
 
     //Se agrega datos extras al token como roles , permisos ,  el generateToken de arriva llama internamente a este metodo
-    private String generateToken(Map<String, Object> extraClaims,
+    public String generateToken(Map<String, Object> extraClaims,
         UserDetails userDetails) {
         return buildToken(extraClaims, userDetails, jwtConfig.getTokenExpirationInMillis());
     }
@@ -58,7 +55,7 @@ public class JwtService {
 
 
     //Valida que el token no este expirado y que el username coincida
-    public boolean isTookenValid(String token, UserDetails userDetails){
+    public boolean isTookenValid(String token, UserDetails userDetails) {
         final String username = extractUsername(token);
         return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
@@ -74,7 +71,7 @@ public class JwtService {
     }
 
     //Extrae el nombre de usuario
-    private String extractUsername(String token) {
+    public String extractUsername(String token) {
         return extractClaim (token, Claims::getSubject);
     }
 
@@ -105,5 +102,7 @@ public class JwtService {
         (claims.getExpiration().getTime()- System.currentTimeMillis()));
     }
 
+    
+    
 
 }
