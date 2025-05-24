@@ -4,14 +4,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import javax.crypto.SecretKey;
 
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import com.example.hotel.config.JwtConfig;
-import com.example.hotel.entities.Usuario;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -28,8 +29,7 @@ public class JwtService {
     public String generateToken (UserDetails userDetails){
         return generateToken(new HashMap<>(),userDetails);
     }
-
-
+    
     //Se agrega datos extras al token como roles , permisos ,  el generateToken de arriva llama internamente a este metodo
     public String generateToken(Map<String, Object> extraClaims,
         UserDetails userDetails) {

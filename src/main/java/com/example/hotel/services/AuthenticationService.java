@@ -17,7 +17,6 @@ import com.example.hotel.util.RegisterRequest;
 import com.example.hotel.util.Rol;
 
 import lombok.RequiredArgsConstructor;
-import lombok.val;
 
 @Service
 @RequiredArgsConstructor

@@ -19,7 +19,7 @@ public class CustomUserService implements UserDetailsService{
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Usuario usuario;
+       Usuario usuario;
         try {
             usuario = service.findByCorreo(username);
             return new CustomUser(usuario);

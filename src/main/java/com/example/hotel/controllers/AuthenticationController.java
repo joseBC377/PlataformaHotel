@@ -26,6 +26,8 @@ public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
 
+    //El AuthenticationRespones viene del paquete util
+
     //El RegisterRequest viene de el paquete util , el record RegisterRequest
     @PostMapping("/registro")
     public ResponseEntity <AuthenticationResponse> registrar(@RequestBody RegisterRequest request) {
