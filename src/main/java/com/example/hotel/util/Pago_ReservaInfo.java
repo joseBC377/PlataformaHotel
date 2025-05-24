@@ -3,6 +3,8 @@ package com.example.hotel.util;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+
+//Para la transaccion
 public record Pago_ReservaInfo(
 
     //Pago

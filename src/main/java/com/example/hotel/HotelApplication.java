@@ -17,13 +17,12 @@ public class HotelApplication {
 		SpringApplication.run(HotelApplication.class, args);
 	}
 
-
 	//Creamos un usuario para hacer pruebas 
 	@Bean
-	CommandLineRunner commandLineRunner (UsuarioRepository repository, PasswordEncoder encoder){
+	CommandLineRunner commandLineRunner (UsuarioRepository usuarioRepository, PasswordEncoder encoder){
 		return args -> {
 			System.out.println("Creando usuario");
-			if (repository.findByCorreo("durand@gmail.com").isEmpty()) { //Ponemos la condicional para ver si exite  no lo crea , pero si no exite lo crea en la databse
+			if (usuarioRepository.findByCorreo("durand@gmail.com").isEmpty()) { //Ponemos la condicional para ver si exite  no lo crea , pero si no exite lo crea en la databse
 				Usuario usuario = new Usuario();
 				usuario.setTelefono("123456789");
 				usuario.setApellido("durand");
@@ -31,7 +30,7 @@ public class HotelApplication {
 				usuario.setCorreo("durand@gmail.com");
 				usuario.setPassword(encoder.encode("123456"));
 				usuario.setRol(Rol.ADMIN);
-				repository.save(usuario);
+				usuarioRepository.save(usuario);
 			}
 		};
 	}

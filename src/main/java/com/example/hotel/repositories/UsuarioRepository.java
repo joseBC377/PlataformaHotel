@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import com.example.hotel.entities.Usuario;
 import com.example.hotel.util.ConteoRol;
@@ -14,6 +15,7 @@ import com.example.hotel.util.ConteoRol;
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
 
     Optional <Usuario> findByCorreo(String correo);
+    
     //Querys nativos
     @Query(value = "SELECT * FROM usuario WHERE rol = 'CLIENT';", nativeQuery = true)
     List<Usuario>TodosClientQuery();
@@ -34,7 +36,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
     
     @Query(value = "SELECT new com.example.hotel.util.ConteoRol(u.rol, COUNT(u)) FROM Usuario u GROUP BY u.rol")
     List<ConteoRol> contarUsuariosRol();
-
-
 
 }

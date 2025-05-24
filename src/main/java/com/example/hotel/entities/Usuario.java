@@ -30,12 +30,14 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity // permite al JPA convertir la clase a base de datos
 @Table(name = "USUARIO")
 @Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class Usuario {
@@ -85,4 +87,5 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL,orphanRemoval = true)
     @JsonIgnoreProperties("usuario")
     private List<Reserva> reserva;
+
 }
