@@ -25,7 +25,7 @@ public class JwtService {
     private final JwtConfig jwtConfig;
     private final SecretKey secretKey;
 
-    
+    //Generar un token de acceso
     public String generateToken (UserDetails userDetails){
         return generateToken(new HashMap<>(),userDetails);
     }
