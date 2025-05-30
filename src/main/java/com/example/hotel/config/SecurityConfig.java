@@ -67,10 +67,10 @@ public class SecurityConfig {
         http
             .csrf(AbstractHttpConfigurer::disable)
             .authorizeHttpRequests(auth -> auth
-            .requestMatchers("/api/v1/auth/**").permitAll()
-            //.requestMatchers("/api/usuario/**").permitAll()
-            .requestMatchers("/api/usuario/publico","/api/usuario/").hasAuthority("CLIENT")
+            .requestMatchers("/api/v1/auth/**").permitAll() //Ingresar sin token
+            .requestMatchers("/api/usuario/publico","/api/usuario/**").hasAuthority("CLIENT")
             .requestMatchers("/api/usuario/privado").hasAuthority("ADMIN")
+            //Cualquier otra ruta no mencionada necesita que el usuario sea autenticado pero sin importar si es admin o client
             .anyRequest().authenticated())
         .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);            
