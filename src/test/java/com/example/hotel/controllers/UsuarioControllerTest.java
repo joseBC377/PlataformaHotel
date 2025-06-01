@@ -20,7 +20,7 @@ import com.example.hotel.services.UsuarioService;
 import com.example.hotel.util.Rol;
 
 @SpringBootTest
-@AutoConfigureMockMvc
+@AutoConfigureMockMvc(addFilters = false)
 public class UsuarioControllerTest {
     
     @Autowired

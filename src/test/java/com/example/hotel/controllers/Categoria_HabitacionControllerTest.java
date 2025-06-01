@@ -1,11 +1,15 @@
-package com.example.hotel.controllers;import com.example.hotel.entities.Categoria_Habitacion;
+package com.example.hotel.controllers;
+
+import com.example.hotel.entities.Categoria_Habitacion;
 import com.example.hotel.services.Categoria_HabitacionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import java.util.List;
@@ -15,7 +19,9 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(Categoria_HabitacionRestController.class)
+//@WebMvcTest(Categoria_HabitacionRestController.class)
+@SpringBootTest
+@AutoConfigureMockMvc(addFilters = false)
 public class Categoria_HabitacionControllerTest {
 
     @Autowired
@@ -36,6 +42,7 @@ public class Categoria_HabitacionControllerTest {
     }
 
     @Test
+    @WithMockUser(username = "admin",roles = {"ADMIN"})
     void testFindAllCategorias() throws Exception {
         when(service.selCategoria_Habitacions()).thenReturn(List.of(categoria));
 
@@ -111,4 +118,5 @@ public class Categoria_HabitacionControllerTest {
         mockMvc.perform(delete("/api/categoria_habitacion/999"))
                 .andExpect(status().isNotFound());
     }
+
 }
