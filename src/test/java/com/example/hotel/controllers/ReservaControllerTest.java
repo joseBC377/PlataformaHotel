@@ -8,7 +8,8 @@ import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
@@ -18,7 +19,9 @@ import com.example.hotel.entities.Reserva;
 import com.example.hotel.services.ReservaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-@WebMvcTest(ReservaRestController.class)
+//@WebMvcTest(ReservaRestController.class)
+@SpringBootTest
+@AutoConfigureMockMvc(addFilters = false)
 public class ReservaControllerTest {
     @Autowired
     private MockMvc mockMvc;

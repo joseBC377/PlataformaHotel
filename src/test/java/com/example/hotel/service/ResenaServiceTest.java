@@ -55,7 +55,7 @@ public class ResenaServiceTest {
         Optional<Resena> result = resenaService.getResenaById(1);
 
         assertTrue(result.isPresent());
-        assertEquals(5, result.get().getCalificacion());
+        assertEquals(new BigDecimal("2.1"), result.get().getCalificacion());
     }
 
     @Test
@@ -74,7 +74,7 @@ public class ResenaServiceTest {
         Resena result = resenaService.insertResena(resena);
 
         assertNotNull(result);
-        assertEquals(5, result.getCalificacion());
+        assertEquals(new BigDecimal("2.1"), result.getCalificacion());
     }
 
     @Test
