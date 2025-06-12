@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 
-public class Reserva_habitacion {
+public class ReservaHabitacion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
