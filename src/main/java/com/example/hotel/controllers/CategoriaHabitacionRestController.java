@@ -12,24 +12,24 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.hotel.entities.Categoria_Habitacion;
-import com.example.hotel.services.Categoria_HabitacionService;
+import com.example.hotel.entities.CategoriaHabitacion;
+import com.example.hotel.services.CategoriaHabitacionService;
 
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping(value = "api/categoria_habitacion",produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "api/categoriaHabitacion",produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
-public class Categoria_HabitacionRestController {
-private final Categoria_HabitacionService service;
+public class CategoriaHabitacionRestController {
+private final CategoriaHabitacionService service;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public  List<Categoria_Habitacion> selCategoria_Habitacions(){
-        return service.selCategoria_Habitacions();
+    public  List<CategoriaHabitacion> selCategoria_Habitacions(){
+        return service.selCategoriaHabitacions();
     }
     // Buscar con endpoints categoría por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Categoria_Habitacion> getCategoriaById(@PathVariable Integer id) {
+    public ResponseEntity<CategoriaHabitacion> getCategoriaById(@PathVariable Integer id) {
         return service.getCategoriaById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -37,15 +37,15 @@ private final Categoria_HabitacionService service;
 
     // Insertar con endpoints una nueva categoría
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Categoria_Habitacion> insertCategoria(@RequestBody Categoria_Habitacion categoria) {
+    public ResponseEntity<CategoriaHabitacion> insertCategoria(@RequestBody CategoriaHabitacion categoria) {
         return ResponseEntity.ok(service.insertCategoria(categoria));
     }
 
     // Actualizar con endpoints categoría existente
     @PutMapping("/{id}")
-    public ResponseEntity<Categoria_Habitacion> updateCategoria(
+    public ResponseEntity<CategoriaHabitacion> updateCategoria(
             @PathVariable Integer id,
-            @RequestBody Categoria_Habitacion categoria) {
+            @RequestBody CategoriaHabitacion categoria) {
         return service.updateCategoria(id, categoria)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

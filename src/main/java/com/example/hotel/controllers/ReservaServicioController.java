@@ -16,33 +16,33 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.hotel.entities.Reserva;
 import com.example.hotel.entities.ReservaServicioId;
-import com.example.hotel.entities.Reserva_Servicio;
+import com.example.hotel.entities.ReservaServicio;
 import com.example.hotel.entities.Servicio;
 import com.example.hotel.repositories.ReservaRepository;
-import com.example.hotel.repositories.Reserva_ServicioRepository;
+import com.example.hotel.repositories.ReservaServicioRepository;
 import com.example.hotel.repositories.ServicioRepository;
-import com.example.hotel.services.Reserva_ServicioService;
+import com.example.hotel.services.ReservaServicioService;
 
 import lombok.AllArgsConstructor;
 
 @RestController
 @RequestMapping(value = "api/ReservaServicio", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
-public class Reserva_ServicioController {
+public class ReservaServicioController {
 
         private ReservaRepository reservaRepository;
         private ServicioRepository servicioRepository;
-        private Reserva_ServicioRepository reservaServicioRepository;
+        private ReservaServicioRepository reservaServicioRepository;
 
-        private final Reserva_ServicioService reservaServicioService;
+        private final ReservaServicioService reservaServicioService;
 
         @GetMapping("lista")
-        public List<Reserva_Servicio> selectReserva_Servicios() {
+        public List<ReservaServicio> selectReservaServicios() {
                 return reservaServicioService.listarTodas();
         }
 
         @PostMapping("insertar")
-        public ResponseEntity<Reserva_Servicio> insertarReservaServicio(@RequestBody Reserva_Servicio reservaServicio) {
+        public ResponseEntity<ReservaServicio> insertarReservaServicio(@RequestBody ReservaServicio reservaServicio) {
                 // Obtener las entidades reales desde la base de datos
                 Reserva reserva = reservaRepository.findById(reservaServicio.getReserva().getId()) // obtengo el objeto reserva ,despues el getId captura el id de ese objeto reserva
                                 .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
@@ -58,20 +58,20 @@ public class Reserva_ServicioController {
                 ReservaServicioId id = new ReservaServicioId(reserva.getId(), servicio.getId_servicio());
                 reservaServicio.setId(id);
 
-                Reserva_Servicio guardado = reservaServicioService.guardar(reservaServicio);
+                ReservaServicio guardado = reservaServicioService.guardar(reservaServicio);
                 return ResponseEntity.status(HttpStatus.CREATED).body(guardado);
         }
 
         @PutMapping("editar/{idReserva}/{idServicio}")
-        public ResponseEntity<Reserva_Servicio> editarReservaServicio(
+        public ResponseEntity<ReservaServicio> editarReservaServicio(
                         @PathVariable Integer idReserva,
                         @PathVariable Integer idServicio,
-                        @RequestBody Reserva_Servicio nuevaRelacion) {
+                        @RequestBody ReservaServicio nuevaRelacion) {
 
                 // El ID actual que modificaremos
                 ReservaServicioId idActual = new ReservaServicioId(idReserva, idServicio);
 
-                // Reserva_Servicio existente = reservaServicioRepository.findById(idActual)
+                // ReservaServicio existente = reservaServicioRepository.findById(idActual)
                 // .orElseThrow(() -> new RuntimeException("Relación no encontrada"));
                 if (!reservaServicioRepository.existsById(idActual)) {
                         throw new RuntimeException("Relación no encontrada");
@@ -93,7 +93,7 @@ public class Reserva_ServicioController {
                 nuevaRelacion.setReserva(nuevaReserva);
                 nuevaRelacion.setServicio(nuevoServicio);
 
-                Reserva_Servicio guardado = reservaServicioRepository.save(nuevaRelacion);
+                ReservaServicio guardado = reservaServicioRepository.save(nuevaRelacion);
 
                 return ResponseEntity.ok(guardado);
         }
@@ -104,7 +104,7 @@ public class Reserva_ServicioController {
                         @PathVariable Integer idServicio) {
 
                 // Buscar la relación en la base de datos
-                Reserva_Servicio reservaServicio = reservaServicioRepository
+                ReservaServicio reservaServicio = reservaServicioRepository
                                 .findById(new ReservaServicioId(idReserva, idServicio))
                                 .orElseThrow(() -> new RuntimeException("Relación no encontrada"));
 

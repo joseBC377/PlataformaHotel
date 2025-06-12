@@ -15,39 +15,39 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.hotel.entities.Reserva_habitacion;
-import com.example.hotel.services.Reserva_habitacionService;
+import com.example.hotel.entities.ReservaHabitacion;
+import com.example.hotel.services.ReservaHabitacionService;
 
 import lombok.AllArgsConstructor;
 @RestController
 @RequestMapping("api/reservas/habitaciones")
 @AllArgsConstructor
-public class Reserva_habitacionRestController {
-        private Reserva_habitacionService service;
+public class ReservaHabitacionRestController {
+        private ReservaHabitacionService service;
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Reserva_habitacion> selectAllReservas_habitacion() {
+    public List<ReservaHabitacion> selectAllReservas_habitacion() {
         return service.selectAllReserva();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Reserva_habitacion> getReservaById(@PathVariable Integer id) {
+    public ResponseEntity<ReservaHabitacion> getReservaById(@PathVariable Integer id) {
         return service.selectById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
     
     @PostMapping
-    public ResponseEntity<Reserva_habitacion> insUpdReservaHabit(@RequestBody Reserva_habitacion reserva_habitacion) {
-        return ResponseEntity.ok(service.insUpdReservaHabit(reserva_habitacion));
+    public ResponseEntity<ReservaHabitacion> insUpdReservaHabit(@RequestBody ReservaHabitacion ReservaHabitacion) {
+        return ResponseEntity.ok(service.insUpdReservaHabit(ReservaHabitacion));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Reserva_habitacion> actualizar(@PathVariable Integer id, @RequestBody Reserva_habitacion reserva_habitActualizada) {
-        Optional<Reserva_habitacion> reservaExistente = service.selectById(id);
+    public ResponseEntity<ReservaHabitacion> actualizar(@PathVariable Integer id, @RequestBody ReservaHabitacion reservahabitActualizada) {
+        Optional<ReservaHabitacion> reservaExistente = service.selectById(id);
         if (reservaExistente.isPresent()) {
-            reserva_habitActualizada.setId(id);
-            return ResponseEntity.ok(service.insUpdReservaHabit(reserva_habitActualizada));
+            reservahabitActualizada.setId(id);
+            return ResponseEntity.ok(service.insUpdReservaHabit(reservahabitActualizada));
         } else {
             return ResponseEntity.notFound().build();
         }

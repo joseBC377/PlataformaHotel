@@ -42,5 +42,5 @@ public class Habitacion {
     //Añadir llave foranea 
     @ManyToOne
     @JoinColumn(name="id_categoria")
-    private Categoria_Habitacion categoria_Habitacion;
+    private CategoriaHabitacion categoriaHabitacion;
 }
