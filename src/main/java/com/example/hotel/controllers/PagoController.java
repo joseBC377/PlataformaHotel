@@ -9,6 +9,8 @@ import com.example.hotel.entities.Pago;
 import com.example.hotel.services.PagoService;
 import com.example.hotel.util.Pago_ReservaInfo;
 
+import jakarta.validation.Valid;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,7 +40,7 @@ public class PagoController {
     }
     
     @PostMapping("insertar")
-    public Pago insertPago(@RequestBody Pago pago) {
+    public Pago insertPago(@Valid @RequestBody Pago pago) {
         return service.insert(pago);
     }
 
@@ -63,7 +65,7 @@ public class PagoController {
     }
 
     @PutMapping("actualizar/{idPago}")
-    public Pago updateIdPago(@PathVariable Integer idPago, @RequestBody Pago pago) {
+    public Pago updateIdPago(@PathVariable Integer idPago, @Valid @RequestBody Pago pago) {
         pago.setIdPago(idPago);
         return service.actualizarPago(idPago, pago);
     }

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.hotel.entities.Resena;
 import com.example.hotel.services.ResenaService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -40,14 +41,14 @@ public class ResenaRestController {
 
     // Insertar con endpoints una nueva habitación
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Resena> insertResena(@RequestBody Resena resena) {
+    public ResponseEntity<Resena> insertResena(@Valid @RequestBody Resena resena) {
         Resena nuevaResena = service.insertResena(resena);
         return ResponseEntity.ok(nuevaResena);
     }
 
     // Actualizar  con endpoints  una habitación existente
     @PutMapping("/{id}")
-    public ResponseEntity<Resena> updateResena(@PathVariable Integer id, @RequestBody Resena resena) {
+    public ResponseEntity<Resena> updateResena(@PathVariable Integer id,@Valid @RequestBody Resena resena) {
         return service.updateResena(id, resena)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

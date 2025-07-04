@@ -23,6 +23,7 @@ import com.example.hotel.repositories.ReservaServicioRepository;
 import com.example.hotel.repositories.ServicioRepository;
 import com.example.hotel.services.ReservaServicioService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -42,7 +43,7 @@ public class ReservaServicioController {
         }
 
         @PostMapping("insertar")
-        public ResponseEntity<ReservaServicio> insertarReservaServicio(@RequestBody ReservaServicio reservaServicio) {
+        public ResponseEntity<ReservaServicio> insertarReservaServicio(@Valid @RequestBody ReservaServicio reservaServicio) {
                 // Obtener las entidades reales desde la base de datos
                 Reserva reserva = reservaRepository.findById(reservaServicio.getReserva().getId()) // obtengo el objeto reserva ,despues el getId captura el id de ese objeto reserva
                                 .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
@@ -66,7 +67,7 @@ public class ReservaServicioController {
         public ResponseEntity<ReservaServicio> editarReservaServicio(
                         @PathVariable Integer idReserva,
                         @PathVariable Integer idServicio,
-                        @RequestBody ReservaServicio nuevaRelacion) {
+                        @Valid @RequestBody ReservaServicio nuevaRelacion) {
 
                 // El ID actual que modificaremos
                 ReservaServicioId idActual = new ReservaServicioId(idReserva, idServicio);
