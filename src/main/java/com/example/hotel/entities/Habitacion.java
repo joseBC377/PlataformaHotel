@@ -29,7 +29,7 @@ import lombok.Setter;
 public class Habitacion {
     @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Integer id;
+    private Integer id;
 
     @NotBlank(message = "El nombre no puede estar vacío")
     @Size(max = 50, message = "El nombre no debe exceder los 50 caracteres")

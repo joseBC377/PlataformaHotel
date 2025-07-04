@@ -32,10 +32,12 @@ public class ReservaHabitacion {
     @Column(name = "Precio", precision = 10, scale = 2)
     private BigDecimal precio;
 
+    @NotNull(message = "La reserva es obligatoria")
     @ManyToOne
     @JoinColumn(name = "id_reserva", nullable = true)
     private Reserva reserva;
 
+    @NotNull(message = "La habitacion es obligatoria")
     @ManyToOne
     @JoinColumn(name = "id_habitacion", nullable = true)
     private Habitacion habitacion;
