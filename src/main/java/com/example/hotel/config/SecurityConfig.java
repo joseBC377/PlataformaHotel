@@ -74,7 +74,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/auth/**").permitAll() // Ingresar sin token
                         .requestMatchers("api/usuario/**").hasAuthority("ADMIN")
-                        //.requestMatchers("/api/usuario/publico", "/api/usuario/**").hasAuthority("CLIENT")
                         // Cualquier otra ruta no mencionada necesita que el usuario sea autenticado
                         // pero sin importar si es admin o client
                         .anyRequest().authenticated())
