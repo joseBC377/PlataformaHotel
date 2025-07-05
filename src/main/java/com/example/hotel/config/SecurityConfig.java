@@ -5,6 +5,7 @@ import java.util.Arrays;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -69,10 +70,11 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/auth/**").permitAll() // Ingresar sin token
-                        .requestMatchers("api/usuario/todosCliente").hasAuthority("ADMIN")
-                        .requestMatchers("/api/usuario/publico", "/api/usuario/**").hasAuthority("CLIENT")
+                        .requestMatchers("api/usuario/**").hasAuthority("ADMIN")
+                        //.requestMatchers("/api/usuario/publico", "/api/usuario/**").hasAuthority("CLIENT")
                         // Cualquier otra ruta no mencionada necesita que el usuario sea autenticado
                         // pero sin importar si es admin o client
                         .anyRequest().authenticated())
