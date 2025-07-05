@@ -14,6 +14,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -30,15 +35,22 @@ public class CategoriaHabitacion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private  Integer id;
 
-    @Column(unique=true, nullable= false, length=  50 )
+    @NotBlank(message = "El nombre no puede estar vacío")
+    @Size(max = 50, message = "El nombre no debe exceder los 50 caracteres")
+    @Column(unique = true, nullable = false, length = 50)
     private String nombre;
+    
     @Lob
+    @NotBlank(message = "La descripción no puede estar vacía")
     @Column(columnDefinition ="TEXT",nullable = false)
     private String descripcion;
     
     @Column(nullable = false)
+    @Min(value = 1, message = "La capacidad mínima debe ser 1")
     private Integer capacidad;
    
+    @NotNull(message = "El precio es obligatorio")
+    @DecimalMin(value = "0.0", inclusive = false, message = "El precio debe ser mayor a 0")
     private BigDecimal precio;
 
     @Column(nullable = false, length = 255)

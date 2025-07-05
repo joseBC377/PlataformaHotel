@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.hotel.entities.Habitacion;
 import com.example.hotel.services.HabitacionService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,14 +40,14 @@ public class HabitacionRestController {
 
     // Insertar con endpoints una nueva habitación
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Habitacion> insertHabitacion(@RequestBody Habitacion habitacion) {
+    public ResponseEntity<Habitacion> insertHabitacion(@Valid @RequestBody Habitacion habitacion) {
         Habitacion nuevaHabitacion = service.insertHabitacion(habitacion);
         return ResponseEntity.ok(nuevaHabitacion);
     }
 
     // Actualizar  con endpoints  una habitación existente
     @PutMapping("/{id}")
-    public ResponseEntity<Habitacion> updateHabitacion(@PathVariable Integer id, @RequestBody Habitacion habitacion) {
+    public ResponseEntity<Habitacion> updateHabitacion(@PathVariable Integer id,@Valid @RequestBody Habitacion habitacion) {
         return service.updateHabitacion(id, habitacion)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

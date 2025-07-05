@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.hotel.entities.Contacto;
 import com.example.hotel.services.ContactoService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -34,12 +35,12 @@ public class ContactoController {
     }
 
     @PostMapping("insertar")
-    public Contacto insertContact(@RequestBody Contacto contacto) {
+    public Contacto insertContact(@Valid @RequestBody Contacto contacto) {
         return service.insert(contacto);
     }
 
     @PutMapping("actualizar/{id}")
-    public Contacto updateIdContact(@PathVariable Integer id, @RequestBody Contacto contacto) {
+    public Contacto updateIdContact(@PathVariable Integer id, @Valid @RequestBody Contacto contacto) {
         contacto.setId(id);
         return service.updateContact(id, contacto);
     }

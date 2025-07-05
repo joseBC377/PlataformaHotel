@@ -6,6 +6,7 @@ import com.example.hotel.entities.Usuario;
 import com.example.hotel.services.UsuarioService;
 import com.example.hotel.util.ConteoRol;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
@@ -52,12 +53,12 @@ public class UsuarioRestController {
     }
 
     @PostMapping(value = "insertar")
-    public Usuario insertIdUser(@RequestBody Usuario usuario) {
+    public Usuario insertIdUser(@Valid @RequestBody Usuario usuario) {
         return service.insertUsuario(usuario);
     }
 
     @PutMapping(value = "actualizar/{id}")
-    public Usuario updateIdUser(@PathVariable Integer id, @RequestBody Usuario usuario) {
+    public Usuario updateIdUser(@PathVariable Integer id,@Valid @RequestBody Usuario usuario) {
         usuario.setId(id); //asi haga lo que haga tendra el mismo id
         return service.updateUsuario(id, usuario);
     }

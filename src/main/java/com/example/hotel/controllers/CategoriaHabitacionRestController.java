@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.hotel.entities.CategoriaHabitacion;
 import com.example.hotel.services.CategoriaHabitacionService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
@@ -37,15 +38,13 @@ private final CategoriaHabitacionService service;
 
     // Insertar con endpoints una nueva categoría
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<CategoriaHabitacion> insertCategoria(@RequestBody CategoriaHabitacion categoria) {
+    public ResponseEntity<CategoriaHabitacion> insertCategoria(@Valid @RequestBody CategoriaHabitacion categoria) {
         return ResponseEntity.ok(service.insertCategoria(categoria));
     }
 
     // Actualizar con endpoints categoría existente
     @PutMapping("/{id}")
-    public ResponseEntity<CategoriaHabitacion> updateCategoria(
-            @PathVariable Integer id,
-            @RequestBody CategoriaHabitacion categoria) {
+    public ResponseEntity<CategoriaHabitacion> updateCategoria(@PathVariable Integer id, @Valid @RequestBody CategoriaHabitacion categoria) {
         return service.updateCategoria(id, categoria)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.hotel.entities.ReservaHabitacion;
 import com.example.hotel.services.ReservaHabitacionService;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 @RestController
 @RequestMapping("api/reservas/habitaciones")
@@ -38,12 +39,12 @@ public class ReservaHabitacionRestController {
     }
     
     @PostMapping
-    public ResponseEntity<ReservaHabitacion> insUpdReservaHabit(@RequestBody ReservaHabitacion ReservaHabitacion) {
+    public ResponseEntity<ReservaHabitacion> insUpdReservaHabit(@Valid @RequestBody ReservaHabitacion ReservaHabitacion) {
         return ResponseEntity.ok(service.insUpdReservaHabit(ReservaHabitacion));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ReservaHabitacion> actualizar(@PathVariable Integer id, @RequestBody ReservaHabitacion reservahabitActualizada) {
+    public ResponseEntity<ReservaHabitacion> actualizar(@PathVariable Integer id,@Valid @RequestBody ReservaHabitacion reservahabitActualizada) {
         Optional<ReservaHabitacion> reservaExistente = service.selectById(id);
         if (reservaExistente.isPresent()) {
             reservahabitActualizada.setId(id);
