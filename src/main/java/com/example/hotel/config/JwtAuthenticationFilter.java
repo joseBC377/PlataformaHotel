@@ -34,6 +34,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain)
             throws ServletException, IOException { 
+
         final String authHeader = request.getHeader("Authorization"); //El Authorization y Bearer es lo que esta en el postman
         if (authHeader == null || !authHeader.startsWith("Bearer")) { // verifica si el encabezado es nulo o mal formado si no hay token o no empieza con Bearer no hace nada y deja que siga la solicitud
             filterChain.doFilter(request, response);
