@@ -30,8 +30,8 @@ public class AuthenticationController {
 
     //El RegisterRequest viene de el paquete util , el record RegisterRequest
     @PostMapping("/registro")
-    public ResponseEntity <AuthenticationResponse> registrar(@RequestBody RegisterRequest request) {
-        return ResponseEntity.ok(authenticationService.register(request));
+    public void registrar(@RequestBody RegisterRequest request) {
+        authenticationService.register(request);
     }
     
     
