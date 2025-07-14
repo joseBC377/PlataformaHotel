@@ -24,42 +24,41 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity 
+@Entity
 @Setter
-@Getter 
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "CATEGORIA_HABITACION")
 public class CategoriaHabitacion {
-  @Id 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Integer id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Integer id;
 
-    @NotBlank(message = "El nombre no puede estar vacío")
-    @Size(max = 50, message = "El nombre no debe exceder los 50 caracteres")
-    @Column(unique = true, nullable = false, length = 50)
-    private String nombre;
-    
-    @Lob
-    @NotBlank(message = "La descripción no puede estar vacía")
-    @Column(columnDefinition ="TEXT",nullable = false)
-    private String descripcion;
-    
-    @Column(nullable = false)
-    @Min(value = 1, message = "La capacidad mínima debe ser 1")
-    private Integer capacidad;
-   
-    @NotNull(message = "El precio es obligatorio")
-    @DecimalMin(value = "0.0", inclusive = false, message = "El precio debe ser mayor a 0")
-    private BigDecimal precio;
+  @NotBlank(message = "El nombre no puede estar vacío")
+  @Size(max = 50, message = "El nombre no debe exceder los 50 caracteres")
+  @Column(unique = true, nullable = false, length = 50)
+  private String nombre;
 
-    @Column(nullable = false, length = 255)
-    private String imagen;
+  @Lob
+  @NotBlank(message = "La descripción no puede estar vacía")
+  @Column(columnDefinition = "TEXT", nullable = false)
+  private String descripcion;
 
-    //Añadir carga de llave foranea de habitacion
-    // @OneToMany(mappedBy = "categoria_Habitacion", cascade = CascadeType.ALL,orphanRemoval = true)
-    // @JsonIgnoreProperties("categoria_Habitacion")
-    // private List<Habitacion> habitacion;
+  @Column(nullable = false)
+  @Min(value = 1, message = "La capacidad mínima debe ser 1")
+  private Integer capacidad;
 
-   
+  @NotNull(message = "El precio es obligatorio")
+  @DecimalMin(value = "0.0", inclusive = false, message = "El precio debe ser mayor a 0")
+  private BigDecimal precio;
+
+  @Column(columnDefinition = "LONGTEXT") 
+  private String imagen;
+  // Añadir carga de llave foranea de habitacion
+  // @OneToMany(mappedBy = "categoria_Habitacion", cascade =
+  // CascadeType.ALL,orphanRemoval = true)
+  // @JsonIgnoreProperties("categoria_Habitacion")
+  // private List<Habitacion> habitacion;
+
 }
