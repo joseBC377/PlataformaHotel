@@ -46,6 +46,23 @@ public class AuthenticationService {
 
     }
 
+    public String editarUsuario(Integer id, RegisterRequest request) {
+        var usuario = usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + id));
+
+        usuario.setNombre(request.firstname());
+        usuario.setApellido(request.lastname());
+        usuario.setCorreo(request.email());
+        usuario.setTelefono(request.telefono());
+
+        if (request.password() != null && !request.password().isBlank()) {
+            usuario.setPassword(passwordEncoder.encode(request.password()));
+        }
+        usuarioRepository.save(usuario);
+        return "Usuario actualizado exitosamente";
+    }
+
+
+
     // El AuthenticationRequest viene del paquete util (Al momento de iniciar sesion
     // valida credenciales y se genera un token)
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
@@ -68,11 +85,8 @@ public class AuthenticationService {
 
     }
 
-    // proceso de renovacion del access token usando el refresh token
-    // (es decir cuando se venca el access token , mediante el refresh token se
-    // genera un access token y cuando se venca el access token si el refresh token
-    // sigo vigente sigue generando un access token hasta que venca el refresh
-    // token)
+    // proceso de renovacion del access token usando el refresh token (es decir cuando se venca el access token , mediante el refresh token se genera un access token y cuando se venca el access token si el refresh token
+    // sigo vigente sigue generando un access token hasta que venca el refresh token)
     // El RefreshTokenRequest viene del paquete util ,
     public AuthenticationResponse refreshToken(RefreshTokenRequest request) {
         String userEmail = jwtService.extractUsername(request.refreshToken());
