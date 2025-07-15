@@ -72,9 +72,12 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/auth/**").permitAll() // Ingresar sin token
+                        .requestMatchers("/api/v1/auth/registro").hasAuthority("ADMIN")
+                        .requestMatchers("/api/v1/auth/editar/**").hasAuthority("ADMIN") // Ingresar sin token
+                        .requestMatchers("/api/v1/auth/autenticarse").permitAll() // Ingresar sin token
+                        .requestMatchers("/api/v1/auth/refresh-token").permitAll() // Ingresar sin token
+
                         .requestMatchers("api/usuario/**").hasAuthority("ADMIN")
-                        //.requestMatchers("/api/usuario/publico", "/api/usuario/**").hasAuthority("CLIENT")
                         // Cualquier otra ruta no mencionada necesita que el usuario sea autenticado
                         // pero sin importar si es admin o client
                         .anyRequest().authenticated())

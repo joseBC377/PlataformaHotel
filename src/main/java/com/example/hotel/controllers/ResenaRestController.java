@@ -27,7 +27,7 @@ public class ResenaRestController {
     @Autowired
     private final ResenaService service;
 
-     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public  List<Resena> selectAllResenas(){
         return service.selectAllResenas();
     }
