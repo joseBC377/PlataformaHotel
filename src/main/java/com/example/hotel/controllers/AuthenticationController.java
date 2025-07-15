@@ -34,9 +34,8 @@ public class AuthenticationController {
     }
 
     @PutMapping("/editar/{id}")
-    public ResponseEntity<String> editarUsuario(@PathVariable Integer id, @RequestBody RegisterRequest request) {
-        String mensaje = authenticationService.editarUsuario(id, request);
-        return ResponseEntity.ok(mensaje);
+    public void editarUsuario(@PathVariable Integer id, @RequestBody RegisterRequest request) {
+        authenticationService.editarUsuario(id, request);
     }
 
     @PostMapping("/autenticarse")

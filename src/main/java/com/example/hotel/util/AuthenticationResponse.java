@@ -11,5 +11,4 @@ public record AuthenticationResponse(
     String apellido,
     String rol
 
-
 ) {}

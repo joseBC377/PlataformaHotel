@@ -64,9 +64,8 @@ public class UsuarioRestController {
     }
 
     @DeleteMapping(value = "eliminar/{id}")
-    public ResponseEntity<String> deleteIdUser(@PathVariable Integer id) {
+    public void deleteIdUser(@PathVariable Integer id) {
         service.deleteUsuario(id);
-        return ResponseEntity.ok("Usuario eliminado correctamente Id :" + id);
     }
 
 

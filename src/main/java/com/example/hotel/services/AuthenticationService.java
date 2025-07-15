@@ -54,6 +54,7 @@ public class AuthenticationService {
         usuario.setCorreo(request.email());
         usuario.setTelefono(request.telefono());
 
+        //Si esque no actualizo la contraseña , se queda con la antigua
         if (request.password() != null && !request.password().isBlank()) {
             usuario.setPassword(passwordEncoder.encode(request.password()));
         }
