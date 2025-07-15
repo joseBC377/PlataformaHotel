@@ -34,9 +34,7 @@ public class ResenaRestController {
     // Buscar con endpoints habitación por ID
     @GetMapping("/{id}")
     public ResponseEntity<Resena> getResenaById(@PathVariable Integer id) {
-        return service.getResenaById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return service.getResenaById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
     }
 
     // Insertar con endpoints una nueva habitación
@@ -48,10 +46,9 @@ public class ResenaRestController {
 
     // Actualizar  con endpoints  una habitación existente
     @PutMapping("/{id}")
-    public ResponseEntity<Resena> updateResena(@PathVariable Integer id,@Valid @RequestBody Resena resena) {
-        return service.updateResena(id, resena)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity <Void> updateResena(@PathVariable Integer id,@Valid @RequestBody Resena resena) {
+        service.updateResena(id, resena);
+        return ResponseEntity.noContent().build(); // HTTP 204
     }
 
     // Eliminar  con endpoints una habitación
