@@ -72,7 +72,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/auth/registro").hasAuthority("ADMIN")
+                        .requestMatchers("/api/v1/auth/registro").permitAll()
                         .requestMatchers("/api/v1/auth/editar/**").hasAuthority("ADMIN") // Ingresar sin token
                         .requestMatchers("/api/v1/auth/autenticarse").permitAll() // Ingresar sin token
                         .requestMatchers("/api/resena/**").hasAuthority("ADMIN") 
