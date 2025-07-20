@@ -5,8 +5,6 @@ import java.util.List;
 import com.example.hotel.util.Rol;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import jakarta.persistence.CascadeType;
-
 // import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 // import java.util.List;
 // import jakarta.persistence.OneToMany;
