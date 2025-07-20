@@ -36,15 +36,15 @@ public class Reserva {
 
     @Column(nullable = false)
     @NotNull(message = "La fecha es obligatoria")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") // También ajusta DateTimeFormat
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm") // Este es el formato que envía el datetime-local de HTML
     @FutureOrPresent(message = "La fecha debe ser hoy o en el futuro")
     private LocalDateTime fecha_inicio;
 
     @Column(nullable = false)
     @NotNull(message = "La fecha es obligatoria")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") // También ajusta DateTimeFormat
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm") // Este es el formato que envía el datetime-local de HTML
     @FutureOrPresent(message = "La fecha debe ser hoy o en el futuro")
     private LocalDateTime fecha_fin;
 

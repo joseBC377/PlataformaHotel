@@ -75,7 +75,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/auth/autenticarse","/api/v1/auth/registro").permitAll() // Ingresar sin token
                         .requestMatchers("/api/v1/auth/editar/**").hasAuthority("ADMIN") // Ingresar sin token
                         .requestMatchers("/api/resena/**").hasAuthority("ADMIN") 
-                        .requestMatchers("/api/usuario/**","/pi/reservas/**").hasAuthority("ADMIN")
+                        .requestMatchers("/api/usuario/**","/api/reservas/**").hasAuthority("ADMIN")
                         // Cualquier otra ruta no mencionada necesita que el usuario sea autenticado
                         // pero sin importar si es admin o client
                         .anyRequest().authenticated())
