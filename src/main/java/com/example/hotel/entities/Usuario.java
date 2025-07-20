@@ -85,7 +85,7 @@ public class Usuario {
     // @JsonIgnoreProperties("usuario")
     // private List<Contacto> contacto;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
     @JsonIgnoreProperties("usuario")
     private List<Reserva> reserva;
 

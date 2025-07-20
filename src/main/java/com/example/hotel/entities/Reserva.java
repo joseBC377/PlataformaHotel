@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
@@ -28,20 +29,22 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 
 public class Reserva {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    
+
     @Column(nullable = false)
     @NotNull(message = "La fecha es obligatoria")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @FutureOrPresent(message = "La fecha debe ser hoy o en el futuro")
     private LocalDateTime fecha_inicio;
 
     @Column(nullable = false)
     @NotNull(message = "La fecha es obligatoria")
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @FutureOrPresent(message = "La fecha debe ser hoy o en el futuro")
     private LocalDateTime fecha_fin;
 
