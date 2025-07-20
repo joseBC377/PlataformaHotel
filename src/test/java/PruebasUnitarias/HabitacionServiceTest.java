@@ -1,7 +1,10 @@
 package PruebasUnitarias;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -13,6 +16,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -94,5 +98,88 @@ public class HabitacionServiceTest {
         verify(repository).findById(99);
     }
 
+    
+    @Test
+    @DisplayName("insertHabitacion: guarda y devuelve la habitación")
+    void insertHabitacion_ok() {
+        when(repository.save(any(Habitacion.class))).thenReturn(habitacionBase);
+
+        Habitacion guardada = service.insertHabitacion(habitacionBase);
+
+        assertNotNull(guardada);
+        assertEquals("Hab101", guardada.getNombre());
+        assertEquals("DISPONIBLE", guardada.getEstado());
+        assertEquals(10, guardada.getCategoriaHabitacion().getId());
+
+        ArgumentCaptor<Habitacion> captor = ArgumentCaptor.forClass(Habitacion.class);
+        verify(repository).save(captor.capture());
+        Habitacion enviada = captor.getValue();
+        assertEquals("Hab101", enviada.getNombre());
+    }
+
+
+
+    @Test
+    @DisplayName("updateHabitacion: actualiza campos sin cambiar categoría")
+    void updateHabitacion_ok_sinCambiarCategoria() {
+        Habitacion cambios = Habitacion.builder()
+            .nombre("Hab101-Editada")
+            .descripcion("Editada")
+            .estado("OCUPADA")
+            .build(); // sin categoría
+
+        when(repository.findById(1)).thenReturn(Optional.of(habitacionBase));
+        when(repository.save(any(Habitacion.class))).thenAnswer(inv -> inv.getArgument(0));
+
+        Optional<Habitacion> opt = service.updateHabitacion(1, cambios);
+
+        assertTrue(opt.isPresent());
+        Habitacion actualizada = opt.get();
+        assertEquals("Hab101-Editada", actualizada.getNombre());
+        assertEquals("OCUPADA", actualizada.getEstado());
+        // categoría se mantiene
+        assertNotNull(actualizada.getCategoriaHabitacion());
+        assertEquals(10, actualizada.getCategoriaHabitacion().getId());
+
+        verify(repository).findById(1);
+        verify(categoriaRepository, never()).findById(any());
+        verify(repository).save(any(Habitacion.class));
+    }
+
+
+    @Test
+    @DisplayName("updateHabitacion: cambia categoría cuando se envía ID válido")
+    void updateHabitacion_ok_conCategoriaNueva() {
+        CategoriaHabitacion nuevaCat = CategoriaHabitacion.builder()
+            .id(20)
+            .nombre("Doble")
+            .descripcion("Dos camas")
+            .capacidad(2)
+            .precio(new BigDecimal("180.00"))
+            .imagen(null)
+            .build();
+
+        Habitacion cambios = Habitacion.builder()
+            .nombre("Hab101-Editada")
+            .descripcion("Editada con cat nueva")
+            .estado("MANTENIMIENTO")
+            .categoriaHabitacion(nuevaCat)
+            .build();
+
+        when(repository.findById(1)).thenReturn(Optional.of(habitacionBase));
+        when(categoriaRepository.findById(20)).thenReturn(Optional.of(nuevaCat));
+        when(repository.save(any(Habitacion.class))).thenAnswer(inv -> inv.getArgument(0));
+
+        Optional<Habitacion> opt = service.updateHabitacion(1, cambios);
+
+        assertTrue(opt.isPresent());
+        Habitacion actualizada = opt.get();
+        assertEquals(20, actualizada.getCategoriaHabitacion().getId());
+        assertEquals("Doble", actualizada.getCategoriaHabitacion().getNombre());
+
+        verify(repository).findById(1);
+        verify(categoriaRepository).findById(20);
+        verify(repository).save(any(Habitacion.class));
+    }
 
 }
