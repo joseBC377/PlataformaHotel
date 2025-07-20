@@ -1,6 +1,7 @@
 package PruebasUnitarias;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -126,7 +127,7 @@ public class HabitacionServiceTest {
             .nombre("Hab101-Editada")
             .descripcion("Editada")
             .estado("OCUPADA")
-            .build(); // sin categoría
+            .build();
 
         when(repository.findById(1)).thenReturn(Optional.of(habitacionBase));
         when(repository.save(any(Habitacion.class))).thenAnswer(inv -> inv.getArgument(0));
@@ -180,6 +181,31 @@ public class HabitacionServiceTest {
         verify(repository).findById(1);
         verify(categoriaRepository).findById(20);
         verify(repository).save(any(Habitacion.class));
+    }
+
+    
+    @Test
+    @DisplayName("deleteHabitacion: elimina cuando existe y retorna true")
+    void deleteHabitacion_ok() {
+        when(repository.existsById(1)).thenReturn(true);
+
+        boolean resultado = service.deleteHabitacion(1);
+
+        assertTrue(resultado);
+        verify(repository).existsById(1);
+        verify(repository).deleteById(1);
+    }
+
+    @Test
+    @DisplayName("deleteHabitacion: retorna false cuando no existe")
+    void deleteHabitacion_noExiste() {
+        when(repository.existsById(99)).thenReturn(false);
+
+        boolean resultado = service.deleteHabitacion(99);
+
+        assertFalse(resultado);
+        verify(repository).existsById(99);
+        verify(repository, never()).deleteById(any());
     }
 
 }
