@@ -51,6 +51,7 @@
 - Control de usuarios y roles (ADMIN / CLIENT)
 - Controladores REST para exponer la API
 - Manejo de excepciones y validaciones personalizadas
+- CORS
 
 ### Herramientas adicionales
 - Visual Studio Code
@@ -148,7 +149,7 @@ Asegúrate de que el frontend esté corriendo correctamente en el puerto corresp
 <h2>📁 Estructura del proyecto -  Backend</h2>
 
 <pre>
-PlataformaHotelBackend/
+PlataformaHotel/
 ├── src/
 │   ├── main/
 │   │   ├── java/
@@ -159,7 +160,7 @@ PlataformaHotelBackend/
 │   │   │               ├── service/        # Lógica de negocio
 │   │   │               ├── model/          # Entidades (JPA)
 │   │   │               ├── repository/     # Interfaces JPA (acceso a datos)
-│   │   │               ├── security/       # Configuración de seguridad (JWT, filtros)
+│   │   │               ├── config/         # Configuración de seguridad (JWT, filtros,CORS)
 │   │   │               └── PlataformaHotelApplication.java  # Clase principal
 │   │   └── resources/
 │   │       ├── application.properties      # Configuración de conexión (DB, puerto)
