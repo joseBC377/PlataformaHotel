@@ -8,25 +8,27 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity 
+@Entity
 @Setter
-@Getter 
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "RESENA")
 public class Resena {
-    
-    @Id 
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Integer id;
+    private Integer id;
 
     @Column(nullable = false, length = 150)
     @NotNull(message = "La calificación es obligatoria")
@@ -36,6 +38,11 @@ public class Resena {
     @NotNull(message = "La fecha es obligatoria")
     private LocalDate fecha;
 
+    @Lob
+    @NotBlank(message = "La descripción no puede estar vacía")
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String descripcion;
+    
     @NotNull(message = "El usuario es obligatoria")
     @ManyToOne
     @JoinColumn(name = "id_usuario", nullable = true)
