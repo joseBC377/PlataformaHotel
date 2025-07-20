@@ -2,7 +2,6 @@ package com.example.hotel.entities;
 
 import java.math.BigDecimal;
 
-import com.example.hotel.entities.Habitacion.HabitacionBuilder;
 
 // import java.util.List;
 // import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
