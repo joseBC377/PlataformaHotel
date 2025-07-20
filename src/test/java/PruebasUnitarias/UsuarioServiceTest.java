@@ -2,13 +2,20 @@ package PruebasUnitarias;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -49,7 +56,7 @@ public class UsuarioServiceTest {
             .build();
     }
 
-    @DisplayName("selectAll: retorna lista con usuarios")
+    @DisplayName("Test de retornar lista con usuarios")
     @Test
     public void todosUsuarios(){
         when(repository.findAll()).thenReturn(Arrays.asList(usuarioBase));//Devolvera la lista con un unico elemento, en este caso con usuarioBase
@@ -75,13 +82,102 @@ public class UsuarioServiceTest {
         assertEquals(usuarioBase.getId(), resultado.getId(), "Id debe coincidir");
         assertEquals("Prueba", resultado.getNombre(), "Nombre debe coincidir");
 
-        // EXTRA: Capturamos lo que realmente se envió al repositorio.save().
-        // Esto comprueba que el servicio pasó los datos correctos al DAO.
         ArgumentCaptor<Usuario> captor = ArgumentCaptor.forClass(Usuario.class);
-        verify(repository).save(captor.capture()); // verifica llamada y captura arg.
+        verify(repository).save(captor.capture()); // verifico llamada y captura arg.
         Usuario enviado = captor.getValue();
         assertEquals("Prueba", enviado.getNombre(), "El nombre enviado al repositorio debe coincidir");
         
     }
+
+    
+    @Test
+    @DisplayName("selectId: encuentra usuario existente")
+    void selectId_existente() {
+        when(repository.findById(1)).thenReturn(Optional.of(usuarioBase));
+
+        Usuario resultado = service.selectId(1);
+
+        assertEquals(1, resultado.getId()); //Compruebo que el Usuario que obtuve realmente tiene id=1. Si el resultado tiene otro id, el test fallaría., DETERMINA SI LA PRUEBA FALLO O PASO
+        verify(repository).findById(1);
+    }
+
+    @Test
+    @DisplayName("selectId: lanza excepción si no existe")
+    void selectId_noExiste() {
+        when(repository.findById(99)).thenReturn(Optional.empty());
+
+        RuntimeException ex = assertThrows(RuntimeException.class, () -> service.selectId(99));
+        assertTrue(ex.getMessage().contains("No existe el id"));
+        verify(repository).findById(99);
+    }
+
+    @Test
+    @DisplayName("updateUsuario: actualiza cuando existe")
+    void updateUsuario_ok() {
+        // suponiendo que servicio valida por id del método
+        when(repository.existsById(1)).thenReturn(true);
+        when(repository.save(any(Usuario.class))).thenReturn(usuarioBase);
+
+        Usuario actualizado = service.updateUsuario(1, usuarioBase);
+
+        assertEquals(1, actualizado.getId());
+        verify(repository).existsById(1);
+        verify(repository).save(usuarioBase);
+    }
+
+    @Test
+    @DisplayName("updateUsuario: lanza excepción si no existe")
+    void updateUsuario_noExiste() {
+        when(repository.existsById(1)).thenReturn(false);
+
+        RuntimeException ex = assertThrows(RuntimeException.class, () -> service.updateUsuario(1, usuarioBase));
+        assertTrue(ex.getMessage().contains("no existe") || ex.getMessage().contains("No se puede actualizar"));
+        verify(repository).existsById(1);
+        verify(repository, never()).save(any());
+    }
+
+    @Test
+    @DisplayName("deleteUsuario: elimina cuando existe")
+    void deleteUsuario_ok() {
+        when(repository.existsById(1)).thenReturn(true);
+
+        service.deleteUsuario(1);
+
+        verify(repository).existsById(1);
+        verify(repository).deleteById(1);
+    }
+
+    @Test
+    @DisplayName("deleteUsuario: lanza excepción si no existe")
+    void deleteUsuario_noExiste() {
+        when(repository.existsById(99)).thenReturn(false);
+
+        RuntimeException ex = assertThrows(RuntimeException.class, () -> service.deleteUsuario(99));
+        assertTrue(ex.getMessage().contains("no exite") || ex.getMessage().contains("No existe"));
+        verify(repository).existsById(99);
+        verify(repository, never()).deleteById(any());
+    }
+
+    @Test
+    @DisplayName("findByCorreo: retorna usuario cuando existe")
+    void findByCorreo_ok() {
+        when(repository.findByCorreo(eq("[email protected]"))).thenReturn(Optional.of(usuarioBase));
+
+        Usuario encontrado = service.findByCorreo("[email protected]");
+
+        assertEquals(1, encontrado.getId());
+        verify(repository).findByCorreo("[email protected]");
+    }
+
+    @Test
+    @DisplayName("findByCorreo: lanza excepción si no existe")
+    void findByCorreo_noExiste() {
+        when(repository.findByCorreo(anyString())).thenReturn(Optional.empty());
+
+        assertThrows(NoSuchElementException.class, () -> service.findByCorreo("[email protected]"));
+        verify(repository).findByCorreo("[email protected]");
+    }
+
+
 
 }
