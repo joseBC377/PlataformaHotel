@@ -35,7 +35,7 @@ public class ResenaServiceTest {
         MockitoAnnotations.openMocks(this);
         Usuario usuario= new Usuario();
         Habitacion habitacion= new Habitacion();
-        resena = new Resena(1, new BigDecimal("2.1"), LocalDate.now(), usuario, habitacion);
+        resena = new Resena(1, new BigDecimal("2.1"), LocalDate.now(), "Buena experiencia", usuario, habitacion);
     }
 
     @Test
