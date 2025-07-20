@@ -46,7 +46,7 @@ public class Servicio {
     private BigDecimal precio;
 
     @NotBlank(message = "La imagen es obligatoria")
-    @Column(nullable = false, length = 255)
+    @Column(columnDefinition = "LONGTEXT")
     private String imagen;
    
 }

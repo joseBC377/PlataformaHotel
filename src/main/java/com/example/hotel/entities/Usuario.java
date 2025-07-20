@@ -1,8 +1,5 @@
 package com.example.hotel.entities;
 
-
-
-
 import java.util.List;
 
 import com.example.hotel.util.Rol;
@@ -59,33 +56,34 @@ public class Usuario {
     @Size(min = 2, max = 50, message = "Ingrese un apellido entre 2 y 50 caracteres")
     private String apellido;
 
-    @Column(nullable = false,length = 100, unique = true)
+    @Column(nullable = false, length = 100, unique = true)
     @NotBlank(message = "Ingrese correo")
     @Email(message = "Formato de correo no valido")
     private String correo;
 
-    @Column(nullable = false,length = 15)
+    @Column(nullable = false, length = 15)
     @NotBlank(message = "Ingrese telefono")
-    @Pattern(regexp="\\d{9}", message="El telefono debe tener 9 digitos")
+    @Pattern(regexp = "\\d{9}", message = "El telefono debe tener 9 digitos")
     private String telefono;
-    
+
     @Column(nullable = false)
     @NotBlank(message = "Ingrese contraseña")
     @Size(min = 8, message = "La contraseña debe tener minimo 8 caracteres")
     private String password;
-    
-    //experimental todavia no a sido probado con roles security
+
+    // experimental todavia no a sido probado con roles security
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @NotNull(message = "Ingrese rol")
     private Rol rol;
 
-    //prueba de tablas de contacto
-    // @OneToMany(mappedBy = "usuario", cascade =CascadeType.ALL, orphanRemoval = true )
+    // prueba de tablas de contacto
+    // @OneToMany(mappedBy = "usuario", cascade =CascadeType.ALL, orphanRemoval =
+    // true )
     // @JsonIgnoreProperties("usuario")
     // private List<Contacto> contacto;
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL,orphanRemoval = true,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
     @JsonIgnoreProperties("usuario")
     private List<Reserva> reserva;
 
