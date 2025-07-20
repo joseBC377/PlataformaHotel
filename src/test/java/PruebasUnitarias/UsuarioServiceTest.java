@@ -32,7 +32,7 @@ import com.example.hotel.services.UsuarioService;
 import com.example.hotel.util.Rol;
 
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith(MockitoExtension.class) //Importantisimo con esto habilito el soporte de Mockito
 public class UsuarioServiceTest {
 
     @Mock
@@ -177,7 +177,6 @@ public class UsuarioServiceTest {
         assertThrows(NoSuchElementException.class, () -> service.findByCorreo("[email protected]"));
         verify(repository).findByCorreo("[email protected]");
     }
-
 
 
 }
