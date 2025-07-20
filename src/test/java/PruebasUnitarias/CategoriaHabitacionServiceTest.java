@@ -1,6 +1,7 @@
 package PruebasUnitarias;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
@@ -144,8 +145,29 @@ public class CategoriaHabitacionServiceTest {
         verify(repository, never()).save(any());
     }
 
+    @Test
+    @DisplayName("deleteCategoria: elimina cuando existe y retorna true")
+    void deleteCategoria_ok() {
+        when(repository.existsById(1)).thenReturn(true);
 
-    
+        boolean resultado = service.deleteCategoria(1);
+
+        assertTrue(resultado);
+        verify(repository).existsById(1);
+        verify(repository).deleteById(1);
+    }
+
+    @Test
+    @DisplayName("deleteCategoria: retorna false cuando no existe")
+    void deleteCategoria_noExiste() {
+        when(repository.existsById(99)).thenReturn(false);
+
+        boolean resultado = service.deleteCategoria(99);
+
+        assertFalse(resultado);
+        verify(repository).existsById(99);
+        verify(repository, never()).deleteById(any());
+    }
 
 
 }
