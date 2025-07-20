@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -102,7 +103,49 @@ public class CategoriaHabitacionServiceTest {
     }
 
 
+    @Test
+    @DisplayName("updateCategoria: actualiza cuando existe")
+    void updateCategoria_ok() {
+        CategoriaHabitacion cambios = CategoriaHabitacion.builder()
+            .nombre("Suite Deluxe")
+            .descripcion("Suite Deluxe con terraza")
+            .capacidad(3)
+            .precio(new BigDecimal("500.00"))
+            .imagen("deluxe.png")
+            .build();
+
+        when(repository.findById(1)).thenReturn(Optional.of(categoriaBase));
+        when(repository.save(any(CategoriaHabitacion.class))).thenAnswer(inv -> inv.getArgument(0));
+
+        Optional<CategoriaHabitacion> opt = service.updateCategoria(1, cambios);
+
+        assertTrue(opt.isPresent());
+        CategoriaHabitacion actualizada = opt.get();
+        assertEquals("Suite Deluxe", actualizada.getNombre());
+        assertEquals(0, actualizada.getPrecio().compareTo(new BigDecimal("500.00")));
+
+        verify(repository).findById(1);
+        verify(repository).save(any(CategoriaHabitacion.class));
+    }
+
+    @Test
+    @DisplayName("updateCategoria: retorna Optional.empty() si no existe")
+    void updateCategoria_noExiste() {
+        CategoriaHabitacion cambios = CategoriaHabitacion.builder()
+            .nombre("Suite Deluxe")
+            .build();
+
+        when(repository.findById(42)).thenReturn(Optional.empty());
+
+        Optional<CategoriaHabitacion> opt = service.updateCategoria(42, cambios);
+
+        assertTrue(opt.isEmpty());
+        verify(repository).findById(42);
+        verify(repository, never()).save(any());
+    }
 
 
     
+
+
 }
