@@ -22,12 +22,12 @@ public class HotelApplication {
 	CommandLineRunner commandLineRunner (UsuarioRepository usuarioRepository, PasswordEncoder encoder){
 		return args -> {
 			System.out.println("Creando usuario");
-			if (usuarioRepository.findByCorreo("messi@gmail.com").isEmpty()) { //Ponemos la condicional para ver si exite  no lo crea , pero si no exite lo crea en la databse
+			if (usuarioRepository.findByCorreo("admin@gmail.com").isEmpty()) { //Ponemos la condicional para ver si exite  no lo crea , pero si no exite lo crea en la databse
 				Usuario usuario = new Usuario();
 				usuario.setTelefono("123456789");
-				usuario.setApellido("cusitini");
-				usuario.setNombre("leonel");
-				usuario.setCorreo("messi@gmail.com");
+				usuario.setApellido("UserAdmin");
+				usuario.setNombre("Admin");
+				usuario.setCorreo("admin@gmail.com");
 				usuario.setPassword(encoder.encode("12345678"));
 				usuario.setRol(Rol.ADMIN);
 				usuarioRepository.save(usuario);
