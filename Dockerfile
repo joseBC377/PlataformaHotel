@@ -1,14 +1,12 @@
-# Imagen base con Java 17
-FROM eclipse-temurin:17-jdk-alpine
-
-# Directorio de trabajo en el contenedor
+# Etapa 1: Construcción del .jar
+FROM maven:3.8.6-eclipse-temurin-17 AS build
 WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
 
-# Variable con la ruta del .jar
-ARG JAR_FILE=target/*.jar
-
-# Copia el jar compilado al contenedor
-COPY ${JAR_FILE} app.jar
-
-# Ejecuta la aplicación
+# Etapa 2: Imagen final con Java y .jar
+FROM eclipse-temurin:17-jdk-alpine
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+EXPOSE 8081
 ENTRYPOINT ["java", "-jar", "app.jar"]
