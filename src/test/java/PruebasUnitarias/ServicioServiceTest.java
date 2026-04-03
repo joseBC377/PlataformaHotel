@@ -21,12 +21,15 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 
+import com.example.hotel.HotelApplication;
 import com.example.hotel.entities.Servicio;
 import com.example.hotel.repositories.ServicioRepository;
 import com.example.hotel.services.ServicioService;
-
 @ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class ServicioServiceTest {
 
     @Mock

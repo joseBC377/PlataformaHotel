@@ -1,14 +1,15 @@
 package com.example.hotel.entities;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-
 import org.springframework.format.annotation.DateTimeFormat;
-
+import com.example.hotel.util.RolReserva;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -33,23 +34,17 @@ public class Reserva {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    
     @Column(nullable = false)
-    @NotNull(message = "La fecha es obligatoria")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") // También ajusta DateTimeFormat
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm") // Este es el formato que envía el datetime-local de HTML
-    @FutureOrPresent(message = "La fecha debe ser hoy o en el futuro")
-    private LocalDateTime fecha_inicio;
-
-    @Column(nullable = false)
-    @NotNull(message = "La fecha es obligatoria")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") // También ajusta DateTimeFormat
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm") // Este es el formato que envía el datetime-local de HTML
-    @FutureOrPresent(message = "La fecha debe ser hoy o en el futuro")
-    private LocalDateTime fecha_fin;
+    private LocalDate fecha_reserva;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_usuario", nullable = true)
     @JsonIgnoreProperties("reserva")
     private Usuario usuario;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @NotNull(message = "Ingrese el estado de la reserva")
+    private RolReserva estado;
 }

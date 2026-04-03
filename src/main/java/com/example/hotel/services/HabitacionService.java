@@ -26,21 +26,32 @@ public class HabitacionService {
         return repository.save(habitacion);
     }
 
-    public Optional<Habitacion> updateHabitacion(Integer id, Habitacion habitacion) {
-        return repository.findById(id).map(existing -> {
-            existing.setNombre(habitacion.getNombre());
-            existing.setDescripcion(habitacion.getDescripcion());
+  public Optional<Habitacion> updateHabitacion(Integer id, Habitacion habitacion) {
+    return repository.findById(id).map(existing -> {
+
+        existing.setNombre(habitacion.getNombre());
+        existing.setDescripcion(habitacion.getDescripcion());
+
+        // ✅ SOLO actualiza el rol si viene en el request
+        if (habitacion.getEstado() != null) {
             existing.setEstado(habitacion.getEstado());
-            // Verificamos si la categoría de habitación está presente y actualizamos
-            if (habitacion.getCategoriaHabitacion() != null && habitacion.getCategoriaHabitacion().getId() != null) {
-                CategoriaHabitacion nuevaCategoria = categoriarepository
-                        .findById(habitacion.getCategoriaHabitacion().getId())
-                        .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
-                existing.setCategoriaHabitacion(nuevaCategoria);
-            }
-            return repository.save(existing);
-        });
-    }
+        }
+
+        // ✅ Actualizar categoría solo si viene informada
+        if (habitacion.getCategoriaHabitacion() != null 
+                && habitacion.getCategoriaHabitacion().getId() != null) {
+
+            CategoriaHabitacion nuevaCategoria = categoriarepository
+                    .findById(habitacion.getCategoriaHabitacion().getId())
+                    .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
+
+            existing.setCategoriaHabitacion(nuevaCategoria);
+        }
+
+        return repository.save(existing);
+    });
+}
+
 
     public boolean deleteHabitacion(Integer id) {
         if (repository.existsById(id)) {

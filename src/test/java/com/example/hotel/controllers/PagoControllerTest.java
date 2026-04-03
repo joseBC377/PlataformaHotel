@@ -3,11 +3,13 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -15,14 +17,18 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-
+import com.example.hotel.HotelApplication;
 import com.example.hotel.entities.Pago;
 import com.example.hotel.entities.Reserva;
 import com.example.hotel.services.PagoService;
+import com.example.hotel.util.RolEstadoPago;
+import com.example.hotel.util.RolPago;
 
-//@WebMvcTest(PagoController.class) //Cargo solo el controlador PagoController para hacer pruebas
-@SpringBootTest
-@AutoConfigureMockMvc(addFilters = false) //con esto me permite simular solicitudes http (get,post, put, delete)
+
+@WebMvcTest(PagoController.class)
+@AutoConfigureMockMvc(addFilters = false)
+
+
 public class PagoControllerTest {
 
     @Autowired
@@ -42,9 +48,8 @@ public class PagoControllerTest {
         Pago pago = new Pago();
         pago.setIdPago(1);
         pago.setTotal(new BigDecimal(125.4));
-        pago.setMetodo_pago("Efectivo");
-        pago.setEstado_pago("Pagado");
-        pago.setFecha_pago(LocalDateTime.of(2025, 4, 24, 10, 0));
+        pago.setEstado(RolEstadoPago.RECHAZADO);
+        pago.setFecha_pago(LocalDate.now());
         pago.setReserva(reserva);
 
         when(service.insert(any(Pago.class))).thenReturn(pago); //“Cuando alguien llame a service.insert(...) con cualquier objeto Pago, entonces devuélvele este objeto pago que acabo de crear.”

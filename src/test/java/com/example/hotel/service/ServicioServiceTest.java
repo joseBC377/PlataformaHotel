@@ -12,11 +12,15 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 
+import com.example.hotel.HotelApplication;
 import com.example.hotel.entities.Servicio;
 import com.example.hotel.repositories.ServicioRepository;
 import com.example.hotel.services.ServicioService;
 
+@AutoConfigureMockMvc(addFilters = false)
 public class ServicioServiceTest {
 
     @Mock

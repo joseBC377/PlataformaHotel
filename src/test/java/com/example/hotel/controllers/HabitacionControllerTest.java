@@ -3,13 +3,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.List;
 import java.util.Optional;
 
+import com.example.hotel.HotelApplication;
 import com.example.hotel.entities.Habitacion;
 import com.example.hotel.services.HabitacionService;
+import com.example.hotel.util.RolHabitacion;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -19,9 +22,10 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
-//@WebMvcTest(HabitacionRestController.class)
-@SpringBootTest
+
+@WebMvcTest(HabitacionControllerTest.class)
 @AutoConfigureMockMvc(addFilters = false)
+
 public class HabitacionControllerTest {
 
     @Autowired
@@ -38,7 +42,7 @@ public class HabitacionControllerTest {
         habitacion.setId(1);
         habitacion.setNombre("Habitación 101");
         habitacion.setDescripcion("Habitación con cama doble y vista al jardín");
-        habitacion.setEstado("Disponible");
+        habitacion.setEstado(RolHabitacion.DISPONIBLE); // Asignar un valor válido según tu enum RolHabitacion
     }
 
     @Test

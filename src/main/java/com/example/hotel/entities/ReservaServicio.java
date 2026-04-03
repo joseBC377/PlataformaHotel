@@ -1,5 +1,8 @@
 package com.example.hotel.entities;
 
+import java.math.BigDecimal;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
@@ -33,6 +36,9 @@ public class ReservaServicio {
     @JoinColumn(name = "id_servicio", nullable = false)
     private Servicio servicio;
 
-    
 
+
+    @NotNull(message = "El precio unitario es obligatorio")
+    @Column(name = "precio_unitario", nullable = false)
+    private BigDecimal precioUnitario;
 }

@@ -1,11 +1,15 @@
 package com.example.hotel.entities;
 
 
+import com.example.hotel.util.RolHabitacion;
+
 // import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 // import jakarta.persistence.FetchType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,6 +18,7 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -43,13 +48,18 @@ public class Habitacion {
     @Column(columnDefinition = "TEXT",nullable = false)
     private String descripcion;
     
-    @NotBlank(message = "El estado es obligatorio")
-    @Size(max = 20, message = "El estado no debe exceder los 20 caracteres")
-    @Column(nullable = false, length = 20)
-    private String estado;
+    // experimental todavia no a sido probado con roles security
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @NotNull(message = "Ingrese el estado de la habitación")
+    private RolHabitacion estado;
+
 
     //Añadir llave foranea 
     @ManyToOne
     @JoinColumn(name="id_categoria")
     private CategoriaHabitacion categoriaHabitacion;
+
+
+
 }
