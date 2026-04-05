@@ -14,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.test.annotation.Rollback;
 import com.example.hotel.util.RolEstadoPago;
-import com.example.hotel.util.RolPago;
+import com.example.hotel.util.RolMetodoPago;
 import com.example.hotel.HotelApplication;
 import com.example.hotel.entities.Pago;
 import com.example.hotel.entities.Reserva;

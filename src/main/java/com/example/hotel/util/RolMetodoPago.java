@@ -1,6 +1,6 @@
 package com.example.hotel.util;
 
-public enum RolPago  {
+public enum RolMetodoPago  {
  YAPE,
  PLIN,
  TARJETA

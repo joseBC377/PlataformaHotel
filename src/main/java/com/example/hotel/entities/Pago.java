@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 import com.example.hotel.entities.Pago;
 import com.example.hotel.util.RolEstadoPago;
-import com.example.hotel.util.RolPago;
+import com.example.hotel.util.RolMetodoPago;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

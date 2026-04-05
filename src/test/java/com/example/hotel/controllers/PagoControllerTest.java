@@ -22,7 +22,7 @@ import com.example.hotel.entities.Pago;
 import com.example.hotel.entities.Reserva;
 import com.example.hotel.services.PagoService;
 import com.example.hotel.util.RolEstadoPago;
-import com.example.hotel.util.RolPago;
+import com.example.hotel.util.RolMetodoPago;
 
 
 @WebMvcTest(PagoController.class)

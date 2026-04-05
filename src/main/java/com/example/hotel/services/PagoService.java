@@ -11,7 +11,7 @@ import com.example.hotel.repositories.ReservaRepository;
 import com.example.hotel.repositories.UsuarioRepository;
 import com.example.hotel.util.Pago_ReservaInfo;
 import com.example.hotel.util.RolEstadoPago;
-import com.example.hotel.util.RolPago;
+import com.example.hotel.util.RolMetodoPago;
 
 import jakarta.transaction.Transactional;
 
