@@ -25,14 +25,17 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 
+import com.example.hotel.HotelApplication;
 import com.example.hotel.entities.Usuario;
 import com.example.hotel.repositories.UsuarioRepository;
 import com.example.hotel.services.UsuarioService;
 import com.example.hotel.util.Rol;
 
-
-@ExtendWith(MockitoExtension.class) //Importantisimo con esto habilito el soporte de Mockito
+@ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class UsuarioServiceTest {
 
     @Mock

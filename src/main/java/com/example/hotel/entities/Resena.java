@@ -34,14 +34,16 @@ public class Resena {
     @NotNull(message = "La calificación es obligatoria")
     private BigDecimal calificacion;
 
-    @Column(nullable = false, length = 150)
+
+    @Column(nullable = false)
     @NotNull(message = "La fecha es obligatoria")
     private LocalDate fecha;
 
+
     @Lob
-    @NotBlank(message = "La descripción no puede estar vacía")
+    @NotBlank(message = "El comentario no puede estar vacía")
     @Column(columnDefinition = "TEXT", nullable = false)
-    private String descripcion;
+    private String comentario;
     
     @NotNull(message = "El usuario es obligatoria")
     @ManyToOne

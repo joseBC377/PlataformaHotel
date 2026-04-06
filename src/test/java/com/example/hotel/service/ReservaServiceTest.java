@@ -18,11 +18,16 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 
+import com.example.hotel.HotelApplication;
 import com.example.hotel.entities.Reserva;
 import com.example.hotel.repositories.ReservaRepository;
 import com.example.hotel.services.ReservaService;
 
+// @ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class ReservaServiceTest {
     @Mock
     private ReservaRepository reservaRepository;
@@ -38,8 +43,7 @@ public class ReservaServiceTest {
 
         reserva = new Reserva();
         reserva.setId(1);
-        reserva.setFecha_inicio(LocalDateTime.now().plusDays(1));
-        reserva.setFecha_fin(LocalDateTime.now().plusDays(2));
+        reserva.getFecha_reserva(); // Asignar un valor válido según tu entidad Reserva
     }
 
     @Test

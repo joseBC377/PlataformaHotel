@@ -1,19 +1,27 @@
 package com.example.hotel.service;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 import java.util.List;
 import java.util.Optional;
+
+import com.example.hotel.HotelApplication;
 import com.example.hotel.entities.Habitacion;
 import com.example.hotel.repositories.HabitacionRepository;
 import com.example.hotel.services.HabitacionService;
+import com.example.hotel.util.RolHabitacion;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 
+// @ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class HabitacionServiceTest {
 
     @Mock
@@ -32,7 +40,7 @@ public class HabitacionServiceTest {
         habitacion.setId(1);
         habitacion.setNombre("Suite Junior");
         habitacion.setDescripcion("Habitación amplia con cama queen y baño privado.");
-        habitacion.setEstado("Disponible");
+        habitacion.setEstado(RolHabitacion.DISPONIBLE);  // Asignar un valor válido según tu enum RolHabitacion
     }
 
     @Test
@@ -82,7 +90,7 @@ public class HabitacionServiceTest {
         Habitacion actualizada = new Habitacion();
         actualizada.setNombre("Suite Ejecutiva");
         actualizada.setDescripcion("Más cómoda y moderna.");
-        actualizada.setEstado("Ocupado");
+        actualizada.setEstado(RolHabitacion.OCUPADA); // Asignar un valor válido según tu enum RolHabitacion
 
         when(habitacionRepository.findById(1)).thenReturn(Optional.of(habitacion));
         when(habitacionRepository.save(any(Habitacion.class))).thenReturn(actualizada);
@@ -99,7 +107,7 @@ public class HabitacionServiceTest {
         Habitacion nueva = new Habitacion();
         nueva.setNombre("Nueva");
         nueva.setDescripcion("Desc");
-        nueva.setEstado("Disponible");
+        nueva.setEstado(RolHabitacion.OCUPADA);
 
         when(habitacionRepository.findById(999)).thenReturn(Optional.empty());
 

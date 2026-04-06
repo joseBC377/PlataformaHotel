@@ -1,25 +1,29 @@
 package com.example.hotel.entities;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 // import com.fasterxml.jackson.annotation.JsonIgnore;
 // import org.hibernate.annotations.ManyToAny;
 import org.springframework.format.annotation.DateTimeFormat;
-
-
+import com.example.hotel.entities.Pago;
+import com.example.hotel.util.RolEstadoPago;
+import com.example.hotel.util.RolMetodoPago;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 // import jakarta.persistence.ManyToOne;
 // import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PastOrPresent;
-import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,22 +41,19 @@ public class Pago {
     @NotNull
     private BigDecimal total;
 
-    @Column(nullable = false, length = 50)
-    @NotNull
-    @NotBlank(message="Ingrese un metodo de pago")
-    @Pattern(regexp = "\\D*",message="No puede contener numeros")
-    private String metodo_pago;
+    @NotBlank(message = "El igv es obligatoria")
+    @Lob
+    @Column(columnDefinition ="decimal(10,2)"  ,nullable = false)
+    private BigDecimal igv;
 
-    @Column(nullable = false, length = 50)
-    @NotNull
-    @NotBlank(message ="Ingrese su estado de pago")
-    @Pattern(regexp = "\\D*",message="No puede contener numeros")
-    private String estado_pago;
 
-    @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") 
-    @PastOrPresent(message= "La fecha no puede ser futura")
-    private LocalDateTime fecha_pago;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "estado_pago")
+    private RolEstadoPago estado;
+    
+    @Column(nullable = false)
+    private LocalDate fecha_pago;;
+
 
     // @ManyToOne
     // @JsonIgnoreProperties("pago") //para que no se muestre en mi json lo de reserva

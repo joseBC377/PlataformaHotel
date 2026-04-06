@@ -21,14 +21,20 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 
+import com.example.hotel.HotelApplication;
 import com.example.hotel.entities.CategoriaHabitacion;
 import com.example.hotel.entities.Habitacion;
 import com.example.hotel.repositories.CategoriaHabitacionRepository;
 import com.example.hotel.repositories.HabitacionRepository;
 import com.example.hotel.services.HabitacionService;
+import com.example.hotel.util.RolHabitacion;
+
 
 @ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class HabitacionServiceTest {
 
     @Mock
@@ -58,7 +64,7 @@ public class HabitacionServiceTest {
                 .id(1)
                 .nombre("Hab101")
                 .descripcion("Habitación amplia con vista al mar")
-                .estado("DISPONIBLE")
+                .estado(RolHabitacion.OCUPADA)
                 .categoriaHabitacion(categoriaBase)
                 .build();
     }
@@ -109,7 +115,7 @@ public class HabitacionServiceTest {
 
         assertNotNull(guardada);
         assertEquals("Hab101", guardada.getNombre());
-        assertEquals("DISPONIBLE", guardada.getEstado());
+        assertEquals("DISPONIBLE", guardada.getEstado().toString());
         assertEquals(10, guardada.getCategoriaHabitacion().getId());
 
         ArgumentCaptor<Habitacion> captor = ArgumentCaptor.forClass(Habitacion.class);
@@ -126,7 +132,7 @@ public class HabitacionServiceTest {
         Habitacion cambios = Habitacion.builder()
             .nombre("Hab101-Editada")
             .descripcion("Editada")
-            .estado("OCUPADA")
+            .estado(RolHabitacion.OCUPADA)
             .build();
 
         when(repository.findById(1)).thenReturn(Optional.of(habitacionBase));
@@ -137,7 +143,7 @@ public class HabitacionServiceTest {
         assertTrue(opt.isPresent());
         Habitacion actualizada = opt.get();
         assertEquals("Hab101-Editada", actualizada.getNombre());
-        assertEquals("OCUPADA", actualizada.getEstado());
+        assertEquals("OCUPADA", actualizada.getEstado().toString());
         // categoría se mantiene
         assertNotNull(actualizada.getCategoriaHabitacion());
         assertEquals(10, actualizada.getCategoriaHabitacion().getId());
@@ -163,7 +169,7 @@ public class HabitacionServiceTest {
         Habitacion cambios = Habitacion.builder()
             .nombre("Hab101-Editada")
             .descripcion("Editada con cat nueva")
-            .estado("MANTENIMIENTO")
+            .estado(RolHabitacion.OCUPADA)
             .categoriaHabitacion(nuevaCat)
             .build();
 

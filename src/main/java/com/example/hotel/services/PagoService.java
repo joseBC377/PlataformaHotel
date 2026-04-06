@@ -1,9 +1,8 @@
 package com.example.hotel.services;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-
 import org.springframework.stereotype.Service;
-
 import com.example.hotel.entities.Pago;
 import com.example.hotel.entities.Reserva;
 import com.example.hotel.entities.Usuario;
@@ -11,6 +10,8 @@ import com.example.hotel.repositories.PagoRepository;
 import com.example.hotel.repositories.ReservaRepository;
 import com.example.hotel.repositories.UsuarioRepository;
 import com.example.hotel.util.Pago_ReservaInfo;
+import com.example.hotel.util.RolEstadoPago;
+import com.example.hotel.util.RolMetodoPago;
 
 import jakarta.transaction.Transactional;
 
@@ -64,7 +65,7 @@ public class PagoService {
    
 
     @Transactional
-    public void crearReservaPago(Pago_ReservaInfo info){
+    public void crearReservaPago(Pago_ReservaInfo info, LocalDate fecha_reserva) {
         try {
             
             //Buscar el usuario por id
@@ -73,17 +74,15 @@ public class PagoService {
 
             //Crear una reserva
             Reserva reserva = new Reserva();
-            reserva.setFecha_inicio(info.fecha_inicio());
-            reserva.setFecha_fin(info.fecha_fin());
+            reserva.setFecha_reserva(fecha_reserva);
             reserva.setUsuario(usuario);
             Reserva aux = reservaRepository.save(reserva);
 
             //Crear un pago
             Pago pago = new Pago();
             pago.setTotal(info.total());
-            pago.setMetodo_pago(info.metodo_pago());
-            pago.setEstado_pago(info.estado_pago());
-            pago.setFecha_pago(LocalDateTime.now());
+            pago.setEstado(RolEstadoPago.RECHAZADO);
+            pago.setFecha_pago(LocalDate.now());
             pago.setReserva(aux);
             repository.save(pago);
 

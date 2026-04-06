@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import com.example.hotel.HotelApplication;
 import com.example.hotel.entities.Habitacion;
 import com.example.hotel.entities.Resena;
 import com.example.hotel.entities.Usuario;
@@ -19,7 +20,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
 
+// @ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class ResenaServiceTest {
 
     @Mock
