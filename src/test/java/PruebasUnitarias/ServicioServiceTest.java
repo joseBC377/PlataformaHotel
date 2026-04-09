@@ -22,9 +22,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.boot.test.context.SpringBootTest;
 
-import com.example.hotel.HotelApplication;
+//import com.example.hotel.HotelApplication;
 import com.example.hotel.entities.Servicio;
 import com.example.hotel.repositories.ServicioRepository;
 import com.example.hotel.services.ServicioService;
@@ -43,7 +43,7 @@ public class ServicioServiceTest {
     @BeforeEach
     void setUp() {
         servicioBase = Servicio.builder()
-                .id_servicio(1)
+                .id(1)
                 .nombre("Spa Premium")
                 .descripcion("Acceso completo al spa")
                 .precio(new BigDecimal("150.00"))

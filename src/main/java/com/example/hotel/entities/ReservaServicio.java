@@ -2,43 +2,48 @@ package com.example.hotel.entities;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "RESERVA_SERVICIO")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ReservaServicio { 
 
-    //Esto le dice a JPA que la clave primaria de Reserva_Servicio está compuesta y que se define 
-    //en ReservaServicioId.
     @EmbeddedId
     private ReservaServicioId id;
 
     @NotNull(message = "La reserva es obligatoria")
-    @ManyToOne
-    @MapsId("reserva") // el nombre del campo en ReservaServicioId
-    @JoinColumn(name = "id_reserva", nullable = false) //El id tiene que ser el mismo con la otra tabla porque puede aber confusion
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("reserva")
+    @JoinColumn(name = "id_reserva", nullable = false)
+    @JsonIgnoreProperties("reservaServicios")
     private Reserva reserva;
 
     @NotNull(message = "El servicio es obligatorio")
-    @ManyToOne
-    @MapsId("servicio") // el nombre del campo en ReservaServicioId
+    @ManyToOne(fetch = FetchType.LAZY)
+    @MapsId("servicio")
     @JoinColumn(name = "id_servicio", nullable = false)
+    @JsonIgnoreProperties("reservaServicio")
     private Servicio servicio;
 
-
-
-    @NotNull(message = "El precio unitario es obligatorio")
-    @Column(name = "precio_unitario", nullable = false)
-    private BigDecimal precioUnitario;
+    @NotNull(message = "El subtotal es obligatorio")
+    @DecimalMin(value = "0.0", inclusive = false)
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal subtotal;
 }

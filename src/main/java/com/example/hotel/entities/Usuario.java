@@ -5,11 +5,6 @@ import java.util.List;
 import com.example.hotel.util.Rol;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-// import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-// import java.util.List;
-// import jakarta.persistence.OneToMany;
-// import jakarta.persistence.CascadeType;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -75,15 +70,23 @@ public class Usuario {
     @NotNull(message = "Ingrese rol")
     private Rol rol;
 
-    // prueba de tablas de contacto
-    // @OneToMany(mappedBy = "usuario", cascade =CascadeType.ALL, orphanRemoval =
-    // true )
-    // @JsonIgnoreProperties("usuario")
-    // private List<Contacto> contacto;
-
-    @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
     @JsonIgnoreProperties("usuario")
     private List<Reserva> reserva;
+
+
+    // En caso de querer relación de reversa
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("usuario")
+    private List<Contacto> contacto;
+
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("usuario")
+    private List<Resena> resena;
+
+    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("usuario")
+    private List<MetodoPago> metodoPago;
 
 }
 

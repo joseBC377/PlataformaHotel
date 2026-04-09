@@ -1,6 +1,7 @@
+//import java.time.LocalDateTime;
+//import com.example.hotel.util.RolMetodoPago;
 package com.example.hotel.services;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import com.example.hotel.entities.Pago;
@@ -11,7 +12,6 @@ import com.example.hotel.repositories.ReservaRepository;
 import com.example.hotel.repositories.UsuarioRepository;
 import com.example.hotel.util.Pago_ReservaInfo;
 import com.example.hotel.util.RolEstadoPago;
-import com.example.hotel.util.RolMetodoPago;
 
 import jakarta.transaction.Transactional;
 
@@ -49,8 +49,8 @@ public class PagoService {
     }
 
     public Pago actualizarPago(Integer idPago,Pago pago){
-        if (!repository.existsById(pago.getIdPago())) {
-            throw new RuntimeException("No se encontro el id "+pago.getIdPago());
+        if (!repository.existsById(pago.getId())) {
+            throw new RuntimeException("No se encontro el id "+pago.getId());
         }
         return repository.save(pago);
     }
@@ -74,7 +74,7 @@ public class PagoService {
 
             //Crear una reserva
             Reserva reserva = new Reserva();
-            reserva.setFecha_reserva(fecha_reserva);
+            reserva.setFechaCreacion(fecha_reserva);
             reserva.setUsuario(usuario);
             Reserva aux = reservaRepository.save(reserva);
 
@@ -82,7 +82,7 @@ public class PagoService {
             Pago pago = new Pago();
             pago.setTotal(info.total());
             pago.setEstado(RolEstadoPago.RECHAZADO);
-            pago.setFecha_pago(LocalDate.now());
+            pago.setFechaPago(LocalDate.now());
             pago.setReserva(aux);
             repository.save(pago);
 

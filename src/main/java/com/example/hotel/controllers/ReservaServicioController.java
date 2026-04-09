@@ -48,7 +48,7 @@ public class ReservaServicioController {
                 Reserva reserva = reservaRepository.findById(reservaServicio.getReserva().getId()) // obtengo el objeto reserva ,despues el getId captura el id de ese objeto reserva
                                 .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
 
-                Servicio servicio = servicioRepository.findById(reservaServicio.getServicio().getId_servicio())
+                Servicio servicio = servicioRepository.findById(reservaServicio.getServicio().getId())
                                 .orElseThrow(() -> new RuntimeException("Servicio no encontrado"));
 
                 reservaServicio.setReserva(reserva); // Recupero un objeto reserva de la database es decir la variable
@@ -56,7 +56,7 @@ public class ReservaServicioController {
                 reservaServicio.setServicio(servicio);
 
                 // Crear y setear el ID compuesto
-                ReservaServicioId id = new ReservaServicioId(reserva.getId(), servicio.getId_servicio());
+                ReservaServicioId id = new ReservaServicioId(reserva.getId(), servicio.getId());
                 reservaServicio.setId(id);
 
                 ReservaServicio guardado = reservaServicioService.guardar(reservaServicio);
@@ -82,14 +82,14 @@ public class ReservaServicioController {
                 Reserva nuevaReserva = reservaRepository.findById(nuevaRelacion.getReserva().getId())
                                 .orElseThrow(() -> new RuntimeException("Nueva reserva no encontrada"));
 
-                Servicio nuevoServicio = servicioRepository.findById(nuevaRelacion.getServicio().getId_servicio())
+                Servicio nuevoServicio = servicioRepository.findById(nuevaRelacion.getServicio().getId())
                                 .orElseThrow(() -> new RuntimeException("Nuevo servicio no encontrado"));
 
                 // Eliminar la relación vieja
                 reservaServicioRepository.deleteById(idActual);
 
                 // Crear nueva relación , porque no podemos quedarnos con el IdCompuesto y que los datos nomas cambien porque forman parte del Id Completo todo
-                ReservaServicioId nuevoId = new ReservaServicioId(nuevaReserva.getId(), nuevoServicio.getId_servicio());
+                ReservaServicioId nuevoId = new ReservaServicioId(nuevaReserva.getId(), nuevoServicio.getId());
                 nuevaRelacion.setId(nuevoId);
                 nuevaRelacion.setReserva(nuevaReserva);
                 nuevaRelacion.setServicio(nuevoServicio);

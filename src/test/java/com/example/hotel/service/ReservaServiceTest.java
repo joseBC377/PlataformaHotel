@@ -9,7 +9,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDateTime;
+//import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,9 +19,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.boot.test.context.SpringBootTest;
 
-import com.example.hotel.HotelApplication;
+//import com.example.hotel.HotelApplication;
 import com.example.hotel.entities.Reserva;
 import com.example.hotel.repositories.ReservaRepository;
 import com.example.hotel.services.ReservaService;
@@ -43,7 +43,7 @@ public class ReservaServiceTest {
 
         reserva = new Reserva();
         reserva.setId(1);
-        reserva.getFecha_reserva(); // Asignar un valor válido según tu entidad Reserva
+        reserva.getFechaCreacion(); // Asignar un valor válido según tu entidad Reserva
     }
 
     @Test

@@ -1,28 +1,28 @@
+//import com.example.hotel.HotelApplication;
+//import java.time.LocalDateTime;
+//import com.example.hotel.util.RolMetodoPago;
+//import org.springframework.boot.test.context.SpringBootTest;
 package com.example.hotel.controllers;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.example.hotel.HotelApplication;
 import com.example.hotel.entities.Pago;
 import com.example.hotel.entities.Reserva;
 import com.example.hotel.services.PagoService;
 import com.example.hotel.util.RolEstadoPago;
-import com.example.hotel.util.RolMetodoPago;
 
 
 @WebMvcTest(PagoController.class)
@@ -46,10 +46,10 @@ public class PagoControllerTest {
 
         //ESTO ES COMO EL BACKEND, RECIBE LO DE jsonContent la linea 53 hasta la 60 , lo procesa en backend es decir ese json enviado lo transforma en un objeto por eso debe coincidir
         Pago pago = new Pago();
-        pago.setIdPago(1);
+        pago.setId(1);
         pago.setTotal(new BigDecimal(125.4));
         pago.setEstado(RolEstadoPago.RECHAZADO);
-        pago.setFecha_pago(LocalDate.now());
+        pago.setFechaPago(LocalDate.now());
         pago.setReserva(reserva);
 
         when(service.insert(any(Pago.class))).thenReturn(pago); //“Cuando alguien llame a service.insert(...) con cualquier objeto Pago, entonces devuélvele este objeto pago que acabo de crear.”

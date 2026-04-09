@@ -56,7 +56,7 @@ public ResponseEntity<Reserva> actualizar(
     }
 
     Reserva existente = optional.get();
-    existente.setFecha_reserva(reservaActualizada.getFecha_reserva());
+    existente.setFechaCreacion(reservaActualizada.getFechaCreacion());
     existente.setUsuario(reservaActualizada.getUsuario());
     existente.setEstado(reservaActualizada.getEstado()); 
 

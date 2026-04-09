@@ -3,7 +3,7 @@ package com.example.hotel.util;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import org.springframework.format.annotation.DateTimeFormat;
+//import org.springframework.format.annotation.DateTimeFormat;
 
 
 //Para la transaccion
@@ -24,9 +24,8 @@ public record Pago_ReservaInfo(
 
 ) {
 
-    public DateTimeFormat fecha_reserva() {
-        // TODO Auto-generated method stub
+   /* public DateTimeFormat fecha_reserva() {
         throw new UnsupportedOperationException("Unimplemented method 'fecha_reserva'");
     }
-
+*/
 }

@@ -66,7 +66,7 @@ public class PagoController {
 
     @PutMapping("actualizar/{idPago}")
     public Pago updateIdPago(@PathVariable Integer idPago, @Valid @RequestBody Pago pago) {
-        pago.setIdPago(idPago);
+        pago.setId(idPago);
         return service.actualizarPago(idPago, pago);
     }
 

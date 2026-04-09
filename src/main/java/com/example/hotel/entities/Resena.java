@@ -2,6 +2,9 @@ package com.example.hotel.entities;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,6 +14,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.DecimalMax;
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -30,7 +35,9 @@ public class Resena {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false, length = 150)
+    @Column(nullable = false, precision = 2, scale = 1)
+    @DecimalMin(value = "1.0")
+    @DecimalMax(value = "5.0")
     @NotNull(message = "La calificación es obligatoria")
     private BigDecimal calificacion;
 
@@ -47,12 +54,18 @@ public class Resena {
     
     @NotNull(message = "El usuario es obligatoria")
     @ManyToOne
-    @JoinColumn(name = "id_usuario", nullable = true)
+    @JoinColumn(name = "id_usuario", nullable = false)
+    @JsonIgnoreProperties({"reserva", "contacto", "resena", "metodoPago"})
     private Usuario usuario;
 
     @NotNull(message = "La habitación es obligatoria")
     @ManyToOne
     @JoinColumn(name = "id_habitacion")
+    @JsonIgnoreProperties({"resenas"})
     private Habitacion habitacion;
+
+    @ManyToOne
+    @JoinColumn(name = "id_reserva")
+    private Reserva reserva;
 
 }

@@ -1,5 +1,7 @@
 package com.example.hotel.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 // import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 // import jakarta.persistence.FetchType;
 
@@ -57,6 +59,7 @@ private String mensaje;
 //cualquiera puede mandar un correo sin ser cliente
 @ManyToOne
 @JoinColumn(name = "id_usuario", nullable = true)
+@JsonIgnoreProperties({"contacto", "reserva", "resena", "metodoPago"})
 private Usuario usuario;
 //Un usuario puede hacer varios contactanos
 }

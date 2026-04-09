@@ -2,14 +2,16 @@ package com.example.hotel.entities;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+//import java.time.LocalDateTime;
 
-import org.springframework.format.annotation.DateTimeFormat;
+//import org.springframework.format.annotation.DateTimeFormat;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+//import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,36 +30,34 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class ReservaHabitacion {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @FutureOrPresent(message = "La fecha de inicio debe ser actual o futura")
+    @Column(name = "fecha_inicio", nullable = false)
+    private LocalDate fechaInicio;
 
-    
-    @Column(nullable = false)
-    private LocalDate fecha_inicio;
-
-    
-
-    @Column(nullable = false)
-    private LocalDate fecha_fin;
-
+    @FutureOrPresent(message = "La fecha fin debe ser actual o futura")
+    @Column(name = "fecha_fin", nullable = false)
+    private LocalDate fechaFin;
 
     @NotNull(message = "El precio es obligatorio")
-    @PositiveOrZero(message = "El precio debe ser un valor positivo")
-    @Column(name = "precio_uni", precision = 10, scale = 2)
-    private BigDecimal precio_uni;
+    @PositiveOrZero(message = "El precio debe ser positivo")
+    @Column(name = "precio_uni", nullable = false, precision = 10, scale = 2)
+    private BigDecimal precioUnitario;
 
     @NotNull(message = "La reserva es obligatoria")
-    @ManyToOne
-    @JoinColumn(name = "id_reserva", nullable = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_reserva", nullable = false)
+    @JsonIgnoreProperties("reservaHabitaciones")
     private Reserva reserva;
 
-    @NotNull(message = "La habitacion es obligatoria")
-    @ManyToOne
-    @JoinColumn(name = "id_habitacion", nullable = true)
+    @NotNull(message = "La habitación es obligatoria")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_habitacion", nullable = false)
+    @JsonIgnoreProperties("habitaciones")
     private Habitacion habitacion;
-
 }

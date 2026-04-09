@@ -1,10 +1,13 @@
 package com.example.hotel.entities;
+//import com.fasterxml.jackson.annotation.JsonFormat;
+//import jakarta.validation.constraints.FutureOrPresent;
+//import java.time.LocalDateTime;
+//import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import org.springframework.format.annotation.DateTimeFormat;
+import java.util.List;
+
 import com.example.hotel.util.RolReserva;
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -16,6 +19,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
@@ -36,10 +41,12 @@ public class Reserva {
 
     
     @Column(nullable = false)
-    private LocalDate fecha_reserva;
+    @FutureOrPresent(message = "La fecha debe ser actual o futura")
+    private LocalDate fechaCreacion;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_usuario", nullable = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull(message = "El usuario es obligatorio")
+    @JoinColumn(name = "id_usuario", nullable = false)
     @JsonIgnoreProperties("reserva")
     private Usuario usuario;
 
@@ -47,4 +54,16 @@ public class Reserva {
     @Column(nullable = false)
     @NotNull(message = "Ingrese el estado de la reserva")
     private RolReserva estado;
+    
+    @OneToOne(mappedBy = "reserva", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("reserva")
+    private Pago pago;
+
+    @OneToMany(mappedBy = "reserva", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("reserva")
+    private List<ReservaServicio> reservaServicio;
+
+    @OneToMany(mappedBy = "reserva", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("reserva")
+    private List<ReservaHabitacion> reservaHabitacion;
 }

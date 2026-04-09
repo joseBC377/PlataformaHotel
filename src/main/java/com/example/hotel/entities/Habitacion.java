@@ -1,7 +1,11 @@
 package com.example.hotel.entities;
 
 
+//import java.util.List;
+
 import com.example.hotel.util.RolHabitacion;
+import com.example.hotel.util.RolTipo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 // import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 // import jakarta.persistence.FetchType;
@@ -16,6 +20,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
+//import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -48,16 +53,21 @@ public class Habitacion {
     @Column(columnDefinition = "TEXT",nullable = false)
     private String descripcion;
     
-    // experimental todavia no a sido probado con roles security
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @NotNull(message = "Ingrese el estado de la habitación")
     private RolHabitacion estado;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @NotNull(message = "Ingrese la condición de la habitación")
+    private RolTipo tipo;
+
 
     //Añadir llave foranea 
     @ManyToOne
-    @JoinColumn(name="id_categoria")
+    @JoinColumn(name="id_categoria" , nullable = false)
+    @JsonIgnoreProperties({"habitacion"})
     private CategoriaHabitacion categoriaHabitacion;
 
 

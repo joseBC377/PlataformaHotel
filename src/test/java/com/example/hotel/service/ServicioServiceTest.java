@@ -13,9 +13,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.boot.test.context.SpringBootTest;
 
-import com.example.hotel.HotelApplication;
+//import com.example.hotel.HotelApplication;
 import com.example.hotel.entities.Servicio;
 import com.example.hotel.repositories.ServicioRepository;
 import com.example.hotel.services.ServicioService;
@@ -36,7 +36,7 @@ public class ServicioServiceTest {
         MockitoAnnotations.openMocks(this);
 
         servicio = new Servicio();
-        servicio.setId_servicio(1);
+        servicio.setId(1);
         servicio.setNombre("Spa");
         servicio.setDescripcion("Relajación total");
         servicio.setPrecio(new BigDecimal(12.54));
@@ -61,7 +61,7 @@ public class ServicioServiceTest {
         Optional<Servicio> result = servicioService.getServicioById(1);
 
         assertTrue(result.isPresent());
-        assertEquals(1, result.get().getId_servicio());
+        assertEquals(1, result.get().getId());
         verify(servicioRepository).findById(1);
     }
 
@@ -81,7 +81,7 @@ public class ServicioServiceTest {
         Servicio result = servicioService.insertServicio(servicio);
 
         assertNotNull(result);
-        assertEquals(1, result.getId_servicio());
+        assertEquals(1, result.getId());
         verify(servicioRepository).save(servicio);
     }
 

@@ -26,9 +26,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.boot.test.context.SpringBootTest;
 
-import com.example.hotel.HotelApplication;
+//import com.example.hotel.HotelApplication;
 import com.example.hotel.entities.Usuario;
 import com.example.hotel.repositories.UsuarioRepository;
 import com.example.hotel.services.UsuarioService;

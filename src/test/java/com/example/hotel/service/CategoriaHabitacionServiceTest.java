@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.hotel.HotelApplication;
+//import com.example.hotel.HotelApplication;
 import com.example.hotel.entities.CategoriaHabitacion;
 import com.example.hotel.repositories.CategoriaHabitacionRepository;
 import com.example.hotel.services.CategoriaHabitacionService;
@@ -18,7 +18,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.boot.test.context.SpringBootTest;
 
 // @ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc(addFilters = false)

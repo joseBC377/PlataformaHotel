@@ -5,17 +5,17 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+//import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.format.annotation.DateTimeFormat;
+//import org.springframework.boot.test.context.SpringBootTest;
+//import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.test.annotation.Rollback;
 import com.example.hotel.util.RolEstadoPago;
-import com.example.hotel.util.RolMetodoPago;
-import com.example.hotel.HotelApplication;
+//import com.example.hotel.util.RolMetodoPago;
+//import com.example.hotel.HotelApplication;
 import com.example.hotel.entities.Pago;
 import com.example.hotel.entities.Reserva;
 
@@ -31,7 +31,7 @@ public class PagoRepositoryTest {
     @Autowired
     private PagoRepository repository;
     @Autowired
-    private ReservaRepository repository2;
+   // private ReservaRepository repository2;
 
     @Test
     public void insertarPago() {
@@ -40,18 +40,18 @@ public class PagoRepositoryTest {
         Reserva reserva = new Reserva();
         // reserva.setId(1);
         // Asignar fechas a la reserva
-        LocalDateTime fechaInicio= LocalDateTime.of(2026, 4, 24, 10, 0, 0);
-        reserva.setFecha_reserva(null);
+        //LocalDateTime fechaInicio= LocalDateTime.of(2026, 4, 24, 10, 0, 0);
+        reserva.setFechaCreacion(null);
 
         Pago pago = new Pago();
         pago.setTotal(new BigDecimal(125.4));
          pago.setEstado(RolEstadoPago.RECHAZADO);
-       pago.setFecha_pago(LocalDate.now());
+       pago.setFechaPago(LocalDate.now());
         pago.setReserva(reserva);
 
         Pago pagoGuardar = repository.save(pago);
 
-        assertNotNull(pagoGuardar.getIdPago());
+        assertNotNull(pagoGuardar.getId());
         assertEquals(RolEstadoPago.RECHAZADO, pagoGuardar.getEstado());
 
     }
