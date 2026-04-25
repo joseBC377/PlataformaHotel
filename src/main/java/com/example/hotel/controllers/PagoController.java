@@ -49,7 +49,7 @@ public class PagoController {
     public String insertarReservaConPago(@RequestBody Pago_ReservaInfo pago_ReservaInfo) {
 
         try {
-            service.crearReservaPago(pago_ReservaInfo, null);
+            service.crearReservaPago(pago_ReservaInfo); 
             return "Reserva con pago creado";
 
         } catch (Exception e) {

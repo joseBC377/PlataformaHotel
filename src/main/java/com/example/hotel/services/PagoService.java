@@ -1,100 +1,118 @@
-//import java.time.LocalDateTime;
-//import com.example.hotel.util.RolMetodoPago;
 package com.example.hotel.services;
+
 import java.time.LocalDate;
 import java.util.List;
+
 import org.springframework.stereotype.Service;
+
+import com.example.hotel.entities.MetodoPago;
 import com.example.hotel.entities.Pago;
 import com.example.hotel.entities.Reserva;
 import com.example.hotel.entities.Usuario;
+import com.example.hotel.repositories.MetodoPagoRepository;
 import com.example.hotel.repositories.PagoRepository;
 import com.example.hotel.repositories.ReservaRepository;
 import com.example.hotel.repositories.UsuarioRepository;
 import com.example.hotel.util.Pago_ReservaInfo;
 import com.example.hotel.util.RolEstadoPago;
+import com.example.hotel.util.RolMetodoPago;
 
 import jakarta.transaction.Transactional;
 
 @Service
 public class PagoService {
 
-    //inyeccion de dependencia por contructor
     private final PagoRepository repository;
-    
     private final ReservaRepository reservaRepository;
-
     private final UsuarioRepository usuarioRepository;
+    private final MetodoPagoRepository metodoPagoRepository;
 
-
-    public PagoService (PagoRepository repository,ReservaRepository reservaRepository, UsuarioRepository usuarioRepository){
+    public PagoService(PagoRepository repository,
+                       ReservaRepository reservaRepository,
+                       UsuarioRepository usuarioRepository,
+                       MetodoPagoRepository metodoPagoRepository) {
         this.repository = repository;
-        this.reservaRepository=reservaRepository;
-        this.usuarioRepository=usuarioRepository;
-
-
+        this.reservaRepository = reservaRepository;
+        this.usuarioRepository = usuarioRepository;
+        this.metodoPagoRepository = metodoPagoRepository;
     }
 
-    
-    public List <Pago>listarTodas(){
+    // ================= CRUD =================
+
+    public List<Pago> listarTodas() {
         return repository.findAll();
     }
 
-    public Pago insert(Pago pago){
+    public Pago insert(Pago pago) {
         return repository.save(pago);
     }
-    
 
-    public Pago obtenerPorId (Integer idPago){
+    public Pago obtenerPorId(Integer idPago) {
         return repository.findById(idPago).orElse(null);
     }
 
-    public Pago actualizarPago(Integer idPago,Pago pago){
-        if (!repository.existsById(pago.getId())) {
-            throw new RuntimeException("No se encontro el id "+pago.getId());
+    public Pago actualizarPago(Integer idPago, Pago pago) {
+        if (!repository.existsById(idPago)) {
+            throw new RuntimeException("No se encontró el id " + idPago);
         }
+        pago.setId(idPago);
         return repository.save(pago);
     }
 
-    public void eliminar (Integer id_pago){
-        repository.deleteById(id_pago);
+    public void eliminar(Integer idPago) {
+        if (!repository.existsById(idPago)) {
+            throw new RuntimeException("No existe el pago con id " + idPago);
+        }
+        repository.deleteById(idPago);
     }
 
-
-
-
-   
+    // ================= LÓGICA IMPORTANTE =================
 
     @Transactional
-    public void crearReservaPago(Pago_ReservaInfo info, LocalDate fecha_reserva) {
+    public void crearReservaPago(Pago_ReservaInfo info) {
+
+        // 1. Buscar usuario
+        Usuario usuario = usuarioRepository.findById(info.id_usuario())
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        // 2. Crear reserva
+        Reserva reserva = new Reserva();
+        reserva.setFechaCreacion(LocalDate.now());
+        reserva.setUsuario(usuario);
+        reserva.setEstado(null);
+
+        Reserva reservaGuardada = reservaRepository.save(reserva);
+
+        // 🔥 3. CONVERTIR String → ENUM
+        RolMetodoPago rolMetodo;
         try {
-            
-            //Buscar el usuario por id
-            Usuario usuario = usuarioRepository.findById(info.id_usuario()).orElseThrow(()-> new RuntimeException("Usuario no encontrado"));
-
-
-            //Crear una reserva
-            Reserva reserva = new Reserva();
-            reserva.setFechaCreacion(fecha_reserva);
-            reserva.setUsuario(usuario);
-            Reserva aux = reservaRepository.save(reserva);
-
-            //Crear un pago
-            Pago pago = new Pago();
-            pago.setTotal(info.total());
-            pago.setEstado(RolEstadoPago.RECHAZADO);
-            pago.setFechaPago(LocalDate.now());
-            pago.setReserva(aux);
-            repository.save(pago);
-
+            rolMetodo = RolMetodoPago.valueOf(info.metodo_pago().toUpperCase());
         } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-
+            throw new RuntimeException("Método de pago inválido: " + info.metodo_pago());
         }
 
+        // 4. Buscar método de pago
+        MetodoPago metodoPago = metodoPagoRepository
+                .findByTipo(rolMetodo)
+                .orElseThrow(() -> new RuntimeException("Método de pago no encontrado"));
+
+        // 🔥 5. CONVERTIR estado String → ENUM
+        RolEstadoPago estado;
+        try {
+            estado = RolEstadoPago.valueOf(info.estado_pago().toUpperCase());
+        } catch (Exception e) {
+            throw new RuntimeException("Estado de pago inválido: " + info.estado_pago());
+        }
+
+        // 6. Crear pago
+        Pago pago = new Pago();
+        pago.setTotal(info.total());
+        pago.setIgv(info.total().multiply(new java.math.BigDecimal("0.18")));
+        pago.setEstado(estado);
+        pago.setFechaPago(LocalDate.now());
+        pago.setReserva(reservaGuardada);
+        pago.setMetodoPago(metodoPago);
+
+        repository.save(pago);
     }
-
-
-
-
-
 }

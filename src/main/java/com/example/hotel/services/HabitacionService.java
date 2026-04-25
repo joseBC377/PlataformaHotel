@@ -34,7 +34,7 @@ public class HabitacionService {
 
         // ✅ SOLO actualiza el rol si viene en el request
         if (habitacion.getEstado() != null) {
-            existing.setEstado(habitacion.getEstado());
+            existing.setTipo(habitacion.getTipo());
         }
 
         // ✅ Actualizar categoría solo si viene informada

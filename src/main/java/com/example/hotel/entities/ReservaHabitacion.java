@@ -52,12 +52,12 @@ public class ReservaHabitacion {
     @NotNull(message = "La reserva es obligatoria")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_reserva", nullable = false)
-    @JsonIgnoreProperties("reservaHabitaciones")
+    @JsonIgnoreProperties("reservaHabitacion") 
     private Reserva reserva;
 
     @NotNull(message = "La habitación es obligatoria")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_habitacion", nullable = false)
-    @JsonIgnoreProperties("habitaciones")
+    @JsonIgnoreProperties({"categoriaHabitacion"}) 
     private Habitacion habitacion;
 }

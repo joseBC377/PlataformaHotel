@@ -25,10 +25,11 @@ public class ContactoService {
         return repository.save(contacto);
     }
     public Contacto updateContact(Integer id,Contacto contacto){
-        if (!repository.existsById(contacto.getId())) {
-            throw new RuntimeException("No se encontro el id "+contacto.getId());
-        }
-        return repository.save(contacto);
+        if (!repository.existsById(id)) {
+    throw new RuntimeException("No se encontró el id " + id);
+            }
+            contacto.setId(id);
+            return repository.save(contacto);
     }
     public void deleteContact(Integer id){
         if (!repository.existsById(id)) {
