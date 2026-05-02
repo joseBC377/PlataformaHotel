@@ -23,12 +23,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RestController
 @RequestMapping(value = "api/pago", produces = MediaType.APPLICATION_JSON_VALUE)
 
-public class PagoController {
+public class PagoRestController {
 
 
     //inyeccion de dependencia por contructor
     private final PagoService service;
-    public PagoController (PagoService service){
+    public PagoRestController (PagoService service){
         this.service = service;
     }
 

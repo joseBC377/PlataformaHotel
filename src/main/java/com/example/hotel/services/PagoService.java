@@ -37,8 +37,6 @@ public class PagoService {
         this.metodoPagoRepository = metodoPagoRepository;
     }
 
-    // ================= CRUD =================
-
     public List<Pago> listarTodas() {
         return repository.findAll();
     }
@@ -66,7 +64,6 @@ public class PagoService {
         repository.deleteById(idPago);
     }
 
-    // ================= LÓGICA IMPORTANTE =================
 
     @Transactional
     public void crearReservaPago(Pago_ReservaInfo info) {
@@ -83,7 +80,7 @@ public class PagoService {
 
         Reserva reservaGuardada = reservaRepository.save(reserva);
 
-        // 🔥 3. CONVERTIR String → ENUM
+        // 3. CONVERTIR String → ENUM
         RolMetodoPago rolMetodo;
         try {
             rolMetodo = RolMetodoPago.valueOf(info.metodo_pago().toUpperCase());
@@ -96,7 +93,7 @@ public class PagoService {
                 .findByTipo(rolMetodo)
                 .orElseThrow(() -> new RuntimeException("Método de pago no encontrado"));
 
-        // 🔥 5. CONVERTIR estado String → ENUM
+        // 5. CONVERTIR estado String → ENUM
         RolEstadoPago estado;
         try {
             estado = RolEstadoPago.valueOf(info.estado_pago().toUpperCase());

@@ -25,7 +25,7 @@ import com.example.hotel.services.PagoService;
 import com.example.hotel.util.RolEstadoPago;
 
 
-@WebMvcTest(PagoController.class)
+@WebMvcTest(PagoRestController.class)
 @AutoConfigureMockMvc(addFilters = false)
 
 

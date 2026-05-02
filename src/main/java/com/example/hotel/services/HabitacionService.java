@@ -32,12 +32,10 @@ public class HabitacionService {
         existing.setNombre(habitacion.getNombre());
         existing.setDescripcion(habitacion.getDescripcion());
 
-        // ✅ SOLO actualiza el rol si viene en el request
         if (habitacion.getEstado() != null) {
             existing.setTipo(habitacion.getTipo());
         }
 
-        // ✅ Actualizar categoría solo si viene informada
         if (habitacion.getCategoriaHabitacion() != null 
                 && habitacion.getCategoriaHabitacion().getId() != null) {
 

@@ -45,23 +45,23 @@ public class ReservaRestController {
     }
 
   @PutMapping("/{id}")
-public ResponseEntity<Reserva> actualizar(
-        @PathVariable Integer id,
-        @Valid @RequestBody Reserva reservaActualizada
-) {
-    Optional<Reserva> optional = service.selectById(id);
+    public ResponseEntity<Reserva> actualizar(
+            @PathVariable Integer id,
+            @Valid @RequestBody Reserva reservaActualizada
+    ) {
+        Optional<Reserva> optional = service.selectById(id);
 
-    if (optional.isEmpty()) {
-        return ResponseEntity.notFound().build();
+        if (optional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Reserva existente = optional.get();
+        existente.setFechaCreacion(reservaActualizada.getFechaCreacion());
+        existente.setUsuario(reservaActualizada.getUsuario());
+        existente.setEstado(reservaActualizada.getEstado()); 
+
+        return ResponseEntity.ok(service.insUpdReserva(existente));
     }
-
-    Reserva existente = optional.get();
-    existente.setFechaCreacion(reservaActualizada.getFechaCreacion());
-    existente.setUsuario(reservaActualizada.getUsuario());
-    existente.setEstado(reservaActualizada.getEstado()); 
-
-    return ResponseEntity.ok(service.insUpdReserva(existente));
-}
 
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteReserva(@PathVariable Integer id) {

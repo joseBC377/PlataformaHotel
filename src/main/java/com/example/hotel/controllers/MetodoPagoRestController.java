@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 @RestController
 @RequestMapping(value = "api/metodoPago", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
-public class MetodoPagoController {
+public class MetodoPagoRestController {
 
     private final MetodoPagoService service;
 
