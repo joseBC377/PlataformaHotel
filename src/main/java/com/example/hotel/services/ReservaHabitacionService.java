@@ -1,4 +1,5 @@
 package com.example.hotel.services;
+//import java.time.LocalDate;
 import java.util.List;
 
 import java.util.Optional;
@@ -9,6 +10,7 @@ import com.example.hotel.entities.ReservaHabitacion;
 import com.example.hotel.repositories.ReservaHabitacionRepository;
 
 import lombok.AllArgsConstructor;
+
 
 @Service
 @AllArgsConstructor
@@ -27,7 +29,12 @@ public class ReservaHabitacionService {
 
     // insert - update
     public ReservaHabitacion insUpdReservaHabit(ReservaHabitacion reservaHabitacion){
-        return repository.save(reservaHabitacion);
+
+    if (reservaHabitacion.getFechaFin().isBefore(reservaHabitacion.getFechaInicio())) {
+        throw new RuntimeException("La fecha fin no puede ser menor que la fecha inicio");
+    }
+
+    return repository.save(reservaHabitacion);
     }
     // DELETE
     public boolean delete(Integer id) {
@@ -37,4 +44,6 @@ public class ReservaHabitacionService {
         }
         return false;
     }    
+
+    
 }

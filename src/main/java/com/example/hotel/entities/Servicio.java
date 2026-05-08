@@ -30,7 +30,7 @@ import lombok.Setter;
 @Getter 
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "servicio")
+@Table(name = "SERVICIO")
 public class Servicio {
 
     @Id 

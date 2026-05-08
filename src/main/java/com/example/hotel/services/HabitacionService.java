@@ -32,8 +32,15 @@ public class HabitacionService {
         existing.setNombre(habitacion.getNombre());
         existing.setDescripcion(habitacion.getDescripcion());
 
-        if (habitacion.getEstado() != null) {
+        /*if (habitacion.getEstado() != null) {
             existing.setTipo(habitacion.getTipo());
+        }*/
+        if (habitacion.getTipo() != null) {
+            existing.setTipo(habitacion.getTipo());
+        }
+
+        if (habitacion.getEstado() != null) {
+            existing.setEstado(habitacion.getEstado());
         }
 
         if (habitacion.getCategoriaHabitacion() != null 

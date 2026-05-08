@@ -9,64 +9,43 @@ import jakarta.persistence.Embeddable;
 //Oye la clave primaria de esta entidad es una combinacion de estos 2 campos
 public class ReservaServicioId implements Serializable {
 
-    private Integer reserva;
-    private Integer servicio;
+    private Integer idReserva;
+    private Integer idServicio;
 
+    public ReservaServicioId() {}
 
-    public ReservaServicioId() {
-
+    public ReservaServicioId(Integer idReserva, Integer idServicio) {
+        this.idReserva = idReserva;
+        this.idServicio = idServicio;
     }
 
-    public ReservaServicioId(Integer reserva, Integer servicio) {
-        this.reserva = reserva;
-        this.servicio = servicio;
+    public Integer getIdReserva() {
+        return idReserva;
     }
 
-
-    
-    public Integer getReserva() {
-        return reserva;
+    public void setIdReserva(Integer idReserva) {
+        this.idReserva = idReserva;
     }
 
-
-    public void setReserva(Integer reserva) {
-        this.reserva = reserva;
+    public Integer getIdServicio() {
+        return idServicio;
     }
 
-
-    public Integer getServicio() {
-        return servicio;
+    public void setIdServicio(Integer idServicio) {
+        this.idServicio = idServicio;
     }
 
-
-    public void setServicio(Integer servicio) {
-        this.servicio = servicio;
-    }
-
-    
-    //para comparar si dos claves son iguales.
-    //Si dos objetos son iguales según equals(), deben tener el mismo código hash, en pocas palabras si 2 filas son iguales , si son iguales te mandara un error que no se puede, para no crear registros duplicados.
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ReservaServicioId)) return false;
         ReservaServicioId that = (ReservaServicioId) o;
-        return Objects.equals(reserva, that.reserva) &&
-               Objects.equals(servicio, that.servicio);
+        return Objects.equals(idReserva, that.idReserva) &&
+               Objects.equals(idServicio, that.idServicio);
     }
 
-
-    
-    //El valor del código hash no debe cambiar mientras el objeto esté en la colección.
-    //Segun hashCode , sirve para que los objetos puedan guardarse correctamente en estructuras como HashSet o HashMap
-    //Siempre que sobreescribas equals(), también debes sobreescribir hashCode(), o podrías tener errores muy difíciles de detectar
     @Override
     public int hashCode() {
-        return Objects.hash(reserva, servicio);
+        return Objects.hash(idReserva, idServicio);
     }
-
-    
-
-    
-
 }

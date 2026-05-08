@@ -30,14 +30,14 @@ public class ReservaServicio {
 
     @NotNull(message = "La reserva es obligatoria")
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("reserva") 
+    @MapsId("idReserva") 
     @JoinColumn(name = "id_reserva", nullable = false)
     @JsonIgnoreProperties("reservaServicio")
     private Reserva reserva;
 
     @NotNull(message = "El servicio es obligatorio")
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("servicio") 
+    @MapsId("idServicio") 
     @JoinColumn(name = "id_servicio", nullable = false)
     @JsonIgnoreProperties("reservaServicio")
     private Servicio servicio;

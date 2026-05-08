@@ -16,6 +16,7 @@ import com.example.hotel.repositories.UsuarioRepository;
 import com.example.hotel.util.Pago_ReservaInfo;
 import com.example.hotel.util.RolEstadoPago;
 import com.example.hotel.util.RolMetodoPago;
+import com.example.hotel.util.RolReserva;
 
 import jakarta.transaction.Transactional;
 
@@ -76,7 +77,7 @@ public class PagoService {
         Reserva reserva = new Reserva();
         reserva.setFechaCreacion(LocalDate.now());
         reserva.setUsuario(usuario);
-        reserva.setEstado(null);
+        reserva.setEstado(RolReserva.PENDIENTE);
 
         Reserva reservaGuardada = reservaRepository.save(reserva);
 
