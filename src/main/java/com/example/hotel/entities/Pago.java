@@ -41,7 +41,9 @@ public class Pago {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "id_pago")
+    private Integer id_pago;
+    
     @Column(nullable = false, precision = 10, scale = 2)
     @NotNull
     private BigDecimal total;
@@ -54,17 +56,13 @@ public class Pago {
     @Enumerated(EnumType.STRING)
     @Column(name = "estado_pago", nullable = false)
     @NotNull(message = "El estado del pago es obligatorio")
-    private RolEstadoPago estado;
+    private RolEstadoPago estado_pago;
     
     @Column(nullable = false)
     @NotNull(message = "La fecha de pago es obligatoria")
-    private LocalDate fechaPago;
+    private LocalDate fecha_pago;
 
 
-    // @ManyToOne
-    // @JsonIgnoreProperties("pago") //para que no se muestre en mi json lo de reserva
-    // @JoinColumn(name = "id_reserva", nullable = false)
-    // private Reserva reserva;
 
     // Cambio a la relación uno a uno para que un pago sea de una reserva 
     @OneToOne(fetch = FetchType.LAZY)

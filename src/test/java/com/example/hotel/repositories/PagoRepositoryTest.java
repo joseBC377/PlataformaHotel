@@ -45,14 +45,14 @@ public class PagoRepositoryTest {
 
         Pago pago = new Pago();
         pago.setTotal(new BigDecimal(125.4));
-         pago.setEstado(RolEstadoPago.RECHAZADO);
-       pago.setFechaPago(LocalDate.now());
+         pago.setEstado_pago(RolEstadoPago.RECHAZADO);
+       pago.setFecha_pago(LocalDate.now());
         pago.setReserva(reserva);
 
         Pago pagoGuardar = repository.save(pago);
 
-        assertNotNull(pagoGuardar.getId());
-        assertEquals(RolEstadoPago.RECHAZADO, pagoGuardar.getEstado());
+        assertNotNull(pagoGuardar.getId_pago());
+        assertEquals(RolEstadoPago.RECHAZADO, pagoGuardar.getEstado_pago());
 
     }
 

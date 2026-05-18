@@ -28,7 +28,7 @@ public class ContactoService {
         if (!repository.existsById(id)) {
     throw new RuntimeException("No se encontró el id " + id);
             }
-            contacto.setId(id);
+            contacto.setId_contacto(id);
             return repository.save(contacto);
     }
     public void deleteContact(Integer id){

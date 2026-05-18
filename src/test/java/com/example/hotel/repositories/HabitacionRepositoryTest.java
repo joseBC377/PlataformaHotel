@@ -27,15 +27,15 @@ public class HabitacionRepositoryTest {
     @Test
     public void insertarHabitacion() {
         Habitacion habitacion = new Habitacion();
-        habitacion.setNombre("Suite Deluxe");
-        habitacion.setDescripcion("Habitación con vista al mar y jacuzzi.");
+        habitacion.setNombre_habitacion("Suite Deluxe");
+        habitacion.setDescripcion_habitacion("Habitación con vista al mar y jacuzzi.");
         habitacion.setEstado(RolHabitacion.DISPONIBLE); // Asignar un valor válido según tu enum RolHabitacion
 
         Habitacion habitacionGuardada = repository.save(habitacion);
 
         // Verificar que no sea null y que tenga ID generado
-        assertNotNull(habitacionGuardada.getId());
-        assertEquals("Suite Deluxe", habitacionGuardada.getNombre());
+        assertNotNull(habitacionGuardada.getId_habitacion());
+        assertEquals("Suite Deluxe", habitacionGuardada.getNombre_habitacion());
         assertEquals("Disponible", habitacionGuardada.getEstado().toString());
     }
 }

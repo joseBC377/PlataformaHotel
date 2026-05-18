@@ -5,10 +5,6 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-// import java.util.List;
-// import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-// import jakarta.persistence.OneToMany;
-// import jakarta.persistence.CascadeType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -40,17 +36,18 @@ import lombok.Setter;
 public class CategoriaHabitacion {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+  @Column(name = "id_categoria_habitacion")
+  private Integer id_categoria_habitacion;
 
   @NotBlank(message = "El nombre no puede estar vacío")
   @Size(max = 50, message = "El nombre no debe exceder los 50 caracteres")
   @Column(unique = true, nullable = false, length = 50)
-  private String nombre;
+  private String nombre_categoria;
 
   @Lob
   @NotBlank(message = "La descripción no puede estar vacía")
   @Column(columnDefinition = "TEXT", nullable = false)
-  private String descripcion;
+  private String descripcion_categoria;
 
   @Column(nullable = false)
   @Min(value = 1, message = "La capacidad mínima debe ser 1")

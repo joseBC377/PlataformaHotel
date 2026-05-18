@@ -23,13 +23,13 @@ public class ReservaServicioService {
 
     public ReservaServicio crearRelacion(ReservaServicio reservaServicio) {
 
-        Reserva reserva = reservaRepository.findById(reservaServicio.getReserva().getId())
+        Reserva reserva = reservaRepository.findById(reservaServicio.getReserva().getId_reserva())
                 .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
 
         Servicio servicio = servicioRepository.findById(reservaServicio.getServicio().getIdServicio())
                 .orElseThrow(() -> new RuntimeException("Servicio no encontrado"));
 
-        ReservaServicioId id = new ReservaServicioId(reserva.getId(), servicio.getIdServicio());
+        ReservaServicioId id = new ReservaServicioId(reserva.getId_reserva(), servicio.getIdServicio());
 
         reservaServicio.setId(id);
         reservaServicio.setReserva(reserva);
@@ -46,7 +46,7 @@ public class ReservaServicioService {
             throw new RuntimeException("Relación no encontrada");
         }
 
-        Reserva nuevaReserva = reservaRepository.findById(nuevaRelacion.getReserva().getId())
+        Reserva nuevaReserva = reservaRepository.findById(nuevaRelacion.getReserva().getId_reserva())
                 .orElseThrow(() -> new RuntimeException("Reserva no encontrada"));
 
         Servicio nuevoServicio = servicioRepository.findById(nuevaRelacion.getServicio().getIdServicio())
@@ -54,7 +54,7 @@ public class ReservaServicioService {
 
         reservaServicioRepository.deleteById(idActual);
 
-        ReservaServicioId nuevoId = new ReservaServicioId(nuevaReserva.getId(), nuevoServicio.getIdServicio());
+        ReservaServicioId nuevoId = new ReservaServicioId(nuevaReserva.getId_reserva(), nuevoServicio.getIdServicio());
 
         nuevaRelacion.setId(nuevoId);
         nuevaRelacion.setReserva(nuevaReserva);

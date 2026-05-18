@@ -29,7 +29,8 @@ public class ReservaHabitacion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "id_reserva_habitacion")
+    private Integer id_reserva_habitacion;
 
     @FutureOrPresent(message = "La fecha de inicio debe ser actual o futura")
     @Column(name = "fecha_inicio", nullable = false)
@@ -53,6 +54,6 @@ public class ReservaHabitacion {
     @NotNull(message = "La habitación es obligatoria")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_habitacion", nullable = false)
-    @JsonIgnoreProperties({"categoriaHabitacion"}) 
+    @JsonIgnoreProperties({"categoriaHabitacion", "reservaHabitacion"}) 
     private Habitacion habitacion;
 }

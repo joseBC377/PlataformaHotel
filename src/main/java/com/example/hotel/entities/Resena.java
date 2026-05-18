@@ -33,7 +33,8 @@ public class Resena {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "id_resena")
+    private Integer id_resena;
 
     @Column(nullable = false, precision = 2, scale = 1)
     @DecimalMin(value = "1.0")
@@ -61,11 +62,13 @@ public class Resena {
     @NotNull(message = "La habitación es obligatoria")
     @ManyToOne
     @JoinColumn(name = "id_habitacion")
-    @JsonIgnoreProperties({"resenas"})
+    @JsonIgnoreProperties({"resena"})
     private Habitacion habitacion;
 
+    @NotNull(message = "El servicio es obligatorio")
     @ManyToOne
-    @JoinColumn(name = "id_reserva")
-    private Reserva reserva;
+    @JoinColumn(name = "id_servicio")
+    @JsonIgnoreProperties({"resena"})
+    private Servicio servicio;
 
 }

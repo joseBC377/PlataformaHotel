@@ -54,7 +54,7 @@ public class PagoService {
         if (!repository.existsById(idPago)) {
             throw new RuntimeException("No se encontró el id " + idPago);
         }
-        pago.setId(idPago);
+        pago.setId_pago(idPago);
         return repository.save(pago);
     }
 
@@ -70,7 +70,7 @@ public class PagoService {
     public void crearReservaPago(Pago_ReservaInfo info) {
 
         // 1. Buscar usuario
-        Usuario usuario = usuarioRepository.findById(info.id_usuario())
+        Usuario usuario = usuarioRepository.buscarPorId(info.id_usuario())
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 
         // 2. Crear reserva
@@ -106,8 +106,8 @@ public class PagoService {
         Pago pago = new Pago();
         pago.setTotal(info.total());
         pago.setIgv(info.total().multiply(new java.math.BigDecimal("0.18")));
-        pago.setEstado(estado);
-        pago.setFechaPago(LocalDate.now());
+        pago.setEstado_pago(estado);
+        pago.setFecha_pago(LocalDate.now());
         pago.setReserva(reservaGuardada);
         pago.setMetodoPago(metodoPago);
 

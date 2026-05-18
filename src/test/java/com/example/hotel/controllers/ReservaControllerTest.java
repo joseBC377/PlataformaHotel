@@ -41,7 +41,7 @@ public class ReservaControllerTest {
     @BeforeEach
     void setUp() {
         reserva = new Reserva();
-        reserva.setId(1);
+        reserva.setId_reserva(1);
         reserva.setFechaCreacion(null);
     }
 

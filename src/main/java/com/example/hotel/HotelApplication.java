@@ -1,5 +1,7 @@
 package com.example.hotel;
 
+import java.time.LocalDate;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -25,11 +27,13 @@ public class HotelApplication {
 			if (usuarioRepository.findByCorreo("admin@gmail.com").isEmpty()) { //Ponemos la condicional para ver si exite  no lo crea , pero si no exite lo crea en la databse
 				Usuario usuario = new Usuario();
 				usuario.setTelefono("123456789");
-				usuario.setApellido("UserAdmin");
-				usuario.setNombre("Admin");
+				usuario.setApellido_materno("UserAdmin");
+				usuario.setApellido_paterno("UserAdmin");
+				usuario.setNombre_usuario("Admin");
 				usuario.setCorreo("admin@gmail.com");
 				usuario.setPassword(encoder.encode("12345678"));
 				usuario.setRol(Rol.ADMIN);
+				usuario.setFecha_nacimiento(LocalDate.of(1990, 1, 1));
 				usuarioRepository.save(usuario);
 			}
 		};

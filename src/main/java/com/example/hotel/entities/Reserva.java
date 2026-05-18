@@ -37,12 +37,19 @@ public class Reserva {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "id_reserva")
+    private Integer id_reserva;
 
     
     @Column(nullable = false)
     @FutureOrPresent(message = "La fecha debe ser actual o futura")
     private LocalDate fechaCreacion;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @NotNull(message = "Ingrese el estado de la reserva")
+    private RolReserva estado;
+    
 
     @ManyToOne(fetch = FetchType.LAZY)
     @NotNull(message = "El usuario es obligatorio")
@@ -50,10 +57,6 @@ public class Reserva {
     @JsonIgnoreProperties("reserva")
     private Usuario usuario;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    @NotNull(message = "Ingrese el estado de la reserva")
-    private RolReserva estado;
     
     @OneToOne(mappedBy = "reserva", fetch = FetchType.LAZY)
     @JsonIgnoreProperties("reserva")

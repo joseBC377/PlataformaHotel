@@ -25,8 +25,9 @@ public class UsuarioRepositoriesTest {
     @Test
     public void insertarUsuario(){
         Usuario usuario = new Usuario();
-        usuario.setNombre("Test");
-        usuario.setApellido("Prueba");
+        usuario.setNombre_usuario("Test");
+        usuario.setApellido_materno("Prueba");
+        usuario.setApellido_paterno("null");
         usuario.setTelefono("123456789");
         usuario.setCorreo("Test@Gmail.com");
         usuario.setPassword("Test12345");
@@ -34,7 +35,7 @@ public class UsuarioRepositoriesTest {
         // no se pone el id manual yaque el hibernate lo genera automaticamente
         Usuario usuarioGuardado = repository.save(usuario);
         // Verificar que el usuario no sea nulo y tenga id
-        assertNotNull(usuarioGuardado.getId());
-        assertEquals("Test", usuarioGuardado.getNombre());
+        assertNotNull(usuarioGuardado.getId_usuario());
+        assertEquals("Test", usuarioGuardado.getNombre_usuario());
     }
 }

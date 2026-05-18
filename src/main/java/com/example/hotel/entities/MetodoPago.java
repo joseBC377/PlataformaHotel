@@ -20,20 +20,21 @@ public class MetodoPago {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "id_metodo_pago")
+    private Integer id_metodo_pago;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @NotNull(message = "El tipo de pago es obligatorio")
     private RolMetodoPago tipo;
 
-    @Column(length = 4)
+    @Column(columnDefinition = "CHAR(4)")
     @Pattern(regexp = "\\d{4}", message = "Debe contener 4 dígitos")
     private String ultimoscuatrodigitos;
 
-    @Column(length = 5)
+    @Column(columnDefinition = "CHAR(5)")
     @Pattern(regexp = "(0[1-9]|1[0-2])\\/\\d{2}", message = "Formato MM/YY")
-    private String fechaVencimiento; 
+    private String fechaVencimiento;
 
     @Column(length = 250)
     private String token;

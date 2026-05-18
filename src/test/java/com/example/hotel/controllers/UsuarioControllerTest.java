@@ -36,9 +36,10 @@ public class UsuarioControllerTest {
     @WithMockUser(authorities = "ADMIN")
     public void insertIdUser() throws Exception {
         Usuario usuario = new Usuario();
-        usuario.setId(1);
-        usuario.setNombre("Jose Jesus");
-        usuario.setApellido("Balcazar Choqque");
+        usuario.setId_usuario(1);
+        usuario.setNombre_usuario("Jose Jesus");
+        usuario.setApellido_paterno("Balcazar");
+        usuario.setApellido_materno("Choqque");
         usuario.setTelefono("978152175");
         usuario.setCorreo("jbalcazar377@gmail.com");
         usuario.setPassword("197548636");

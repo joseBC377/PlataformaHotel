@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.example.hotel.entities.Usuario;
 import com.example.hotel.util.ConteoRol;
@@ -15,12 +16,16 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
 
     Optional <Usuario> findByCorreo(String correo);
     
+
+    @Query("SELECT u FROM Usuario u WHERE u.id_usuario = :id")
+    Optional<Usuario> buscarPorId(@Param("id") Integer id);
+    
     //Querys nativos
     @Query(value = "SELECT * FROM usuario WHERE rol = 'CLIENT';", nativeQuery = true)
     List<Usuario>TodosClientQuery();
 
-    @Query(value = "SELECT DISTINCT u.* FROM usuario u JOIN reserva r ON r.id_usuario = u.id;", nativeQuery = true)
-    List<Usuario>TodosUsuarioReservaQuery();
+    @Query(value = "SELECT DISTINCT u.* FROM usuario u JOIN reserva r ON r.id_usuario = u.id_usuario", nativeQuery = true)
+    List<Usuario> TodosUsuarioReservaQuery();
     
     @Query(value = "SELECT rol, COUNT(*) FROM usuario GROUP BY rol;", nativeQuery = true)
     List<ConteoRol> contarUsuariosRolQuery();

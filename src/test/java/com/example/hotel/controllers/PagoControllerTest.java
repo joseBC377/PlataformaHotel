@@ -42,14 +42,14 @@ public class PagoControllerTest {
 
         // Simular reserva
         Reserva reserva = new Reserva();
-        reserva.setId(1);
+        reserva.setId_reserva(1);
 
         //ESTO ES COMO EL BACKEND, RECIBE LO DE jsonContent la linea 53 hasta la 60 , lo procesa en backend es decir ese json enviado lo transforma en un objeto por eso debe coincidir
         Pago pago = new Pago();
-        pago.setId(1);
+        pago.setId_pago(1);
         pago.setTotal(new BigDecimal(125.4));
-        pago.setEstado(RolEstadoPago.RECHAZADO);
-        pago.setFechaPago(LocalDate.now());
+        pago.setEstado_pago(RolEstadoPago.RECHAZADO);
+        pago.setFecha_pago(LocalDate.now());
         pago.setReserva(reserva);
 
         when(service.insert(any(Pago.class))).thenReturn(pago); //“Cuando alguien llame a service.insert(...) con cualquier objeto Pago, entonces devuélvele este objeto pago que acabo de crear.”

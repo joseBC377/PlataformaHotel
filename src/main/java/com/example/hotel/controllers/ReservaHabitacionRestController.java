@@ -47,7 +47,7 @@ public class ReservaHabitacionRestController {
     public ResponseEntity<ReservaHabitacion> actualizar(@PathVariable Integer id,@Valid @RequestBody ReservaHabitacion reservahabitActualizada) {
         Optional<ReservaHabitacion> reservaExistente = service.selectById(id);
         if (reservaExistente.isPresent()) {
-            reservahabitActualizada.setId(id);
+            reservahabitActualizada.setId_reserva_habitacion(id);
             return ResponseEntity.ok(service.insUpdReservaHabit(reservahabitActualizada));
         } else {
             return ResponseEntity.notFound().build();

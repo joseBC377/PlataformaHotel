@@ -37,9 +37,9 @@ public class CategoriaHabitacionServiceTest {
         MockitoAnnotations.openMocks(this);
 
         categoria = new CategoriaHabitacion();
-        categoria.setId(1);
-        categoria.setNombre("Suite");
-        categoria.setDescripcion("Habitación de lujo con vista al mar");
+        categoria.setId_categoria_habitacion(1);
+        categoria.setNombre_categoria("Suite");
+        categoria.setDescripcion_categoria("Habitación de lujo con vista al mar");
         categoria.setCapacidad(4);
         categoria.setPrecio(new BigDecimal("10.2"));
         categoria.setImagen("suite.jpg");
@@ -62,7 +62,7 @@ public class CategoriaHabitacionServiceTest {
         Optional<CategoriaHabitacion> resultado = categoriaService.getCategoriaById(1);
 
         assertTrue(resultado.isPresent());
-        assertEquals(1, resultado.get().getId());
+        assertEquals(1, resultado.get().getId_categoria_habitacion());
         verify(categoriaRepository).findById(1);
     }
 
@@ -82,7 +82,7 @@ public class CategoriaHabitacionServiceTest {
         CategoriaHabitacion resultado = categoriaService.insertCategoria(categoria);
 
         assertNotNull(resultado);
-        assertEquals(1, resultado.getId());
+        assertEquals(1, resultado.getId_categoria_habitacion());
         verify(categoriaRepository).save(categoria);
     }
 
@@ -92,14 +92,14 @@ public class CategoriaHabitacionServiceTest {
         when(categoriaRepository.save(categoria)).thenReturn(categoria);
 
         CategoriaHabitacion updatedCategoria = new CategoriaHabitacion();
-        updatedCategoria.setNombre("Suite Deluxe");
-        updatedCategoria.setDescripcion("Habitación de lujo con vista panorámica");
+        updatedCategoria.setNombre_categoria("Suite Deluxe");
+        updatedCategoria.setDescripcion_categoria("Habitación de lujo con vista panorámica");
 
         Optional<CategoriaHabitacion> resultado = categoriaService.updateCategoria(1, updatedCategoria);
 
         assertTrue(resultado.isPresent());
-        assertEquals("Suite Deluxe", resultado.get().getNombre());
-        assertEquals("Habitación de lujo con vista panorámica", resultado.get().getDescripcion());
+        assertEquals("Suite Deluxe", resultado.get().getNombre_categoria());
+        assertEquals("Habitación de lujo con vista panorámica", resultado.get().getDescripcion_categoria());
         verify(categoriaRepository).save(categoria);
     }
 

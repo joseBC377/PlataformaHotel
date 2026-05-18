@@ -49,10 +49,11 @@ public class UsuarioServiceTest {
     @BeforeEach
     void setUp() {
         usuarioBase = Usuario.builder()
-            .id(1)
-            .nombre("Prueba")
-            .apellido("ApellidoTest")
-            .correo("[email protected]")
+            .id_usuario(1)
+            .nombre_usuario("Prueba")
+            .apellido_materno("ApellidoTest")
+            .apellido_paterno("null")
+            .correo("[email@protected]")
             .telefono("123456789")
             .password("12345678")
             .rol(Rol.ADMIN)
@@ -67,7 +68,7 @@ public class UsuarioServiceTest {
 
         System.out.println(resultado);
         assertEquals(1, resultado.size(), "Debe retornar 1 usuario");
-        assertEquals("Prueba", resultado.get(0).getNombre());
+        assertEquals("Prueba", resultado.get(0).getNombre_usuario());
         verify(repository, times(1)).findAll();
     }
 
@@ -82,13 +83,13 @@ public class UsuarioServiceTest {
 
         // ASSERT: Validamos el valor retornado.
         assertNotNull(resultado, "El servicio debe retornar el usuario guardado");
-        assertEquals(usuarioBase.getId(), resultado.getId(), "Id debe coincidir");
-        assertEquals("Prueba", resultado.getNombre(), "Nombre debe coincidir");
+        assertEquals(usuarioBase.getId_usuario(), resultado.getId_usuario(), "Id debe coincidir");
+        assertEquals("Prueba", resultado.getNombre_usuario(), "Nombre debe coincidir");
 
         ArgumentCaptor<Usuario> captor = ArgumentCaptor.forClass(Usuario.class);
         verify(repository).save(captor.capture()); // verifico llamada y captura arg.
         Usuario enviado = captor.getValue();
-        assertEquals("Prueba", enviado.getNombre(), "El nombre enviado al repositorio debe coincidir");
+        assertEquals("Prueba", enviado.getNombre_usuario(), "El nombre enviado al repositorio debe coincidir");
         
     }
 
@@ -100,7 +101,7 @@ public class UsuarioServiceTest {
 
         Usuario resultado = service.selectId(1);
 
-        assertEquals(1, resultado.getId()); //Compruebo que el Usuario que obtuve realmente tiene id=1. Si el resultado tiene otro id, el test fallaría., DETERMINA SI LA PRUEBA FALLO O PASO
+        assertEquals(1, resultado.getId_usuario()); //Compruebo que el Usuario que obtuve realmente tiene id=1. Si el resultado tiene otro id, el test fallaría., DETERMINA SI LA PRUEBA FALLO O PASO
         verify(repository).findById(1);
     }
 
@@ -123,7 +124,7 @@ public class UsuarioServiceTest {
 
         Usuario actualizado = service.updateUsuario(1, usuarioBase);
 
-        assertEquals(1, actualizado.getId());
+        assertEquals(1, actualizado.getId_usuario());
         verify(repository).existsById(1);
         verify(repository).save(usuarioBase);
     }
@@ -168,7 +169,7 @@ public class UsuarioServiceTest {
 
         Usuario encontrado = service.findByCorreo("[email protected]");
 
-        assertEquals(1, encontrado.getId());
+        assertEquals(1, encontrado.getId_usuario());
         verify(repository).findByCorreo("[email protected]");
     }
 
@@ -177,8 +178,8 @@ public class UsuarioServiceTest {
     void findByCorreo_noExiste() {
         when(repository.findByCorreo(anyString())).thenReturn(Optional.empty());
 
-        assertThrows(NoSuchElementException.class, () -> service.findByCorreo("[email protected]"));
-        verify(repository).findByCorreo("[email protected]");
+        assertThrows(NoSuchElementException.class, () -> service.findByCorreo("[email@protected]"));
+        verify(repository).findByCorreo("[email@protected]");
     }
 
 

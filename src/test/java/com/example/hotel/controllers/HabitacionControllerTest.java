@@ -39,9 +39,9 @@ public class HabitacionControllerTest {
     @BeforeEach
     void setUp() {
         habitacion = new Habitacion();
-        habitacion.setId(1);
-        habitacion.setNombre("Habitación 101");
-        habitacion.setDescripcion("Habitación con cama doble y vista al jardín");
+        habitacion.setId_habitacion(1);
+        habitacion.setNombre_habitacion("Habitación 101");
+        habitacion.setDescripcion_habitacion("Habitación con cama doble y vista al jardín");
         habitacion.setEstado(RolHabitacion.DISPONIBLE); // Asignar un valor válido según tu enum RolHabitacion
     }
 

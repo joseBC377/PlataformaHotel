@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EmbeddedId;
+//import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
@@ -23,21 +24,19 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReservaServicio { 
+public class ReservaServicio {
 
     @EmbeddedId
     private ReservaServicioId id;
 
-    @NotNull(message = "La reserva es obligatoria")
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("idReserva") 
+    @MapsId("idReserva")
     @JoinColumn(name = "id_reserva", nullable = false)
     @JsonIgnoreProperties("reservaServicio")
     private Reserva reserva;
 
-    @NotNull(message = "El servicio es obligatorio")
     @ManyToOne(fetch = FetchType.LAZY)
-    @MapsId("idServicio") 
+    @MapsId("idServicio")
     @JoinColumn(name = "id_servicio", nullable = false)
     @JsonIgnoreProperties("reservaServicio")
     private Servicio servicio;

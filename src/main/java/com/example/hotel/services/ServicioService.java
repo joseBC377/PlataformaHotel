@@ -25,8 +25,8 @@ public class ServicioService {
 
     public Optional<Servicio> updateServicio(Integer id, Servicio servicio) {
         return repository.findById(id).map(existing -> {
-            existing.setNombre(servicio.getNombre());
-            existing.setDescripcion(servicio.getDescripcion());
+            existing.setNombre_servicio(servicio.getNombre_servicio());
+            existing.setDescripcion_servicio(servicio.getDescripcion_servicio());
             existing.setImagen(servicio.getImagen());
             existing.setPrecio(servicio.getPrecio());
             return repository.save(existing);

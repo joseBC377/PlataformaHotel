@@ -42,9 +42,9 @@ class CategoriaHabitacionControllerTest {
     @BeforeEach
     void setUp() {
         categoria = new CategoriaHabitacion();
-        categoria.setId(1);
-        categoria.setNombre("Suite Deluxe");
-        categoria.setDescripcion("Habitación amplia con jacuzzi");
+        categoria.setId_categoria_habitacion(1);
+        categoria.setNombre_categoria("Suite Deluxe");
+        categoria.setDescripcion_categoria("Habitación amplia con jacuzzi");
     }
 
     @Test

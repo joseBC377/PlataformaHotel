@@ -8,7 +8,8 @@ public record AuthenticationResponse(
     @JsonProperty("refresh_token") String refreshToken,
     Integer id,
     String nombre,
-    String apellido,
+    String apellidoMaterno,
+    String apellidoPaterno,
     String rol
 
 ) {}

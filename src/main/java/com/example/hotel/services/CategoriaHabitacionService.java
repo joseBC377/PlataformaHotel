@@ -26,8 +26,8 @@ public class CategoriaHabitacionService {
 
     public Optional<CategoriaHabitacion> updateCategoria(Integer id, CategoriaHabitacion categoria) {
         return repository.findById(id).map(existing -> {
-            existing.setNombre(categoria.getNombre());
-            existing.setDescripcion(categoria.getDescripcion());
+            existing.setNombre_categoria(categoria.getNombre_categoria());
+            existing.setDescripcion_categoria(categoria.getDescripcion_categoria());
             existing.setCapacidad(categoria.getCapacidad());
             existing.setPrecio(categoria.getPrecio());
             existing.setImagen(categoria.getImagen());

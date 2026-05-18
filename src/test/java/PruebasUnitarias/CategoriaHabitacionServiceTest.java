@@ -43,9 +43,9 @@ public class CategoriaHabitacionServiceTest {
     @BeforeEach
     void setUp() {
         categoriaBase = CategoriaHabitacion.builder()
-            .id(1)
-            .nombre("Suite Premium")
-            .descripcion("Suite con jacuzzi y vista al mar")
+            .id_categoria_habitacion(1)
+            .nombre_categoria("Suite Premium")
+            .descripcion_categoria("Suite con jacuzzi y vista al mar")
             .capacidad(2)
             .precio(new BigDecimal("400.00"))
             .imagen("imagen.png")
@@ -60,7 +60,7 @@ public class CategoriaHabitacionServiceTest {
         List<CategoriaHabitacion> lista = service.selCategoriaHabitacions();
 
         assertEquals(1, lista.size());
-        assertEquals("Suite Premium", lista.get(0).getNombre());
+        assertEquals("Suite Premium", lista.get(0).getNombre_categoria());
         verify(repository).findAll();
     }
 
@@ -73,7 +73,7 @@ public class CategoriaHabitacionServiceTest {
         Optional<CategoriaHabitacion> opt = service.getCategoriaById(1);
 
         assertTrue(opt.isPresent());
-        assertEquals("Suite Premium", opt.get().getNombre());
+        assertEquals("Suite Premium", opt.get().getNombre_categoria());
         verify(repository).findById(1);
     }
 
@@ -98,12 +98,12 @@ public class CategoriaHabitacionServiceTest {
         CategoriaHabitacion guardada = service.insertCategoria(categoriaBase);
 
         assertNotNull(guardada);
-        assertEquals("Suite Premium", guardada.getNombre());
+        assertEquals("Suite Premium", guardada.getNombre_categoria());
         assertEquals(0, guardada.getPrecio().compareTo(new BigDecimal("400.00")));
 
         ArgumentCaptor<CategoriaHabitacion> captor = ArgumentCaptor.forClass(CategoriaHabitacion.class);
         verify(repository).save(captor.capture());
-        assertEquals("Suite Premium", captor.getValue().getNombre());
+        assertEquals("Suite Premium", captor.getValue().getNombre_categoria());
     }
 
 
@@ -111,8 +111,8 @@ public class CategoriaHabitacionServiceTest {
     @DisplayName("updateCategoria: actualiza cuando existe")
     void updateCategoria_ok() {
         CategoriaHabitacion cambios = CategoriaHabitacion.builder()
-            .nombre("Suite Deluxe")
-            .descripcion("Suite Deluxe con terraza")
+            .nombre_categoria("Suite Deluxe")
+            .descripcion_categoria("Suite Deluxe con terraza")
             .capacidad(3)
             .precio(new BigDecimal("500.00"))
             .imagen("deluxe.png")
@@ -125,7 +125,7 @@ public class CategoriaHabitacionServiceTest {
 
         assertTrue(opt.isPresent());
         CategoriaHabitacion actualizada = opt.get();
-        assertEquals("Suite Deluxe", actualizada.getNombre());
+        assertEquals("Suite Deluxe", actualizada.getNombre_categoria());
         assertEquals(0, actualizada.getPrecio().compareTo(new BigDecimal("500.00")));
 
         verify(repository).findById(1);
@@ -136,7 +136,7 @@ public class CategoriaHabitacionServiceTest {
     @DisplayName("updateCategoria: retorna Optional.empty() si no existe")
     void updateCategoria_noExiste() {
         CategoriaHabitacion cambios = CategoriaHabitacion.builder()
-            .nombre("Suite Deluxe")
+            .nombre_categoria("Suite Deluxe")
             .build();
 
         when(repository.findById(42)).thenReturn(Optional.empty());

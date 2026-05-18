@@ -33,8 +33,9 @@ public class AuthenticationService {
     // usuario y se genera un token (acces y refresh))
     public String register(RegisterRequest request) {
         var user = Usuario.builder()
-                .nombre(request.firstname())
-                .apellido(request.lastname())
+                .nombre_usuario(request.firstname())
+                .apellido_materno(request.lastnameM())
+                .apellido_paterno(request.lastname())
                 .correo(request.email())
                 .telefono(request.telefono())
                 .password(passwordEncoder.encode(request.password()))
@@ -49,8 +50,9 @@ public class AuthenticationService {
     public String editarUsuario(Integer id, RegisterRequest request) {
         var usuario = usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + id));
 
-        usuario.setNombre(request.firstname());
-        usuario.setApellido(request.lastname());
+        usuario.setNombre_usuario(request.firstname());
+        usuario.setApellido_materno(request.lastnameM());
+        usuario.setApellido_paterno(request.lastname());
         usuario.setCorreo(request.email());
         usuario.setTelefono(request.telefono());
 
@@ -79,9 +81,10 @@ public class AuthenticationService {
         return new AuthenticationResponse(
                 jwtToken,
                 refreshToken,
-                user.getId(),
-                user.getNombre(),
-                user.getApellido(),
+                user.getId_usuario(),
+                user.getNombre_usuario(),
+                user.getApellido_materno(),
+                user.getApellido_paterno(),
                 user.getRol().name());
 
     }
@@ -101,9 +104,10 @@ public class AuthenticationService {
                 return new AuthenticationResponse(
                         accessToken,
                         request.refreshToken(),
-                        user.getId(),
-                        user.getNombre(),
-                        user.getApellido(),
+                        user.getId_usuario(),
+                        user.getNombre_usuario(),
+                        user.getApellido_materno(),
+                        user.getApellido_paterno(),
                         user.getRol().name());
             }
         }

@@ -37,9 +37,9 @@ public class HabitacionServiceTest {
         MockitoAnnotations.openMocks(this);
 
         habitacion = new Habitacion();
-        habitacion.setId(1);
-        habitacion.setNombre("Suite Junior");
-        habitacion.setDescripcion("Habitación amplia con cama queen y baño privado.");
+        habitacion.setId_habitacion(1);
+        habitacion.setNombre_habitacion("Suite Junior");
+        habitacion.setDescripcion_habitacion("Habitación amplia con cama queen y baño privado.");
         habitacion.setEstado(RolHabitacion.DISPONIBLE);  // Asignar un valor válido según tu enum RolHabitacion
     }
 
@@ -61,7 +61,7 @@ public class HabitacionServiceTest {
         Optional<Habitacion> result = habitacionService.getHabitacionById(1);
 
         assertTrue(result.isPresent());
-        assertEquals("Suite Junior", result.get().getNombre());
+        assertEquals("Suite Junior", result.get().getNombre_habitacion());
         verify(habitacionRepository).findById(1);
     }
 
@@ -81,15 +81,15 @@ public class HabitacionServiceTest {
         Habitacion result = habitacionService.insertHabitacion(habitacion);
 
         assertNotNull(result);
-        assertEquals("Suite Junior", result.getNombre());
+        assertEquals("Suite Junior", result.getNombre_habitacion());
         verify(habitacionRepository).save(habitacion);
     }
 
     @Test
     void testUpdateHabitacion_Existente() {
         Habitacion actualizada = new Habitacion();
-        actualizada.setNombre("Suite Ejecutiva");
-        actualizada.setDescripcion("Más cómoda y moderna.");
+        actualizada.setNombre_habitacion("Suite Ejecutiva");
+        actualizada.setDescripcion_habitacion("Más cómoda y moderna.");
         actualizada.setEstado(RolHabitacion.OCUPADA); // Asignar un valor válido según tu enum RolHabitacion
 
         when(habitacionRepository.findById(1)).thenReturn(Optional.of(habitacion));
@@ -98,15 +98,15 @@ public class HabitacionServiceTest {
         Optional<Habitacion> result = habitacionService.updateHabitacion(1, actualizada);
 
         assertTrue(result.isPresent());
-        assertEquals("Suite Ejecutiva", result.get().getNombre());
+        assertEquals("Suite Ejecutiva", result.get().getNombre_habitacion());
         verify(habitacionRepository).save(any(Habitacion.class));
     }
 
     @Test
     void testUpdateHabitacion_NoExistente() {
         Habitacion nueva = new Habitacion();
-        nueva.setNombre("Nueva");
-        nueva.setDescripcion("Desc");
+        nueva.setNombre_habitacion("Nueva");
+        nueva.setDescripcion_habitacion("Desc");
         nueva.setEstado(RolHabitacion.OCUPADA);
 
         when(habitacionRepository.findById(999)).thenReturn(Optional.empty());
