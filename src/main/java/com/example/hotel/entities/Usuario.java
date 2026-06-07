@@ -25,7 +25,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity // permite al JPA convertir la clase a base de datos
 @Table(name = "USUARIO")
 @Data
@@ -82,17 +82,18 @@ public class Usuario {
     @NotNull(message = "Ingrese rol")
     private Rol rol;
 
-    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("usuario")
-    private List<Reserva> reserva;
 
-    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("usuario")
-    private List<Resena> resena;
+@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+@JsonIgnore
+private List<Reserva> reserva;
 
-    @OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("usuario")
-    private List<MetodoPago> metodoPago;
+@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+@JsonIgnore
+private List<Resena> resena;
+
+@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+@JsonIgnore
+private List<MetodoPago> metodoPago;
 
 }
 
