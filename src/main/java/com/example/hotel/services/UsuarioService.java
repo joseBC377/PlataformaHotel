@@ -1,6 +1,6 @@
 package com.example.hotel.services;
-import java.util.List;
 
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -40,24 +40,35 @@ public class UsuarioService {
     }
 
     public Usuario updateUsuario(Integer id, Usuario usuario) {
-        if (!repository.existsById(id)) {
-            throw new RuntimeException("No se puede actualizar el usuario no existe");
+        Usuario existente = repository.findById(id)
+                .orElseThrow(() -> new RuntimeException("No se puede actualizar el usuario no existe"));
+
+        existente.setNombre_usuario(usuario.getNombre_usuario());
+        existente.setApellido_paterno(usuario.getApellido_paterno());
+        existente.setApellido_materno(usuario.getApellido_materno());
+        existente.setCorreo(usuario.getCorreo());
+        existente.setTelefono(usuario.getTelefono());
+        existente.setFecha_nacimiento(usuario.getFecha_nacimiento());
+        existente.setRol(usuario.getRol());
+
+        // Solo actualizar la contraseña si se envía una nueva
+        if (usuario.getPassword() != null && !usuario.getPassword().isBlank()) {
+            existente.setPassword(usuario.getPassword());
         }
-        return repository.save(usuario);
+
+        return repository.save(existente);
     }
 
     public void deleteUsuario(Integer id) {
         if (!repository.existsById(id)) {
-            throw new RuntimeException("El usuario "+id+ " no exite");
+            throw new RuntimeException("El usuario " + id + " no exite");
         }
         repository.deleteById(id);
     }
-    
 
-    //PARA EL SPRING SECURITY (Seguridad)
-    public Usuario findByCorreo(String correo){
+    // PARA EL SPRING SECURITY (Seguridad)
+    public Usuario findByCorreo(String correo) {
         return repository.findByCorreo(correo).orElseThrow();
     }
-
 
 }
