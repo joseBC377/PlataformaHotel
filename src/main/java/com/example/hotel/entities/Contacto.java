@@ -42,7 +42,7 @@ private String nombre;
 private String apellido;
 
 //no es necesario ser unico un usuario puede escribir mas de una vez
-@Column(nullable = false, length = 20)
+@Column(nullable = false, length = 50)
 @Email(message = "Formato de correo inválido")
 @NotBlank(message = "Ingrese correo")
 private String correo;

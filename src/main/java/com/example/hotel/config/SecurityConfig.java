@@ -78,6 +78,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/resena/**").permitAll()
                         .requestMatchers("/api/habitacion/**").permitAll()
                         .requestMatchers("/api/servicio/**").permitAll()
+                        .requestMatchers("/api/contacto/**").permitAll()
                         .requestMatchers("/api/usuario/**").hasAuthority("ADMIN")
                         // Cualquier otra ruta no mencionada necesita que el usuario sea autenticado
                         // pero sin importar si es admin o client prubas un
