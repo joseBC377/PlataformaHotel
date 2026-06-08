@@ -51,14 +51,14 @@ public class Reserva {
     private RolReserva estado;
     
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER )
     @NotNull(message = "El usuario es obligatorio")
     @JoinColumn(name = "id_usuario", nullable = false)
     @JsonIgnoreProperties("reserva")
     private Usuario usuario;
 
     
-    @OneToOne(mappedBy = "reserva", fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "reserva", fetch = FetchType.EAGER)
     @JsonIgnoreProperties("reserva")
     private Pago pago;
 

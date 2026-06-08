@@ -19,7 +19,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping(value = "api/categoriaHabitacion",produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/categoriaHabitacion",produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class CategoriaHabitacionRestController {
 private final CategoriaHabitacionService service;

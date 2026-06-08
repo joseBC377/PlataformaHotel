@@ -61,7 +61,7 @@ public class CategoriaHabitacion {
   @Column(columnDefinition = "LONGTEXT") 
   private String imagen;
   // Añadir carga de llave foranea de habitacion
-  @OneToMany(mappedBy = "categoriaHabitacion", fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "categoriaHabitacion", fetch = FetchType.EAGER)
   @JsonIgnoreProperties("categoriaHabitacion")
   private List<Habitacion> habitacion;
 
