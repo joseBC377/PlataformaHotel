@@ -3,6 +3,7 @@ package com.example.hotel.entities;
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
@@ -62,7 +63,8 @@ public class CategoriaHabitacion {
   private String imagen;
   // Añadir carga de llave foranea de habitacion
   @OneToMany(mappedBy = "categoriaHabitacion", fetch = FetchType.LAZY)
-  @JsonIgnoreProperties("categoriaHabitacion")
+  //@JsonIgnoreProperties("categoriaHabitacion")
+  @JsonIgnore
   private List<Habitacion> habitacion;
 
 

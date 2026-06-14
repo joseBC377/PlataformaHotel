@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.example.hotel.util.RolReserva;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -67,6 +68,6 @@ public class Reserva {
     private List<ReservaServicio> reservaServicio;
 
     @OneToMany(mappedBy = "reserva", fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("reserva")
+    @JsonIgnoreProperties("reserva")    
     private List<ReservaHabitacion> reservaHabitacion;
 }

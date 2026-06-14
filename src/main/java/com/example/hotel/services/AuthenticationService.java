@@ -33,11 +33,12 @@ public class AuthenticationService {
     // usuario y se genera un token (acces y refresh))
     public String register(RegisterRequest request) {
         var user = Usuario.builder()
-                .nombre_usuario(request.firstname())
-                .apellido_materno(request.lastnameM())
-                .apellido_paterno(request.lastname())
-                .correo(request.email())
+                .nombre_usuario(request.nombre_usuario())
+                .apellido_materno(request.apellido_materno())
+                .apellido_paterno(request.apellido_paterno())
+                .correo(request.correo())
                 .telefono(request.telefono())
+                .fecha_nacimiento(request.fecha_nacimiento())
                 .password(passwordEncoder.encode(request.password()))
                 .rol(Rol.CLIENT)
                 .build();
@@ -50,11 +51,12 @@ public class AuthenticationService {
     public String editarUsuario(Integer id, RegisterRequest request) {
         var usuario = usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + id));
 
-        usuario.setNombre_usuario(request.firstname());
-        usuario.setApellido_materno(request.lastnameM());
-        usuario.setApellido_paterno(request.lastname());
-        usuario.setCorreo(request.email());
+        usuario.setNombre_usuario(request.nombre_usuario());
+        usuario.setApellido_materno(request.apellido_materno());
+        usuario.setApellido_paterno(request.apellido_paterno());
+        usuario.setCorreo(request.correo());
         usuario.setTelefono(request.telefono());
+        usuario.setRol(request.rol());
 
         //Si esque no actualizo la contraseña , se queda con la antigua
         if (request.password() != null && !request.password().isBlank()) {
@@ -63,8 +65,6 @@ public class AuthenticationService {
         usuarioRepository.save(usuario);
         return "Usuario actualizado exitosamente";
     }
-
-
 
     // El AuthenticationRequest viene del paquete util (Al momento de iniciar sesion
     // valida credenciales y se genera un token)

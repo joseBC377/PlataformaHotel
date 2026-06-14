@@ -26,36 +26,36 @@ public class HabitacionService {
         return repository.save(habitacion);
     }
 
-  public Optional<Habitacion> updateHabitacion(Integer id, Habitacion habitacion) {
-    return repository.findById(id).map(existing -> {
+    public Optional<Habitacion> updateHabitacion(Integer id, Habitacion habitacion) {
+        return repository.findById(id).map(existing -> {
 
-        existing.setNombre_habitacion(habitacion.getNombre_habitacion());
-        existing.setDescripcion_habitacion(habitacion.getDescripcion_habitacion());
+            existing.setNombre_habitacion(habitacion.getNombre_habitacion());
+            existing.setDescripcion_habitacion(habitacion.getDescripcion_habitacion());
 
-        /*if (habitacion.getEstado() != null) {
-            existing.setTipo(habitacion.getTipo());
-        }*/
-        if (habitacion.getTipo() != null) {
-            existing.setTipo(habitacion.getTipo());
-        }
+            /*if (habitacion.getEstado() != null) {
+                existing.setTipo(habitacion.getTipo());
+            }*/
+            if (habitacion.getTipo() != null) {
+                existing.setTipo(habitacion.getTipo());
+            }
 
-        if (habitacion.getEstado() != null) {
-            existing.setEstado(habitacion.getEstado());
-        }
+            if (habitacion.getEstado() != null) {
+                existing.setEstado(habitacion.getEstado());
+            }
 
-        if (habitacion.getCategoriaHabitacion() != null 
-                && habitacion.getCategoriaHabitacion().getId_categoria_habitacion() != null) {
+            if (habitacion.getCategoriaHabitacion() != null 
+                    && habitacion.getCategoriaHabitacion().getId_categoria_habitacion() != null) {
 
-            CategoriaHabitacion nuevaCategoria = categoriarepository
-                    .findById(habitacion.getCategoriaHabitacion().getId_categoria_habitacion())
-                    .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
+                CategoriaHabitacion nuevaCategoria = categoriarepository
+                        .findById(habitacion.getCategoriaHabitacion().getId_categoria_habitacion())
+                        .orElseThrow(() -> new RuntimeException("Categoría no encontrada"));
 
-            existing.setCategoriaHabitacion(nuevaCategoria);
-        }
+                existing.setCategoriaHabitacion(nuevaCategoria);
+            }
 
-        return repository.save(existing);
-    });
-}
+            return repository.save(existing);
+        });
+    }
 
 
     public boolean deleteHabitacion(Integer id) {

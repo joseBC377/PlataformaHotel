@@ -1,14 +1,17 @@
 package com.example.hotel.util;
 
+import java.time.LocalDate;
 
 public record RegisterRequest(
 
-    String firstname,
-    String lastnameM,
-    String lastname,
-    String email,
+    String nombre_usuario,
+    String apellido_paterno,
+    String apellido_materno,
+    String correo,
     String telefono,
-    String password
+    LocalDate fecha_nacimiento,
+    String password,
+    Rol rol
 
 ) {
 

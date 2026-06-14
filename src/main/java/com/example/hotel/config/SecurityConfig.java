@@ -73,8 +73,7 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/auth/autenticarse","/api/v1/auth/registro").permitAll() // Ingresar sin token
-                        .requestMatchers("/api/v1/auth/editar/**").hasAuthority("ADMIN") // Ingresar sin token
-                        .requestMatchers("/api/v1/auth/autenticarse").permitAll() // Ingresar sin token
+                        .requestMatchers("/api/v1/auth/editar/**").hasAuthority("ADMIN") // Ingresar sin token                        
                         .requestMatchers("/api/resena/**").permitAll()
                         .requestMatchers("/api/habitacion/**").permitAll()
                         .requestMatchers("/api/servicio/**").permitAll()
