@@ -3,6 +3,7 @@ package com.example.hotel.entities;
 import java.math.BigDecimal;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
@@ -58,10 +59,10 @@ public class Servicio {
     private String imagen;
 
     @OneToMany(mappedBy = "servicio", fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("servicio")
+    @JsonIgnore
     private List<ReservaServicio> reservaServicio;
 
     @OneToMany(mappedBy = "servicio", fetch = FetchType.LAZY)
-    @JsonIgnoreProperties("servicio")
+    @JsonIgnore
     private List<Resena> resena;
 }

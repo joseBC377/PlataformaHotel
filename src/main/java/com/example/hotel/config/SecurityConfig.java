@@ -73,11 +73,11 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/auth/autenticarse","/api/v1/auth/registro").permitAll() // Ingresar sin token
-                        .requestMatchers("/api/v1/auth/editar/**").hasAuthority("ADMIN") // Ingresar sin token                        
+                        .requestMatchers("/api/v1/auth/editar/**").hasAnyAuthority("ADMIN","RECEPCION") // Ingresar sin token                        
                         .requestMatchers("/api/resena/**").permitAll()
                         .requestMatchers("/api/habitacion/**").permitAll()
                         .requestMatchers("/api/servicio/**").permitAll()
-                        .requestMatchers("/api/usuario/**").hasAuthority("ADMIN")
+                        .requestMatchers("/api/usuario/**").hasAnyAuthority("ADMIN","RECEPCION")
                         // Cualquier otra ruta no mencionada necesita que el usuario sea autenticado
                         // pero sin importar si es admin o client prubas un
                         .anyRequest().authenticated())
