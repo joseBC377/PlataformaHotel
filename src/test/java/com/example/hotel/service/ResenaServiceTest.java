@@ -4,13 +4,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
+//import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-import com.example.hotel.entities.Habitacion;
+//import com.example.hotel.HotelApplication;
+//import com.example.hotel.entities.Habitacion;
 import com.example.hotel.entities.Resena;
-import com.example.hotel.entities.Usuario;
+//import com.example.hotel.entities.Usuario;
 import com.example.hotel.repositories.ResenaRepository;
 import com.example.hotel.services.ResenaService;
 
@@ -18,8 +19,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+//import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+//import org.springframework.boot.test.context.SpringBootTest;
 
+// @ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class ResenaServiceTest {
 
     @Mock
@@ -31,12 +36,13 @@ public class ResenaServiceTest {
     private Resena resena;
 
     @BeforeEach
-    void setUp() {
+    /*void setUp() {
         MockitoAnnotations.openMocks(this);
         Usuario usuario= new Usuario();
         Habitacion habitacion= new Habitacion();
-        resena = new Resena(1, new BigDecimal("2.1"), LocalDate.now(), "Buena experiencia", usuario, habitacion);
+        //resena = new Resena(1, new BigDecimal("2.1"), LocalDate.now(), "Buena experiencia", usuario, habitacion);
     }
+    */
 
     @Test
     void testSelectAllResenas() {

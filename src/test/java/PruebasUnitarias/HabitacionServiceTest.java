@@ -21,14 +21,20 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+//import org.springframework.boot.test.context.SpringBootTest;
 
+//import com.example.hotel.HotelApplication;
 import com.example.hotel.entities.CategoriaHabitacion;
 import com.example.hotel.entities.Habitacion;
 import com.example.hotel.repositories.CategoriaHabitacionRepository;
 import com.example.hotel.repositories.HabitacionRepository;
 import com.example.hotel.services.HabitacionService;
+import com.example.hotel.util.RolHabitacion;
+
 
 @ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class HabitacionServiceTest {
 
     @Mock
@@ -46,19 +52,19 @@ public class HabitacionServiceTest {
     @BeforeEach
     void setUp() {
         categoriaBase = CategoriaHabitacion.builder()
-                .id(10)
-                .nombre("Suite")
-                .descripcion("Categoría Suite")
+                .id_categoria_habitacion(10)
+                .nombre_categoria("Suite")
+                .descripcion_categoria("Categoría Suite")
                 .capacidad(4)
                 .precio(new BigDecimal("350.00"))
                 .imagen(null)
                 .build();
 
         habitacionBase = Habitacion.builder()
-                .id(1)
-                .nombre("Hab101")
-                .descripcion("Habitación amplia con vista al mar")
-                .estado("DISPONIBLE")
+                .id_habitacion(1)
+                .nombre_habitacion("Hab101")
+                .descripcion_habitacion("Habitación amplia con vista al mar")
+                .estado(RolHabitacion.OCUPADA)
                 .categoriaHabitacion(categoriaBase)
                 .build();
     }
@@ -71,7 +77,7 @@ public class HabitacionServiceTest {
         List<Habitacion> resultado = service.selectAllHabitacions();
 
         assertEquals(1, resultado.size());
-        assertEquals("Hab101", resultado.get(0).getNombre());
+        assertEquals("Hab101", resultado.get(0).getNombre_habitacion());
         verify(repository).findAll();
     }
 
@@ -83,7 +89,7 @@ public class HabitacionServiceTest {
         Optional<Habitacion> opt = service.getHabitacionById(1);
 
         assertTrue(opt.isPresent());
-        assertEquals("Hab101", opt.get().getNombre());
+        assertEquals("Hab101", opt.get().getNombre_habitacion());
         verify(repository).findById(1);
     }
 
@@ -108,14 +114,14 @@ public class HabitacionServiceTest {
         Habitacion guardada = service.insertHabitacion(habitacionBase);
 
         assertNotNull(guardada);
-        assertEquals("Hab101", guardada.getNombre());
-        assertEquals("DISPONIBLE", guardada.getEstado());
-        assertEquals(10, guardada.getCategoriaHabitacion().getId());
+        assertEquals("Hab101", guardada.getNombre_habitacion());
+        assertEquals("DISPONIBLE", guardada.getEstado().toString());
+        assertEquals(10, guardada.getCategoriaHabitacion().getId_categoria_habitacion());
 
         ArgumentCaptor<Habitacion> captor = ArgumentCaptor.forClass(Habitacion.class);
         verify(repository).save(captor.capture());
         Habitacion enviada = captor.getValue();
-        assertEquals("Hab101", enviada.getNombre());
+        assertEquals("Hab101", enviada.getNombre_habitacion());
     }
 
 
@@ -124,9 +130,9 @@ public class HabitacionServiceTest {
     @DisplayName("updateHabitacion: actualiza campos sin cambiar categoría")
     void updateHabitacion_ok_sinCambiarCategoria() {
         Habitacion cambios = Habitacion.builder()
-            .nombre("Hab101-Editada")
-            .descripcion("Editada")
-            .estado("OCUPADA")
+            .nombre_habitacion("Hab101-Editada")
+            .descripcion_habitacion("Editada")
+            .estado(RolHabitacion.OCUPADA)
             .build();
 
         when(repository.findById(1)).thenReturn(Optional.of(habitacionBase));
@@ -136,11 +142,11 @@ public class HabitacionServiceTest {
 
         assertTrue(opt.isPresent());
         Habitacion actualizada = opt.get();
-        assertEquals("Hab101-Editada", actualizada.getNombre());
-        assertEquals("OCUPADA", actualizada.getEstado());
+        assertEquals("Hab101-Editada", actualizada.getNombre_habitacion());
+        assertEquals("OCUPADA", actualizada.getEstado().toString());
         // categoría se mantiene
         assertNotNull(actualizada.getCategoriaHabitacion());
-        assertEquals(10, actualizada.getCategoriaHabitacion().getId());
+        assertEquals(10, actualizada.getCategoriaHabitacion().getId_categoria_habitacion());
 
         verify(repository).findById(1);
         verify(categoriaRepository, never()).findById(any());
@@ -152,18 +158,18 @@ public class HabitacionServiceTest {
     @DisplayName("updateHabitacion: cambia categoría cuando se envía ID válido")
     void updateHabitacion_ok_conCategoriaNueva() {
         CategoriaHabitacion nuevaCat = CategoriaHabitacion.builder()
-            .id(20)
-            .nombre("Doble")
-            .descripcion("Dos camas")
+            .id_categoria_habitacion(20)
+            .nombre_categoria("Doble")
+            .descripcion_categoria("Dos camas")
             .capacidad(2)
             .precio(new BigDecimal("180.00"))
             .imagen(null)
             .build();
 
         Habitacion cambios = Habitacion.builder()
-            .nombre("Hab101-Editada")
-            .descripcion("Editada con cat nueva")
-            .estado("MANTENIMIENTO")
+            .nombre_habitacion("Hab101-Editada")
+            .descripcion_habitacion("Editada con cat nueva")
+            .estado(RolHabitacion.OCUPADA)
             .categoriaHabitacion(nuevaCat)
             .build();
 
@@ -175,8 +181,8 @@ public class HabitacionServiceTest {
 
         assertTrue(opt.isPresent());
         Habitacion actualizada = opt.get();
-        assertEquals(20, actualizada.getCategoriaHabitacion().getId());
-        assertEquals("Doble", actualizada.getCategoriaHabitacion().getNombre());
+        assertEquals(20, actualizada.getCategoriaHabitacion().getId_categoria_habitacion());
+        assertEquals("Doble", actualizada.getCategoriaHabitacion().getNombre_categoria());
 
         verify(repository).findById(1);
         verify(categoriaRepository).findById(20);

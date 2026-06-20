@@ -23,12 +23,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RestController
 @RequestMapping(value = "api/pago", produces = MediaType.APPLICATION_JSON_VALUE)
 
-public class PagoController {
+public class PagoRestController {
 
 
     //inyeccion de dependencia por contructor
     private final PagoService service;
-    public PagoController (PagoService service){
+    public PagoRestController (PagoService service){
         this.service = service;
     }
 
@@ -49,7 +49,7 @@ public class PagoController {
     public String insertarReservaConPago(@RequestBody Pago_ReservaInfo pago_ReservaInfo) {
 
         try {
-            service.crearReservaPago(pago_ReservaInfo);
+            service.crearReservaPago(pago_ReservaInfo); 
             return "Reserva con pago creado";
 
         } catch (Exception e) {
@@ -66,7 +66,7 @@ public class PagoController {
 
     @PutMapping("actualizar/{idPago}")
     public Pago updateIdPago(@PathVariable Integer idPago, @Valid @RequestBody Pago pago) {
-        pago.setIdPago(idPago);
+        pago.setId_pago(idPago);
         return service.actualizarPago(idPago, pago);
     }
 

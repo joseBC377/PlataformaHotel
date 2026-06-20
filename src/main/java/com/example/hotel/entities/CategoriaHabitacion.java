@@ -1,19 +1,20 @@
 package com.example.hotel.entities;
 
 import java.math.BigDecimal;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-// import java.util.List;
-// import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-// import jakarta.persistence.OneToMany;
-// import jakarta.persistence.CascadeType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.Min;
@@ -36,17 +37,18 @@ import lombok.Setter;
 public class CategoriaHabitacion {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Integer id;
+  @Column(name = "id_categoria_habitacion")
+  private Integer id_categoria_habitacion;
 
   @NotBlank(message = "El nombre no puede estar vacío")
   @Size(max = 50, message = "El nombre no debe exceder los 50 caracteres")
   @Column(unique = true, nullable = false, length = 50)
-  private String nombre;
+  private String nombre_categoria;
 
   @Lob
   @NotBlank(message = "La descripción no puede estar vacía")
   @Column(columnDefinition = "TEXT", nullable = false)
-  private String descripcion;
+  private String descripcion_categoria;
 
   @Column(nullable = false)
   @Min(value = 1, message = "La capacidad mínima debe ser 1")
@@ -54,15 +56,16 @@ public class CategoriaHabitacion {
 
   @NotNull(message = "El precio es obligatorio")
   @DecimalMin(value = "0.0", inclusive = false, message = "El precio debe ser mayor a 0")
+  @Column(nullable = false, precision = 10, scale = 2)
   private BigDecimal precio;
 
   @Column(columnDefinition = "LONGTEXT") 
   private String imagen;
   // Añadir carga de llave foranea de habitacion
-  // @OneToMany(mappedBy = "categoria_Habitacion", cascade =
-  // CascadeType.ALL,orphanRemoval = true)
-  // @JsonIgnoreProperties("categoria_Habitacion")
-  // private List<Habitacion> habitacion;
+  @OneToMany(mappedBy = "categoriaHabitacion", fetch = FetchType.LAZY)
+  //@JsonIgnoreProperties("categoriaHabitacion")
+  @JsonIgnore
+  private List<Habitacion> habitacion;
 
 
 

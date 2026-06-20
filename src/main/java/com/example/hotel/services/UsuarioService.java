@@ -40,7 +40,7 @@ public class UsuarioService {
     }
 
     public Usuario updateUsuario(Integer id, Usuario usuario) {
-        if (!repository.existsById(usuario.getId())) {
+        if (!repository.existsById(id)) {
             throw new RuntimeException("No se puede actualizar el usuario no existe");
         }
         return repository.save(usuario);

@@ -5,15 +5,17 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+//import org.springframework.boot.test.context.SpringBootTest;
 
-import org.springframework.boot.test.context.SpringBootTest;
-
+//import com.example.hotel.HotelApplication;
 import com.example.hotel.entities.Usuario;
 import com.example.hotel.util.Rol;
 
 import jakarta.transaction.Transactional;
 
-@SpringBootTest
+// @ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc(addFilters = false)
 @Transactional
 public class UsuarioRepositoriesTest {
 
@@ -23,8 +25,9 @@ public class UsuarioRepositoriesTest {
     @Test
     public void insertarUsuario(){
         Usuario usuario = new Usuario();
-        usuario.setNombre("Test");
-        usuario.setApellido("Prueba");
+        usuario.setNombre_usuario("Test");
+        usuario.setApellido_materno("Prueba");
+        usuario.setApellido_paterno("null");
         usuario.setTelefono("123456789");
         usuario.setCorreo("Test@Gmail.com");
         usuario.setPassword("Test12345");
@@ -32,7 +35,7 @@ public class UsuarioRepositoriesTest {
         // no se pone el id manual yaque el hibernate lo genera automaticamente
         Usuario usuarioGuardado = repository.save(usuario);
         // Verificar que el usuario no sea nulo y tenga id
-        assertNotNull(usuarioGuardado.getId());
-        assertEquals("Test", usuarioGuardado.getNombre());
+        assertNotNull(usuarioGuardado.getId_usuario());
+        assertEquals("Test", usuarioGuardado.getNombre_usuario());
     }
 }

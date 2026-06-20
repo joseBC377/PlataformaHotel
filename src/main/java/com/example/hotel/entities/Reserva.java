@@ -1,20 +1,27 @@
 package com.example.hotel.entities;
+//import com.fasterxml.jackson.annotation.JsonFormat;
+//import jakarta.validation.constraints.FutureOrPresent;
+//import java.time.LocalDateTime;
+//import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.util.List;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.example.hotel.util.RolReserva;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
@@ -31,25 +38,36 @@ public class Reserva {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "id_reserva")
+    private Integer id_reserva;
 
+    
     @Column(nullable = false)
-    @NotNull(message = "La fecha es obligatoria")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") // También ajusta DateTimeFormat
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm") // Este es el formato que envía el datetime-local de HTML
-    @FutureOrPresent(message = "La fecha debe ser hoy o en el futuro")
-    private LocalDateTime fecha_inicio;
+    @FutureOrPresent(message = "La fecha debe ser actual o futura")
+    private LocalDate fechaCreacion;
 
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    @NotNull(message = "La fecha es obligatoria")
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") // También ajusta DateTimeFormat
-    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm") // Este es el formato que envía el datetime-local de HTML
-    @FutureOrPresent(message = "La fecha debe ser hoy o en el futuro")
-    private LocalDateTime fecha_fin;
+    @NotNull(message = "Ingrese el estado de la reserva")
+    private RolReserva estado;
+    
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "id_usuario", nullable = true)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @NotNull(message = "El usuario es obligatorio")
+    @JoinColumn(name = "id_usuario", nullable = false)
     @JsonIgnoreProperties("reserva")
     private Usuario usuario;
 
+    
+    @OneToOne(mappedBy = "reserva", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("reserva")
+    private Pago pago;
+
+    @OneToMany(mappedBy = "reserva", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("reserva")
+    private List<ReservaServicio> reservaServicio;
+
+    @OneToMany(mappedBy = "reserva", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("reserva")    
+    private List<ReservaHabitacion> reservaHabitacion;
 }

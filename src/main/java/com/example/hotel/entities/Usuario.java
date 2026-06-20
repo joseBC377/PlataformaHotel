@@ -1,14 +1,9 @@
 package com.example.hotel.entities;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import com.example.hotel.util.Rol;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-// import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-// import java.util.List;
-// import jakarta.persistence.OneToMany;
-// import jakarta.persistence.CascadeType;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -29,7 +24,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity // permite al JPA convertir la clase a base de datos
 @Table(name = "USUARIO")
 @Data
@@ -39,27 +34,34 @@ import lombok.NoArgsConstructor;
 public class Usuario {
     @Id // llave primaria
     @GeneratedValue(strategy = GenerationType.IDENTITY) // auto increment
-    private Integer id;
+    @Column(name = "id_usuario")
+    private Integer id_usuario;
     // Column dice a hibernate que mapee el campo al SQL, le permite agregar las
     // funciones especificas de la base datos
     @Column(nullable = false, length = 50)
     @NotBlank(message = "Ingrese Nombre")
     @Pattern(regexp = "^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$", message = "No puede contener numeros")
     @Size(min = 2, max = 50, message = "Ingrese un nombre entre 2 y 50 caracteres")
-    private String nombre;
+    private String nombre_usuario;
 
     @Column(nullable = false, length = 50)
     @NotBlank(message = "Ingrese apellido")
     @Pattern(regexp = "^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$", message = "No puede contener numeros")
     @Size(min = 2, max = 50, message = "Ingrese un apellido entre 2 y 50 caracteres")
-    private String apellido;
+    private String apellido_paterno;
+
+    @Column(nullable = false, length = 50)
+    @NotBlank(message = "Ingrese apellido")
+    @Pattern(regexp = "^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$", message = "No puede contener numeros")
+    @Size(min = 2, max = 50, message = "Ingrese un apellido entre 2 y 50 caracteres")
+    private String apellido_materno;
 
     @Column(nullable = false, length = 100, unique = true)
     @NotBlank(message = "Ingrese correo")
     @Email(message = "Formato de correo no valido")
     private String correo;
 
-    @Column(nullable = false, length = 15)
+    @Column(nullable = false, length = 20)
     @NotBlank(message = "Ingrese telefono")
     @Pattern(regexp = "\\d{9}", message = "El telefono debe tener 9 digitos")
     private String telefono;
@@ -69,21 +71,28 @@ public class Usuario {
     @Size(min = 8, message = "La contraseña debe tener minimo 8 caracteres")
     private String password;
 
+    @Column(nullable = false)
+    @NotNull(message = "La fecha de nacimiento es obligatoria")
+    private LocalDate fecha_nacimiento;
+
     // experimental todavia no a sido probado con roles security
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @NotNull(message = "Ingrese rol")
     private Rol rol;
 
-    // prueba de tablas de contacto
-    // @OneToMany(mappedBy = "usuario", cascade =CascadeType.ALL, orphanRemoval =
-    // true )
-    // @JsonIgnoreProperties("usuario")
-    // private List<Contacto> contacto;
 
-    @OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
-    @JsonIgnoreProperties("usuario")
-    private List<Reserva> reserva;
+@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+@JsonIgnore
+private List<Reserva> reserva;
+
+@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+@JsonIgnore
+private List<Resena> resena;
+
+@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+@JsonIgnore
+private List<MetodoPago> metodoPago;
 
 }
 

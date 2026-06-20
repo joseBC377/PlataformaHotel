@@ -31,7 +31,7 @@ public class ResenaService {
             existing.setCalificacion(resena.getCalificacion());
             existing.setFecha(resena.getFecha());
             existing.setUsuario(resena.getUsuario());
-            existing.setDescripcion(resena.getDescripcion());
+            existing.setComentario(resena.getComentario());
             existing.setHabitacion(resena.getHabitacion());
             return repository.save(existing);
         });

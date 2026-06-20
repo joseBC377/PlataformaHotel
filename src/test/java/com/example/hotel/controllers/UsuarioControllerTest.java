@@ -1,3 +1,5 @@
+//import org.springframework.boot.test.context.SpringBootTest;
+//import com.example.hotel.HotelApplication;
 package com.example.hotel.controllers;
 import static org.mockito.Mockito.when;
 
@@ -6,7 +8,7 @@ import static org.springframework.security.test.web.servlet.request.SecurityMock
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
@@ -19,8 +21,9 @@ import com.example.hotel.entities.Usuario;
 import com.example.hotel.services.UsuarioService;
 import com.example.hotel.util.Rol;
 
-@SpringBootTest
+@WebMvcTest(UsuarioControllerTest.class)
 @AutoConfigureMockMvc(addFilters = false)
+
 public class UsuarioControllerTest {
     
     @Autowired
@@ -33,9 +36,10 @@ public class UsuarioControllerTest {
     @WithMockUser(authorities = "ADMIN")
     public void insertIdUser() throws Exception {
         Usuario usuario = new Usuario();
-        usuario.setId(1);
-        usuario.setNombre("Jose Jesus");
-        usuario.setApellido("Balcazar Choqque");
+        usuario.setId_usuario(1);
+        usuario.setNombre_usuario("Jose Jesus");
+        usuario.setApellido_paterno("Balcazar");
+        usuario.setApellido_materno("Choqque");
         usuario.setTelefono("978152175");
         usuario.setCorreo("jbalcazar377@gmail.com");
         usuario.setPassword("197548636");

@@ -58,7 +58,7 @@ public class UsuarioRestController {
 
     @PutMapping(value = "actualizar/{id}")
     public Usuario updateIdUser(@PathVariable Integer id,@Valid @RequestBody Usuario usuario) {
-        usuario.setId(id); //asi haga lo que haga tendra el mismo id
+        usuario.setId_usuario(id); //asi haga lo que haga tendra el mismo id
         return service.updateUsuario(id, usuario);
     }
 

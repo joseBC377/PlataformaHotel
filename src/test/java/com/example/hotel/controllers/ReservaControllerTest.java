@@ -1,7 +1,9 @@
+//import com.example.hotel.HotelApplication;
+//import org.springframework.boot.test.context.SpringBootTest;
+//import java.time.LocalDateTime;
 package com.example.hotel.controllers;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,19 +11,24 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 import com.example.hotel.entities.Reserva;
 import com.example.hotel.services.ReservaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-//@WebMvcTest(ReservaRestController.class)
-@SpringBootTest
+
+
+
+
+@WebMvcTest(ReservaControllerTest.class)
 @AutoConfigureMockMvc(addFilters = false)
+
 public class ReservaControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -34,9 +41,8 @@ public class ReservaControllerTest {
     @BeforeEach
     void setUp() {
         reserva = new Reserva();
-        reserva.setId(1);
-        reserva.setFecha_inicio(LocalDateTime.now().plusDays(1));
-        reserva.setFecha_fin(LocalDateTime.now().plusDays(2));
+        reserva.setId_reserva(1);
+        reserva.setFechaCreacion(null);
     }
 
     @Test

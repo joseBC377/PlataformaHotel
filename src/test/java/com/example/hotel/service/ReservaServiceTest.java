@@ -9,7 +9,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDateTime;
+//import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,11 +18,16 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+//import org.springframework.boot.test.context.SpringBootTest;
 
+//import com.example.hotel.HotelApplication;
 import com.example.hotel.entities.Reserva;
 import com.example.hotel.repositories.ReservaRepository;
 import com.example.hotel.services.ReservaService;
 
+// @ExtendWith(MockitoExtension.class)
+@AutoConfigureMockMvc(addFilters = false)
 public class ReservaServiceTest {
     @Mock
     private ReservaRepository reservaRepository;
@@ -37,9 +42,8 @@ public class ReservaServiceTest {
         MockitoAnnotations.openMocks(this);
 
         reserva = new Reserva();
-        reserva.setId(1);
-        reserva.setFecha_inicio(LocalDateTime.now().plusDays(1));
-        reserva.setFecha_fin(LocalDateTime.now().plusDays(2));
+        reserva.setId_reserva(1);
+        reserva.getFechaCreacion(); // Asignar un valor válido según tu entidad Reserva
     }
 
     @Test
@@ -60,7 +64,7 @@ public class ReservaServiceTest {
         Optional<Reserva> result = reservaService.selectById(1);
 
         assertTrue(result.isPresent());
-        assertEquals(1, result.get().getId());
+        assertEquals(1, result.get().getId_reserva());
         verify(reservaRepository).findById(1);
     }
 
@@ -80,7 +84,7 @@ public class ReservaServiceTest {
         Reserva result = reservaService.insUpdReserva(reserva);
 
         assertNotNull(result);
-        assertEquals(1, result.getId());
+        assertEquals(1, result.getId_reserva());
         verify(reservaRepository).save(reserva);
     }
 

@@ -1,13 +1,19 @@
 package com.example.hotel.entities;
 
 import java.math.BigDecimal;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
@@ -27,28 +33,36 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "SERVICIO")
 public class Servicio {
+
     @Id 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Integer id_servicio;
+    @Column(name = "id_servicio")
+    private Integer idServicio;
 
     @NotBlank(message = "El nombre es obligatorio")
     @Size(max = 50, message = "El nombre no debe exceder los 50 caracteres")
-    @Column(unique=true, nullable= false, length=  50 )
-    private String nombre;
+    @Column(unique = true, nullable = false, length = 50)
+    private String nombre_servicio;
         
     @NotBlank(message = "La descripción es obligatoria")
     @Lob
-    @Column(columnDefinition ="TEXT"  ,nullable = false)
-    private String descripcion;
+    @Column(columnDefinition = "TEXT", nullable = false)
+    private String descripcion_servicio;
    
-    
     @NotNull(message = "El precio es obligatorio")
     @DecimalMin(value = "0.0", inclusive = false, message = "El precio debe ser mayor que cero")
-    @Column(nullable = false)
+    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal precio;
 
     @NotBlank(message = "La imagen es obligatoria")
     @Column(columnDefinition = "LONGTEXT")
     private String imagen;
-   
+
+    @OneToMany(mappedBy = "servicio", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<ReservaServicio> reservaServicio;
+
+    @OneToMany(mappedBy = "servicio", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Resena> resena;
 }
