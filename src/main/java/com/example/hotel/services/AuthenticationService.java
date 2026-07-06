@@ -14,7 +14,6 @@ import com.example.hotel.util.AuthenticationRequest;
 import com.example.hotel.util.AuthenticationResponse;
 import com.example.hotel.util.RefreshTokenRequest;
 import com.example.hotel.util.RegisterRequest;
-import com.example.hotel.util.Rol;
 
 import lombok.RequiredArgsConstructor;
 
@@ -40,7 +39,7 @@ public class AuthenticationService {
                 .telefono(request.telefono())
                 .fecha_nacimiento(request.fecha_nacimiento())
                 .password(passwordEncoder.encode(request.password()))
-                .rol(Rol.CLIENT)
+                .rol(request.rol())
                 .build();
         usuarioRepository.save(user);
 
