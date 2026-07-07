@@ -14,9 +14,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.hotel.DTOS.ReservaCompletaRequest;
 import com.example.hotel.entities.Reserva;
+import com.example.hotel.services.ReservaCompletaService;
 import com.example.hotel.services.ReservaService;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
@@ -26,6 +29,8 @@ import lombok.AllArgsConstructor;
 public class ReservaRestController {
 
     private ReservaService service;
+    private ReservaCompletaService reservaCompletaService; // nuevo
+
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Reserva> selectAllReservas() {
@@ -42,6 +47,15 @@ public class ReservaRestController {
     @PostMapping
     public ResponseEntity<Reserva> insUpdReserva(@Valid @RequestBody Reserva reserva) {
         return ResponseEntity.ok(service.insUpdReserva(reserva));
+    }
+    @PostMapping("/completa")
+    public ResponseEntity<?> crearReservaCompleta(@RequestBody ReservaCompletaRequest req) {
+        try {
+            Reserva reserva = reservaCompletaService.crearReservaCompleta(req);
+            return ResponseEntity.ok(reserva);
+        } catch (EntityNotFoundException | IllegalStateException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
   @PutMapping("/{id}")
