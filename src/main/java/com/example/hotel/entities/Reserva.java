@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 import com.example.hotel.util.RolReserva;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
