@@ -3,6 +3,7 @@ package com.example.hotel.services;
 import com.example.hotel.DTOS.*;
 import com.example.hotel.entities.*;
 import com.example.hotel.repositories.*;
+import com.example.hotel.util.RolEstadoPago;
 import com.example.hotel.util.RolHabitacion;
 import com.example.hotel.util.RolReserva;
 import jakarta.persistence.EntityNotFoundException;
@@ -35,7 +36,7 @@ public class ReservaCompletaService {
         // 2. Crear la reserva base
         Reserva reserva = new Reserva();
         reserva.setFechaCreacion(LocalDate.now());
-        reserva.setEstado(RolReserva.PENDIENTE);
+        reserva.setEstado(RolReserva.CONFIRMADO);
         reserva.setUsuario(usuario);
         reserva = reservaRepository.save(reserva);
 
@@ -88,7 +89,7 @@ public class ReservaCompletaService {
         pago.setReserva(reserva);
         pago.setTotal(req.getPago().getTotal());
         pago.setIgv(req.getPago().getIgv());
-        pago.setEstado_pago(req.getPago().getEstadoPago());
+        pago.setEstado_pago(RolEstadoPago.APROBADO);
         pago.setFecha_pago(req.getPago().getFechaPago());
         pago.setMetodoPago(metodoPago);
         pagoRepository.save(pago);
