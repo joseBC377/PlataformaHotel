@@ -16,4 +16,7 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
 
     @Query("SELECT r FROM Reserva r JOIN FETCH r.usuario WHERE r.id_reserva = :id")
     Optional<Reserva> findById(@Param("id") Integer id);
+
+    @Query("SELECT r FROM Reserva r WHERE r.usuario.id_usuario = :idUsuario")
+    List<Reserva> buscarPorUsuario(@Param("idUsuario") Integer idUsuario);
 }

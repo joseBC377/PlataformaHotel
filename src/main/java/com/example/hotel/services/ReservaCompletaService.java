@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -95,5 +97,48 @@ public class ReservaCompletaService {
         pagoRepository.save(pago);
 
         return reserva;
+    }
+    
+    @Transactional(readOnly = true)
+    public List<HistorialReservaResponse> obtenerHistorialPorUsuario(Integer idUsuario) {
+        List<Reserva> reservas = reservaRepository.buscarPorUsuario(idUsuario);
+
+        return reservas.stream().map(reserva -> {
+            HistorialReservaResponse dto = new HistorialReservaResponse();
+            dto.setIdReserva(reserva.getId_reserva());
+            dto.setFechaCreacion(reserva.getFechaCreacion());
+            dto.setEstado(reserva.getEstado().name());
+
+            List<HabitacionResumen> habitaciones = reservaHabitacionRepository.buscarPorReserva(reserva.getId_reserva())
+                    .stream().map(rh -> new HabitacionResumen(
+                            rh.getHabitacion().getNombre_habitacion(),
+                            rh.getHabitacion().getCategoriaHabitacion().getNombre_categoria(),
+                            rh.getHabitacion().getCategoriaHabitacion().getImagen(),
+                            rh.getFechaInicio(),
+                            rh.getFechaFin(),
+                            rh.getPrecioUnitario()
+                    )).collect(Collectors.toList());
+            dto.setHabitaciones(habitaciones);
+
+            List<ServicioResumen> servicios = reservaServicioRepository.buscarPorReserva(reserva.getId_reserva())
+                    .stream().map(rs -> new ServicioResumen(
+                            rs.getServicio().getNombre_servicio(),
+                            rs.getSubtotal()
+                    )).collect(Collectors.toList());
+            dto.setServicios(servicios);
+
+            pagoRepository.buscarPorReserva(reserva.getId_reserva()).ifPresent(pago -> {
+                PagoResumen pagoResumen = new PagoResumen(
+                        pago.getTotal(),
+                        pago.getIgv(),
+                        pago.getEstado_pago().name(),
+                        pago.getFecha_pago(),
+                        pago.getMetodoPago() != null ? pago.getMetodoPago().getTipo().name() : null
+                );
+                dto.setPago(pagoResumen);
+            });
+
+            return dto;
+        }).collect(Collectors.toList());
     }
 }
