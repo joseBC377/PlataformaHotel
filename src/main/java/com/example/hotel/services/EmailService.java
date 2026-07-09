@@ -26,7 +26,7 @@ public class EmailService {
             MimeMessageHelper helper = new MimeMessageHelper(mensaje, true, "UTF-8");
 
             helper.setTo(destinatario);
-            helper.setSubject("¡Reserva Confirmada! #" + idReserva);
+            helper.setSubject("✅ Confirmación de Reserva - Royal Suites: " + nombreCliente);
 
             DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd 'de' MMMM 'de' yyyy");
             String html = construirHtml(nombreCliente, idReserva, nombreHabitacion, nombreCategoria,
