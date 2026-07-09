@@ -11,32 +11,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "METODO_PAGO")
+@Table(name = "billetera_digital")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MetodoPago {
+public class BilleteraDigital {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_metodo_pago")
-    private Integer idMetodoPago;
+    @Column(name = "id_billetera")
+    private Integer idBilletera;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private RolMetodoPago tipo;
+    @Column(name = "numero_celular", nullable = false, length = 9)
+    private String numeroCelular;
 
-    @Column(nullable = false)
-    private Boolean activo;
-
-    @ManyToOne
-    @JoinColumn(name = "id_usuario", nullable = false)
-    @JsonIgnoreProperties({
-        "metodoPago",
-        "reserva",
-        "contacto",
-        "resena"
-    })
-    private Usuario usuario;
+    @OneToOne
+    @JoinColumn(name = "id_metodo_pago", nullable = false)
+    private MetodoPago metodoPago;
 }

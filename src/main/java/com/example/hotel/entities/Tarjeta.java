@@ -9,34 +9,29 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 @Entity
-@Table(name = "METODO_PAGO")
+@Table(name = "tarjeta")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class MetodoPago {
+public class Tarjeta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_metodo_pago")
-    private Integer idMetodoPago;
+    @Column(name = "id_tarjeta")
+    private Integer idTarjeta;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private RolMetodoPago tipo;
+    @Column(nullable = false, length = 250)
+    private String token;
 
-    @Column(nullable = false)
-    private Boolean activo;
+    @Column(nullable = false, length = 5)
+    private String fechaVencimiento;
 
-    @ManyToOne
-    @JoinColumn(name = "id_usuario", nullable = false)
-    @JsonIgnoreProperties({
-        "metodoPago",
-        "reserva",
-        "contacto",
-        "resena"
-    })
-    private Usuario usuario;
+    @Column(nullable = false, length = 4)
+    private String ultimoscuatrodigitos;
+
+    @OneToOne
+    @JoinColumn(name = "id_metodo_pago", nullable = false)
+    private MetodoPago metodoPago;
 }

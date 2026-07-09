@@ -78,23 +78,20 @@ public class ReservaCompletaService {
         }
 
         // 5. Crear el método de pago del usuario
-        MetodoPago metodoPago = new MetodoPago();
-        metodoPago.setTipo(req.getPago().getMetodoPago().getTipo());
-        metodoPago.setUltimoscuatrodigitos(req.getPago().getMetodoPago().getUltimoscuatrodigitos());
-        metodoPago.setFechaVencimiento(req.getPago().getMetodoPago().getFechaVencimiento());
-        metodoPago.setActivo(true);
-        metodoPago.setUsuario(usuario);
-        metodoPago = metodoPagoRepository.save(metodoPago);
-
+MetodoPago metodoPago = metodoPagoRepository
+        .findById(req.getPago().getIdMetodoPago())
+        .orElseThrow(() ->
+                new EntityNotFoundException("Método de pago no encontrado"));
         // 6. Registrar el pago
-        Pago pago = new Pago();
-        pago.setReserva(reserva);
-        pago.setTotal(req.getPago().getTotal());
-        pago.setIgv(req.getPago().getIgv());
-        pago.setEstado_pago(RolEstadoPago.APROBADO);
-        pago.setFecha_pago(req.getPago().getFechaPago());
-        pago.setMetodoPago(metodoPago);
-        pagoRepository.save(pago);
+Pago pago = new Pago();
+pago.setReserva(reserva);
+pago.setTotal(req.getPago().getTotal());
+pago.setIgv(req.getPago().getIgv());
+pago.setEstado_pago(RolEstadoPago.APROBADO);
+pago.setFecha_pago(req.getPago().getFechaPago());
+pago.setMetodoPago(metodoPago);
+
+pagoRepository.save(pago);
 
         return reserva;
     }
