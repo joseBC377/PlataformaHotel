@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.example.hotel.entities.MetodoPago;
 import com.example.hotel.repositories.MetodoPagoRepository;
 
+//import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 
 @Service
@@ -39,7 +40,7 @@ public class MetodoPagoService {
             return repository.save(existing);
         });
     }
-
+    
     public boolean eliminar(Integer id) {
         if (repository.existsById(id)) {
             repository.deleteById(id);

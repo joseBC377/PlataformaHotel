@@ -47,7 +47,6 @@ public class AuthenticationService {
         return "Usuario registrado exitosamente";
 
     }
-
     public String editarUsuario(Integer id, RegisterRequest request) {
         var usuario = usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + id));
 

@@ -17,6 +17,7 @@ public class ResenaService {
     public List<Resena>selectAllResenas(){
         return repository.findAll();
     }
+
     public Optional<Resena> getResenaById(Integer id) {
         return repository.findById(id);
     }
@@ -24,7 +25,6 @@ public class ResenaService {
     public Resena insertResena(Resena resena) {
         return repository.save(resena);
     }
-
 
     public Optional<Resena> updateResena(Integer id, Resena resena) {
         return repository.findById(id).map(existing -> {
@@ -36,6 +36,7 @@ public class ResenaService {
             return repository.save(existing);
         });
     }
+
 
     public boolean deleteResena(Integer id) {
         if (repository.existsById(id)) {

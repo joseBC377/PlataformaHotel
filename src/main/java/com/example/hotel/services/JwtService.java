@@ -68,14 +68,24 @@ public class JwtService {
         return extractExpiration(token).before(new Date());
     }
     
+    // //Extrae la fecha de expiracion
+    // private Date extractExpiration(String token) {
+    //     return extractClaim(token, Claims::getExpiration);
+    // }
+
+    // //Extrae el nombre de usuario
+    // public String extractUsername(String token) {
+    //     return extractClaim (token, Claims::getSubject);
+    // }
+
     //Extrae la fecha de expiracion
     private Date extractExpiration(String token) {
-        return extractClaim(token, Claims::getExpiration);
+        return extractClaim(token, claims -> claims.getExpiration());
     }
 
     //Extrae el nombre de usuario
     public String extractUsername(String token) {
-        return extractClaim (token, Claims::getSubject);
+        return extractClaim (token, claims -> claims.getSubject());
     }
 
     //Metodo generico para extraer cualquier claim

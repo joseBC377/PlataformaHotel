@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping(value = "api/usuario", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/usuario", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class UsuarioRestController {
     private final UsuarioService service;

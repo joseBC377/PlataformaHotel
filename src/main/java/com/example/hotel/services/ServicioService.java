@@ -14,9 +14,11 @@ public class ServicioService {
      public List<Servicio>sellectAllServicios(){
         return repository.findAll();
     }
+
     public Optional<Servicio> getServicioById(Integer id) {
         return repository.findById(id);
     }
+
 
     public Servicio insertServicio(Servicio servicio) {
         return repository.save(servicio);
@@ -32,6 +34,7 @@ public class ServicioService {
             return repository.save(existing);
         });
     }
+
 
     public boolean deleteServicio(Integer id) {
         if (repository.existsById(id)) {

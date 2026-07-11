@@ -21,9 +21,11 @@ public class ContactoService {
     public Contacto selectId(Integer id) {
         return repository.findById(id).orElseThrow(() -> new RuntimeException("No existe el id : "+id));
     }
+
     public Contacto insert(Contacto contacto){
         return repository.save(contacto);
     }
+
     public Contacto updateContact(Integer id,Contacto contacto){
         if (!repository.existsById(id)) {
     throw new RuntimeException("No se encontró el id " + id);
@@ -31,6 +33,7 @@ public class ContactoService {
             contacto.setId_contacto(id);
             return repository.save(contacto);
     }
+
     public void deleteContact(Integer id){
         if (!repository.existsById(id)) {
             throw new RuntimeException("No se encuentra el id :" +id);

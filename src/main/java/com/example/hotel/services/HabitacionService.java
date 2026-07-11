@@ -18,6 +18,7 @@ public class HabitacionService {
     public List<Habitacion>selectAllHabitacions(){
         return repository.findAll();
     }
+
     public Optional<Habitacion> getHabitacionById(Integer id) {
         return repository.findById(id);
     }
@@ -56,7 +57,6 @@ public class HabitacionService {
             return repository.save(existing);
         });
     }
-
 
     public boolean deleteHabitacion(Integer id) {
         if (repository.existsById(id)) {
