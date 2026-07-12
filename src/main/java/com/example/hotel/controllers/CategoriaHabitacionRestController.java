@@ -19,7 +19,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping(value = "api/categoriaHabitacion",produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/categoriaHabitacion",produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class CategoriaHabitacionRestController {
 private final CategoriaHabitacionService service;
@@ -30,7 +30,7 @@ private final CategoriaHabitacionService service;
     }
     // Buscar con endpoints categoría por ID
     @GetMapping("/{id}")
-    public ResponseEntity<CategoriaHabitacion> getCategoriaById(@PathVariable Integer id) {
+    public ResponseEntity<CategoriaHabitacion> getCategoriaById(@PathVariable("id") Integer id) {
         return service.getCategoriaById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -44,7 +44,7 @@ private final CategoriaHabitacionService service;
 
     // Actualizar con endpoints categoría existente
     @PutMapping("/{id}")
-    public ResponseEntity<CategoriaHabitacion> updateCategoria(@PathVariable Integer id, @Valid @RequestBody CategoriaHabitacion categoria) {
+    public ResponseEntity<CategoriaHabitacion> updateCategoria(@PathVariable("id") Integer id, @Valid @RequestBody CategoriaHabitacion categoria) {
         return service.updateCategoria(id, categoria)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -52,7 +52,7 @@ private final CategoriaHabitacionService service;
 
     // Eliminar con endpoints categoría
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteCategoria(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteCategoria(@PathVariable("id") Integer id) {
         if (service.deleteCategoria(id)) {
             return ResponseEntity.noContent().build();
         }

@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-@RequestMapping(value = "api/habitacion",produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/habitacion",produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class HabitacionRestController {
     //Inyeccion de dependencia 
@@ -32,7 +32,7 @@ public class HabitacionRestController {
     }
     // Buscar con endpoints habitación por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Habitacion> getHabitacionById(@PathVariable Integer id) {
+    public ResponseEntity<Habitacion> getHabitacionById(@PathVariable("id") Integer id) {
         return service.getHabitacionById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -47,7 +47,7 @@ public class HabitacionRestController {
 
     // Actualizar  con endpoints  una habitación existente
     @PutMapping("/{id}")
-    public ResponseEntity<Habitacion> updateHabitacion(@PathVariable Integer id,@Valid @RequestBody Habitacion habitacion) {
+    public ResponseEntity<Habitacion> updateHabitacion(@PathVariable("id") Integer id,@Valid @RequestBody Habitacion habitacion) {
         return service.updateHabitacion(id, habitacion)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -55,7 +55,7 @@ public class HabitacionRestController {
 
     // Eliminar  con endpoints una habitación
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteHabitacion(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteHabitacion(@PathVariable("id") Integer id) {
         if (service.deleteHabitacion(id)) {
             return ResponseEntity.noContent().build();
         } else {

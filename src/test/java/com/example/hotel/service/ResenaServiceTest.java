@@ -5,27 +5,21 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 import java.math.BigDecimal;
-//import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
-//import com.example.hotel.HotelApplication;
-//import com.example.hotel.entities.Habitacion;
 import com.example.hotel.entities.Resena;
-//import com.example.hotel.entities.Usuario;
 import com.example.hotel.repositories.ResenaRepository;
 import com.example.hotel.services.ResenaService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-//import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-//import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-// @ExtendWith(MockitoExtension.class)
-@AutoConfigureMockMvc(addFilters = false)
+@ExtendWith(MockitoExtension.class)
 public class ResenaServiceTest {
 
     @Mock
@@ -37,13 +31,12 @@ public class ResenaServiceTest {
     private Resena resena;
 
     @BeforeEach
-    /*void setUp() {
-        MockitoAnnotations.openMocks(this);
-        Usuario usuario= new Usuario();
-        Habitacion habitacion= new Habitacion();
-        //resena = new Resena(1, new BigDecimal("2.1"), LocalDate.now(), "Buena experiencia", usuario, habitacion);
+    void setUp() {
+        resena = new Resena();
+        resena.setId_resena(1);
+        resena.setCalificacion(new BigDecimal("2.1"));
+        resena.setComentario("Buena experiencia");
     }
-    */
 
     @Test
     void testSelectAllResenas() {
@@ -52,6 +45,7 @@ public class ResenaServiceTest {
         List<Resena> result = resenaService.selectAllResenas();
 
         assertEquals(1, result.size());
+        assertEquals("Buena experiencia", result.get(0).getComentario());
         verify(resenaRepository).findAll();
     }
 
@@ -76,7 +70,7 @@ public class ResenaServiceTest {
 
     @Test
     void testInsUpdResena() {
-        when(resenaRepository.save(resena)).thenReturn(resena);
+        when(resenaRepository.save(any(Resena.class))).thenReturn(resena);
 
         Resena result = resenaService.insertResena(resena);
 
@@ -101,6 +95,6 @@ public class ResenaServiceTest {
         boolean result = resenaService.deleteResena(999);
 
         assertFalse(result);
-        verify(resenaRepository, never()).deleteById(any());
+        verify(resenaRepository, never()).deleteById(anyInt());
     }
 }

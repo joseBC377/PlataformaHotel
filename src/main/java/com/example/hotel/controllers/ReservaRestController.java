@@ -21,7 +21,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping("api/reservas")
+@RequestMapping("/api/reservas")
 @AllArgsConstructor
 public class ReservaRestController {
 
@@ -33,7 +33,7 @@ public class ReservaRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Reserva> getReservaById(@PathVariable Integer id) {
+    public ResponseEntity<Reserva> getReservaById(@PathVariable("id") Integer id) {
         return service.selectById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -46,7 +46,7 @@ public class ReservaRestController {
 
   @PutMapping("/{id}")
     public ResponseEntity<Reserva> actualizar(
-            @PathVariable Integer id,
+            @PathVariable("id") Integer id,
             @Valid @RequestBody Reserva reservaActualizada
     ) {
         Optional<Reserva> optional = service.selectById(id);
@@ -64,7 +64,7 @@ public class ReservaRestController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteReserva(@PathVariable Integer id) {
+    public ResponseEntity<String> deleteReserva(@PathVariable("id") Integer id) {
         boolean deleted = service.delete(id);
         if (deleted) {
             return ResponseEntity.ok("Reserva eliminada correctamente.");

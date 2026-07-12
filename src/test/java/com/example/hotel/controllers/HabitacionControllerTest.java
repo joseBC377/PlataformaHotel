@@ -1,31 +1,36 @@
 package com.example.hotel.controllers;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import java.util.List;
-import java.util.Optional;
 
-//import com.example.hotel.HotelApplication;
-//import org.springframework.boot.test.context.SpringBootTest;
 import com.example.hotel.entities.Habitacion;
 import com.example.hotel.services.HabitacionService;
+import com.example.hotel.services.JwtService;
 import com.example.hotel.util.RolHabitacion;
+import com.example.hotel.util.RolTipo; // IMPORTANTE: Asegúrate de importar tu Enum aquí
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.util.List;
+import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
-@WebMvcTest(HabitacionControllerTest.class)
+@WebMvcTest(
+    controllers = HabitacionRestController.class,
+    excludeAutoConfiguration = {SecurityAutoConfiguration.class}
+)
 @AutoConfigureMockMvc(addFilters = false)
-
+@ContextConfiguration(classes = {HabitacionRestController.class})
 public class HabitacionControllerTest {
 
     @Autowired
@@ -34,7 +39,11 @@ public class HabitacionControllerTest {
     @MockitoBean
     private HabitacionService service;
 
+    @MockitoBean
+    private JwtService jwtService;
+
     private Habitacion habitacion;
+    private final ObjectMapper mapper = new ObjectMapper();
 
     @BeforeEach
     void setUp() {
@@ -42,16 +51,18 @@ public class HabitacionControllerTest {
         habitacion.setId_habitacion(1);
         habitacion.setNombre_habitacion("Habitación 101");
         habitacion.setDescripcion_habitacion("Habitación con cama doble y vista al jardín");
-        habitacion.setEstado(RolHabitacion.DISPONIBLE); // Asignar un valor válido según tu enum RolHabitacion
+        habitacion.setEstado(RolHabitacion.DISPONIBLE);
+        habitacion.setTipo(RolTipo.LIMPIO); 
     }
 
     @Test
     void testSelectAllHabitacions() throws Exception {
         when(service.selectAllHabitacions()).thenReturn(List.of(habitacion));
 
-        mockMvc.perform(get("/api/habitacion"))
+        mockMvc.perform(get("/api/habitacion")
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").value(1));
+                .andExpect(jsonPath("$[0].id_habitacion").value(1));
     }
 
     @Test
@@ -60,7 +71,7 @@ public class HabitacionControllerTest {
 
         mockMvc.perform(get("/api/habitacion/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1));
+                .andExpect(jsonPath("$.id_habitacion").value(1));
     }
 
     @Test
@@ -73,37 +84,18 @@ public class HabitacionControllerTest {
 
     @Test
     void testInsertHabitacion() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-
         when(service.insertHabitacion(any(Habitacion.class))).thenReturn(habitacion);
 
         mockMvc.perform(post("/api/habitacion")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(mapper.writeValueAsString(habitacion)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1));
+                .andExpect(jsonPath("$.id_habitacion").value(1));
     }
-
-    /*
-    @Test
-    void testUpdateHabitacion_Existente() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-
-        when(service.updateHabitacion(1, habitacion)).thenReturn(Optional.of(habitacion));
-
-        mockMvc.perform(put("/api/habitacion/1")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(habitacion)))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1));
-    }
-    */
 
     @Test
     void testUpdateHabitacion_NoExistente() throws Exception {
-        ObjectMapper mapper = new ObjectMapper();
-
-        when(service.updateHabitacion(999, habitacion)).thenReturn(Optional.empty());
+        when(service.updateHabitacion(any(Integer.class), any(Habitacion.class))).thenReturn(Optional.empty());
 
         mockMvc.perform(put("/api/habitacion/999")
                 .contentType(MediaType.APPLICATION_JSON)

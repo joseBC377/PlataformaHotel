@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,16 +21,17 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.example.hotel.entities.Reserva;
+import com.example.hotel.entities.Usuario;
 import com.example.hotel.services.ReservaService;
+import com.example.hotel.util.RolReserva;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
-// 1. Apuntamos únicamente al controlador (no a HotelApplication)
-// 2. Excluimos la configuración de seguridad automáticamente
+
 @WebMvcTest(controllers = ReservaRestController.class, excludeAutoConfiguration = {SecurityAutoConfiguration.class})
-// 3. ContextConfiguration obliga a usar SOLO este controlador y evita el escaneo global
 @ContextConfiguration(classes = {ReservaRestController.class})
-@AutoConfigureMockMvc(addFilters = false) // Desactiva los filtros (incluyendo el JWT)
+@AutoConfigureMockMvc(addFilters = false) 
 public class ReservaControllerTest {
 
     @Autowired
@@ -44,6 +46,12 @@ public class ReservaControllerTest {
     void setUp() {
         reserva = new Reserva();
         reserva.setId_reserva(1);
+        reserva.setFechaCreacion(LocalDate.now()); 
+        reserva.setEstado(RolReserva.PENDIENTE);   
+        
+        Usuario usuario = new Usuario();         
+        usuario.setId_usuario(1);
+        reserva.setUsuario(usuario);
     }
 
     @Test
@@ -83,12 +91,14 @@ public class ReservaControllerTest {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
 
+        // Mockeamos los servicios
         when(service.selectById(1)).thenReturn(Optional.of(reserva));
         when(service.insUpdReserva(any(Reserva.class))).thenReturn(reserva);
 
-        mockMvc.perform(put("/api/reservas/1")
+        mockMvc.perform(put("/api/reservas/1") 
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(mapper.writeValueAsString(reserva)))
+                .content(mapper.writeValueAsString(reserva))) // Aquí asegúrate de que el objeto esté completo
+                .andDo(print()) 
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id_reserva").value(1));
     }
