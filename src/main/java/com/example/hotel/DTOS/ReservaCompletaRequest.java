@@ -1,0 +1,52 @@
+package com.example.hotel.DTOS;
+
+import java.util.List;
+
+public class ReservaCompletaRequest {
+    private Integer idUsuario;
+    private String emailContacto;
+    private List<DetalleHabitacionRequest> habitaciones;
+    private List<DetalleServicioRequest> servicios;
+    private PagoRequest pago;
+
+    // getters y setters
+    public Integer getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Integer idUsuario) {
+        this.idUsuario = idUsuario;
+    }
+
+    public List<DetalleHabitacionRequest> getHabitaciones() {
+        return habitaciones;
+    }
+
+    public void setHabitaciones(List<DetalleHabitacionRequest> habitaciones) {
+        this.habitaciones = habitaciones;
+    }
+
+    public List<DetalleServicioRequest> getServicios() {
+        return servicios;
+    }
+
+    public void setServicios(List<DetalleServicioRequest> servicios) {
+        this.servicios = servicios;
+    }
+
+    public PagoRequest getPago() {
+        return pago;
+    }
+
+    public void setPago(PagoRequest pago) {
+        this.pago = pago;
+    }
+
+    public String getEmailContacto() {
+        return emailContacto;
+    }
+
+    public void setEmailContacto(String emailContacto) {
+        this.emailContacto = emailContacto;
+    }
+}

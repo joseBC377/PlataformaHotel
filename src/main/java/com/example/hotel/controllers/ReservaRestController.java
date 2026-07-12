@@ -1,4 +1,5 @@
 package com.example.hotel.controllers;
+
 import java.util.List;
 
 import java.util.Optional;
@@ -14,9 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.hotel.DTOS.HistorialReservaResponse;
+import com.example.hotel.DTOS.ReservaCompletaRequest;
 import com.example.hotel.entities.Reserva;
+import com.example.hotel.services.ReservaCompletaService;
 import com.example.hotel.services.ReservaService;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
@@ -26,10 +31,16 @@ import lombok.AllArgsConstructor;
 public class ReservaRestController {
 
     private ReservaService service;
+    private ReservaCompletaService reservaCompletaService; // nuevo
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Reserva> selectAllReservas() {
         return service.selectAllReserva();
+    }
+
+    @GetMapping("/historial/{idUsuario}")
+    public ResponseEntity<List<HistorialReservaResponse>> historialPorUsuario(@PathVariable Integer idUsuario) {
+        return ResponseEntity.ok(reservaCompletaService.obtenerHistorialPorUsuario(idUsuario));
     }
 
     @GetMapping("/{id}")
@@ -38,13 +49,23 @@ public class ReservaRestController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
-    
+
     @PostMapping
     public ResponseEntity<Reserva> insUpdReserva(@Valid @RequestBody Reserva reserva) {
         return ResponseEntity.ok(service.insUpdReserva(reserva));
     }
 
-  @PutMapping("/{id}")
+    @PostMapping("/completa")
+    public ResponseEntity<?> crearReservaCompleta(@RequestBody ReservaCompletaRequest req) {
+        try {
+            Reserva reserva = reservaCompletaService.crearReservaCompleta(req);
+            return ResponseEntity.ok(reserva);
+        } catch (EntityNotFoundException | IllegalStateException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/{id}")
     public ResponseEntity<Reserva> actualizar(
             @PathVariable("id") Integer id,
             @Valid @RequestBody Reserva reservaActualizada
@@ -58,7 +79,7 @@ public class ReservaRestController {
         Reserva existente = optional.get();
         existente.setFechaCreacion(reservaActualizada.getFechaCreacion());
         existente.setUsuario(reservaActualizada.getUsuario());
-        existente.setEstado(reservaActualizada.getEstado()); 
+        existente.setEstado(reservaActualizada.getEstado());
 
         return ResponseEntity.ok(service.insUpdReserva(existente));
     }
@@ -71,5 +92,5 @@ public class ReservaRestController {
         } else {
             return ResponseEntity.status(404).body("Reserva no encontrada.");
         }
-    }    
+    }
 }
