@@ -5,12 +5,16 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.hotel.entities.Habitacion;
 import com.example.hotel.entities.MetodoPago;
 import com.example.hotel.entities.Pago;
 import com.example.hotel.entities.Reserva;
+import com.example.hotel.entities.ReservaHabitacion;
 import com.example.hotel.entities.Usuario;
+import com.example.hotel.repositories.HabitacionRepository;
 import com.example.hotel.repositories.MetodoPagoRepository;
 import com.example.hotel.repositories.PagoRepository;
+import com.example.hotel.repositories.ReservaHabitacionRepository;
 import com.example.hotel.repositories.ReservaRepository;
 import com.example.hotel.repositories.UsuarioRepository;
 import com.example.hotel.util.Pago_ReservaInfo;
@@ -27,15 +31,21 @@ public class PagoService {
     private final ReservaRepository reservaRepository;
     private final UsuarioRepository usuarioRepository;
     private final MetodoPagoRepository metodoPagoRepository;
+    private final HabitacionRepository habitacionRepository;
+    private final ReservaHabitacionRepository reservaHabitacionRepository;
 
     public PagoService(PagoRepository repository,
                        ReservaRepository reservaRepository,
                        UsuarioRepository usuarioRepository,
-                       MetodoPagoRepository metodoPagoRepository) {
+                       MetodoPagoRepository metodoPagoRepository,
+                       HabitacionRepository habitacionRepository,
+                       ReservaHabitacionRepository reservaHabitacionRepository) {
         this.repository = repository;
         this.reservaRepository = reservaRepository;
         this.usuarioRepository = usuarioRepository;
         this.metodoPagoRepository = metodoPagoRepository;
+        this.habitacionRepository = habitacionRepository;
+        this.reservaHabitacionRepository = reservaHabitacionRepository;
     }
 
     public List<Pago> listarTodas() {
@@ -78,10 +88,20 @@ public class PagoService {
         reserva.setFechaCreacion(LocalDate.now());
         reserva.setUsuario(usuario);
         reserva.setEstado(RolReserva.PENDIENTE);
-
         Reserva reservaGuardada = reservaRepository.save(reserva);
 
-        // 3. CONVERTIR String → ENUM
+        // 3. Crear ReservaHabitacion (Detalle)
+        Habitacion habitacion = habitacionRepository.findById(info.id_habitacion())
+                .orElseThrow(() -> new RuntimeException("Habitación no encontrada"));
+        
+        ReservaHabitacion detalle = new ReservaHabitacion();
+        detalle.setReserva(reservaGuardada);
+        detalle.setHabitacion(habitacion);
+        detalle.setFechaInicio(info.fecha_inicio());
+        detalle.setFechaFin(info.fecha_fin());
+        reservaHabitacionRepository.save(detalle);
+
+        // 4. Procesar Método de Pago
         RolMetodoPago rolMetodo;
         try {
             rolMetodo = RolMetodoPago.valueOf(info.metodo_pago().toUpperCase());
@@ -89,12 +109,10 @@ public class PagoService {
             throw new RuntimeException("Método de pago inválido: " + info.metodo_pago());
         }
 
-        // 4. Buscar método de pago
-        MetodoPago metodoPago = metodoPagoRepository
-                .findByTipo(rolMetodo)
+        MetodoPago metodoPago = metodoPagoRepository.findByTipo(rolMetodo)
                 .orElseThrow(() -> new RuntimeException("Método de pago no encontrado"));
 
-        // 5. CONVERTIR estado String → ENUM
+        // 5. Procesar Estado de Pago
         RolEstadoPago estado;
         try {
             estado = RolEstadoPago.valueOf(info.estado_pago().toUpperCase());

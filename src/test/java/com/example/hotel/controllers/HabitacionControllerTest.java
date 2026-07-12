@@ -4,7 +4,7 @@ import com.example.hotel.entities.Habitacion;
 import com.example.hotel.services.HabitacionService;
 import com.example.hotel.services.JwtService;
 import com.example.hotel.util.RolHabitacion;
-import com.example.hotel.util.RolTipo; // IMPORTANTE: Asegúrate de importar tu Enum aquí
+import com.example.hotel.util.RolTipo; 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

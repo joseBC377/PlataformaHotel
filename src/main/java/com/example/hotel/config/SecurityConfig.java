@@ -14,7 +14,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+// import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
@@ -67,24 +67,23 @@ public class SecurityConfig {
     // .formLogin(Customizer.withDefaults())
     // .build();
 
-    @Bean
+   @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                //.csrf(AbstractHttpConfigurer::disable)
-                .csrf(csrf -> csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
-                .cors(Customizer.withDefaults())
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/auth/autenticarse","/api/v1/auth/registro").permitAll() // Ingresar sin token
-                        .requestMatchers("/api/v1/auth/editar/**").hasAnyAuthority("ADMIN","RECEPCION") // Ingresar sin token                        
-                        .requestMatchers("/api/resena/**").permitAll()
-                        .requestMatchers("/api/habitacion/**").permitAll()
-                        .requestMatchers("/api/servicio/**").permitAll()
-                        .requestMatchers("/api/usuario/**").hasAnyAuthority("ADMIN","RECEPCION")
-                        // Cualquier otra ruta no mencionada necesita que el usuario sea autenticado
-                        // pero sin importar si es admin o client prubas un
-                        .anyRequest().authenticated())
-                .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+            // CAMBIO: Desactiva CSRF para APIs REST
+            .csrf(csrf -> csrf.disable()) 
+            .cors(Customizer.withDefaults())
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/v1/auth/autenticarse", "/api/v1/auth/registro").permitAll()
+                .requestMatchers("/api/v1/auth/editar/**").hasAnyAuthority("ADMIN", "RECEPCION")
+                .requestMatchers("/api/resena/**").permitAll()
+                .requestMatchers("/api/habitacion/**").permitAll()
+                .requestMatchers("/api/servicio/**").permitAll()
+                .requestMatchers("/api/usuario/**").hasAnyAuthority("ADMIN", "RECEPCION")
+                .anyRequest().authenticated())
+            .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+        
         return http.build();
     }
 
