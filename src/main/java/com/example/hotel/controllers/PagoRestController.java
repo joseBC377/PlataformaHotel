@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 @RestController
-@RequestMapping(value = "api/pago", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/pago", produces = MediaType.APPLICATION_JSON_VALUE)
 
 public class PagoRestController {
 
@@ -34,12 +34,12 @@ public class PagoRestController {
 
 
 
-    @GetMapping("lista")
+    @GetMapping("/lista")
     public List<Pago> selectPago() {
         return service.listarTodas();
     }
     
-    @PostMapping("insertar")
+    @PostMapping("/insertar")
     public Pago insertPago(@Valid @RequestBody Pago pago) {
         return service.insert(pago);
     }
@@ -59,18 +59,18 @@ public class PagoRestController {
     }
     
 
-    @GetMapping("lista/{idPago}")
+    @GetMapping("/lista/{idPago}")
     public Pago selectPagoId(@PathVariable Integer idPago) {
         return service.obtenerPorId(idPago);
     }
 
-    @PutMapping("actualizar/{idPago}")
+    @PutMapping("/actualizar/{idPago}")
     public Pago updateIdPago(@PathVariable Integer idPago, @Valid @RequestBody Pago pago) {
         pago.setId_pago(idPago);
         return service.actualizarPago(idPago, pago);
     }
 
-    @DeleteMapping("eliminar/{idPago}")
+    @DeleteMapping("/eliminar/{idPago}")
     public ResponseEntity<String> deletePago(@PathVariable Integer idPago) {
         service.eliminar(idPago);
         return ResponseEntity.ok("Pago eliminado con exito de id : " + idPago);

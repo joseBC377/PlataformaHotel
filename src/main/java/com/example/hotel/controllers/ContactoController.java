@@ -19,34 +19,34 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping(value = "api/contacto", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/contacto", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class ContactoController {
     private final ContactoService service;
 
-    @GetMapping("lista")
+    @GetMapping("/lista")
     public List<Contacto> selectContact() {
         return service.selectAll();
     }
 
-    @GetMapping("lista/{id}")
-    public Contacto selectContacId(@PathVariable Integer id) {
+    @GetMapping("/lista/{id}")
+    public Contacto selectContacId(@PathVariable("id") Integer id) {
         return service.selectId(id);
     }
 
-    @PostMapping("insertar")
+    @PostMapping("/insertar")
     public Contacto insertContact(@Valid @RequestBody Contacto contacto) {
         return service.insert(contacto);
     }
 
-    @PutMapping("actualizar/{id}")
-    public Contacto updateIdContact(@PathVariable Integer id, @Valid @RequestBody Contacto contacto) {
+    @PutMapping("/actualizar/{id}")
+    public Contacto updateIdContact(@PathVariable("id") Integer id, @Valid @RequestBody Contacto contacto) {
         contacto.setId_contacto(id);
         return service.updateContact(id, contacto);
     }
 
-    @DeleteMapping("eliminar/{id}")
-    public ResponseEntity<String> deleteContact(@PathVariable Integer id) {
+    @DeleteMapping("/eliminar/{id}")
+    public ResponseEntity<String> deleteContact(@PathVariable("id") Integer id) {
         service.deleteContact(id);
         return ResponseEntity.ok("Usuario eliminado Id : " + id);
     }

@@ -13,7 +13,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping(value = "api/metodopago", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/metodopago", produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class MetodoPagoRestController {
 

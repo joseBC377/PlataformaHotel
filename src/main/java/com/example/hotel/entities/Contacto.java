@@ -22,34 +22,30 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Contacto {
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
-@Column(name = "id_contacto")
-private Integer id_contacto;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_contacto")
+    private Integer id_contacto;
 
-@Column(nullable = false, length = 20)
-@NotBlank(message = "Ingrese nombre")
-@Pattern(regexp = "^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$", message = "No puede contener numeros")
-@Size(min = 2, max = 20, message = "Ingrese minimo 2 caracteres, maximo 50 caracteres")
-private String nombre;
+    @Column(nullable = false, length = 50)
+    @NotBlank(message = "Ingrese nombre")
+    @Pattern(regexp = "^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$", message = "No puede contener números")
+    @Size(min = 2, max = 50, message = "Ingrese mínimo 2 caracteres, máximo 50")
+    private String nombre;
 
-@Column(nullable = false, length = 20)
-@NotBlank(message = "Ingrese Apellido")
-@Pattern(regexp = "^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$", message="No puede contener numeros")
-@Size(min = 2, max = 20, message = "Ingrese minimo 2 caracteres, maximo 50 caracteres")
-private String apellido;
+    @Column(nullable = false, length = 50)
+    @NotBlank(message = "Ingrese Apellido")
+    @Pattern(regexp = "^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$", message="No puede contener números")
+    @Size(min = 2, max = 50, message = "Ingrese mínimo 2 caracteres, máximo 50")
+    private String apellido;
 
-//no es necesario ser unico un usuario puede escribir mas de una vez
-@Column(nullable = false, length = 20)
-@Email(message = "Formato de correo inválido")
-@NotBlank(message = "Ingrese correo")
-private String correo;
+    @Column(nullable = false, length = 100) // Aumentado para correos largos
+    @Email(message = "Formato de correo inválido")
+    @NotBlank(message = "Ingrese correo")
+    private String correo;
 
-@Column(nullable = false, length = 20)
-@NotBlank(message = "Ingrese mensaje")
-private String mensaje;
-
-
+    @Column(nullable = false, columnDefinition = "TEXT") // TEXT permite mensajes largos sin límite de 20
+    @NotBlank(message = "Ingrese mensaje")
+    private String mensaje;
 }

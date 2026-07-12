@@ -20,7 +20,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping(value = "api/resena",produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/resena",produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class ResenaRestController {
 

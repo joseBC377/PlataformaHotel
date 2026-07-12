@@ -21,7 +21,7 @@ import com.example.hotel.services.ReservaHabitacionService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 @RestController
-@RequestMapping("api/reservas/habitaciones")
+@RequestMapping("/api/reservas/habitaciones")
 @AllArgsConstructor
 public class ReservaHabitacionRestController {
         private ReservaHabitacionService service;
@@ -32,7 +32,7 @@ public class ReservaHabitacionRestController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ReservaHabitacion> getReservaById(@PathVariable Integer id) {
+    public ResponseEntity<ReservaHabitacion> getReservaById(@PathVariable("id") Integer id) {
         return service.selectById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -44,7 +44,7 @@ public class ReservaHabitacionRestController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ReservaHabitacion> actualizar(@PathVariable Integer id,@Valid @RequestBody ReservaHabitacion reservahabitActualizada) {
+    public ResponseEntity<ReservaHabitacion> actualizar(@PathVariable("id") Integer id,@Valid @RequestBody ReservaHabitacion reservahabitActualizada) {
         Optional<ReservaHabitacion> reservaExistente = service.selectById(id);
         if (reservaExistente.isPresent()) {
             reservahabitActualizada.setId_reserva_habitacion(id);
@@ -55,7 +55,7 @@ public class ReservaHabitacionRestController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteReserva(@PathVariable Integer id) {
+    public ResponseEntity<String> deleteReserva(@PathVariable("id") Integer id) {
         boolean deleted = service.delete(id);
         if (deleted) {
             return ResponseEntity.ok("Reserva de la habitación eliminada correctamente.");

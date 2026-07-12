@@ -19,7 +19,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 
 @RestController
-@RequestMapping(value = "api/servicio",produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/api/servicio",produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
 public class ServicioRestController {
 
@@ -31,7 +31,7 @@ public class ServicioRestController {
     }
     // Buscar con endpoints habitación por ID
     @GetMapping("/{id}")
-    public ResponseEntity<Servicio> getServicioById(@PathVariable Integer id) {
+    public ResponseEntity<Servicio> getServicioById(@PathVariable("id") Integer id) {
         return service.getServicioById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -46,7 +46,7 @@ public class ServicioRestController {
 
     // Actualizar  con endpoints  una habitación existente
     @PutMapping("/{id}")
-    public ResponseEntity<Servicio> updateServicio(@PathVariable Integer id, @Valid @RequestBody Servicio servicio) {
+    public ResponseEntity<Servicio> updateServicio(@PathVariable("id") Integer id, @Valid @RequestBody Servicio servicio) {
         return service.updateServicio(id, servicio)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -54,7 +54,7 @@ public class ServicioRestController {
 
     // Eliminar  con endpoints una habitación
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteServicio(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteServicio(@PathVariable("id") Integer id) {
         if (service.deleteServicio(id)) {
             return ResponseEntity.noContent().build();
         } else {
