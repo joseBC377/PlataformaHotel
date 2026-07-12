@@ -65,12 +65,12 @@ public class Pago {
 
 
     // Cambio a la relación uno a uno para que un pago sea de una reserva 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_reserva", nullable = false)
     @JsonIgnoreProperties("pago")
     private Reserva reserva;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_metodo_pago", nullable = false)
     @JsonIgnoreProperties({"usuario", "metodoPago", "reserva", "contacto", "resena"})
     private MetodoPago metodoPago;

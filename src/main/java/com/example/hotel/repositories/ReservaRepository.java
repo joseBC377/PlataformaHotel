@@ -1,5 +1,6 @@
 package com.example.hotel.repositories;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,4 +20,9 @@ public interface ReservaRepository extends JpaRepository<Reserva, Integer> {
 
     @Query("SELECT r FROM Reserva r WHERE r.usuario.id_usuario = :idUsuario")
     List<Reserva> buscarPorUsuario(@Param("idUsuario") Integer idUsuario);
+
+    // PARA EL DASHBOARD
+    @Query("SELECT COUNT(r) FROM Reserva r WHERE r.fechaCreacion BETWEEN :inicio AND :fin")
+    Long contarPorRangoFechas(@Param("inicio") LocalDate inicio, @Param("fin") LocalDate fin);
+
 }
