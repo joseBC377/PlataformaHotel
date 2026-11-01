@@ -3,6 +3,7 @@ package com.example.hotel.entities;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -46,14 +47,30 @@ public class ReservaHabitacion {
     private BigDecimal precioUnitario;
 
     @NotNull(message = "La reserva es obligatoria")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_reserva", nullable = false)
-    @JsonIgnoreProperties("reservaHabitacion") 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "reservaHabitacion", "reservaHabitaciones", "pago"}) 
     private Reserva reserva;
 
     @NotNull(message = "La habitación es obligatoria")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "id_habitacion", nullable = false)
-    @JsonIgnoreProperties({"categoriaHabitacion", "reservaHabitacion"}) 
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "categoriaHabitacion", "reservaHabitacion", "reservaHabitaciones"}) 
     private Habitacion habitacion;
+
+    /**
+     * Expone id_reserva directamente en el JSON para que el frontend lo asocie sin fallar.
+     */
+    @JsonProperty("id_reserva")
+    public Integer getIdReserva() {
+        return this.reserva != null ? this.reserva.getId_reserva() : null;
+    }
+
+    /**
+     * Expone id_habitacion directamente en el JSON.
+     */
+    @JsonProperty("id_habitacion")
+    public Integer getIdHabitacion() {
+        return this.habitacion != null ? this.habitacion.getId_habitacion() : null;
+    }
 }
