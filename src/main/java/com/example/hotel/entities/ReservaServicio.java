@@ -29,13 +29,13 @@ public class ReservaServicio {
     @EmbeddedId
     private ReservaServicioId id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("idReserva")
     @JoinColumn(name = "id_reserva", nullable = false)
     @JsonIgnoreProperties("reservaServicio")
     private Reserva reserva;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @MapsId("idServicio")
     @JoinColumn(name = "id_servicio", nullable = false)
     @JsonIgnoreProperties("reservaServicio")
