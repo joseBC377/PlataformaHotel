@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +21,7 @@ import java.util.stream.Collectors;
 public class ReservaCompletaService {
 
         private final EmailService emailService;
+        private final PowerAutomateSyncService powerAutomateSyncService; // Inyección para sincronización
         private final ReservaRepository reservaRepository;
         private final ReservaHabitacionRepository reservaHabitacionRepository;
         private final ReservaServicioRepository reservaServicioRepository;
@@ -102,24 +104,50 @@ public class ReservaCompletaService {
                 pago.setMetodoPago(metodoPago);
                 pagoRepository.save(pago);
 
+                // 7. Notificaciones (Correo local + Sincronización Power Automate)
                 try {
                         DetalleHabitacionRequest primerDetalle = req.getHabitaciones().get(0);
                         Habitacion habitacionInfo = habitacionRepository.findById(primerDetalle.getIdHabitacion())
                                         .orElse(null);
 
                         if (habitacionInfo != null) {
+                                String nombreHuesped = usuario.getNombre_usuario() + " " + usuario.getApellido_paterno();
+                                String nombreHab = habitacionInfo.getNombre_habitacion();
+                                String entradaStr = primerDetalle.getFechaInicio() != null ? primerDetalle.getFechaInicio().toString() : LocalDate.now().toString();
+                                String salidaStr = primerDetalle.getFechaFin() != null ? primerDetalle.getFechaFin().toString() : LocalDate.now().toString();
+
+                                long noches = 1;
+                                if (primerDetalle.getFechaInicio() != null && primerDetalle.getFechaFin() != null) {
+                                        noches = ChronoUnit.DAYS.between(primerDetalle.getFechaInicio(), primerDetalle.getFechaFin());
+                                        if (noches <= 0) noches = 1;
+                                }
+
+                                // Correo local del sistema
                                 emailService.enviarConfirmacionReserva(
                                                 req.getEmailContacto(),
-                                                usuario.getNombre_usuario() + " " + usuario.getApellido_paterno(),
+                                                nombreHuesped,
                                                 reserva.getId_reserva(),
-                                                habitacionInfo.getNombre_habitacion(),
+                                                nombreHab,
                                                 habitacionInfo.getCategoriaHabitacion().getNombre_categoria(),
                                                 primerDetalle.getFechaInicio(),
                                                 primerDetalle.getFechaFin(),
                                                 req.getPago().getTotal());
+
+                                // Disparo hacia Power Automate (Excel + Calendario)
+                                powerAutomateSyncService.sincronizarReserva(
+                                                reserva.getId_reserva().longValue(),
+                                                nombreHuesped,
+                                                req.getEmailContacto(),
+                                                reserva.getFechaCreacion().toString(),
+                                                entradaStr,
+                                                salidaStr,
+                                                noches,
+                                                nombreHab,
+                                                reserva.getEstado().name()
+                                );
                         }
                 } catch (Exception e) {
-                        System.err.println("Error al enviar correo de confirmación: " + e.getMessage());
+                        System.err.println("Error al procesar notificaciones: " + e.getMessage());
                 }
 
                 return reserva;

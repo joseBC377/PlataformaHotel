@@ -6,6 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.example.hotel.entities.Usuario;
@@ -13,6 +14,7 @@ import com.example.hotel.repositories.UsuarioRepository;
 import com.example.hotel.util.Rol;
 
 @SpringBootApplication
+@EnableAsync
 public class HotelApplication {
 
 	public static void main(String[] args) {
