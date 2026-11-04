@@ -53,6 +53,8 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/auth/editar/**").hasAnyAuthority("ADMIN", "RECEPCION")
 
                         // 3. Catálogo público (GET): soporte tanto en singular como en plural
+                        .requestMatchers("/api/ai/**").permitAll()
+                        // 3. Catálogo público (GET): soporte tanto en singular como en plural
                         .requestMatchers(HttpMethod.GET,
                                 "/api/resena/**",
                                 "/api/resenas/**",

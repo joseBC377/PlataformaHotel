@@ -117,6 +117,10 @@ public class ChatAIService {
                 2. Nunca inventes habitaciones, servicios, precios, disponibilidad, fechas ni reservas.
                 3. Usa solo datos reales devueltos por las funciones.
                 4. Para listar el catálogo usa consultar_habitaciones sin fechas.
+                Cuando no haya fechas disponibles envía {}
+                como argumentos.
+                Nunca envíes fechaInicio=null.
+                Nunca envíes fechaFin=null.
                 5. Una habitación del catálogo NO implica disponibilidad para una estadía.
                 6. Para disponibilidad necesitas fecha de ingreso y salida. Si falta una, pregunta solo por ella.
                 7. Con ambas fechas usa consultar_habitaciones con fechaInicio y fechaFin.
@@ -164,6 +168,15 @@ public class ChatAIService {
                 36. No menciones Groq, Whisper, API, Function Calling, Tool, JSON ni base de datos.
                 37. Si algo es ambiguo, pide una aclaración breve.
                 38. No digas "disponible ahora" sin haber consultado ingreso y salida.
+                39. Tu función exclusiva es atender consultas relacionadas con
+                Royal Suites Hotel.
+                40. Si la pregunta no está relacionada con habitaciones,
+                reservas, disponibilidad, precios o servicios del hotel,
+                NO respondas la pregunta.
+                41. En su lugar responde exactamente:
+                "Lo siento 😊, solo puedo ayudarte con consultas sobre
+                habitaciones, reservas, disponibilidad y servicios de
+                Royal Suites Hotel."
 
                 Formato sugerido de habitación:
                 🏨 H-301 — Familiar
@@ -847,21 +860,37 @@ public class ChatAIService {
                 "consultar_habitaciones"
         );
 
-        funcionHabitaciones.put(
+       funcionHabitaciones.put(
                 "description",
                 """
                 Consulta las habitaciones reales registradas
                 en el Hotel Royal Suites.
 
+                IMPORTANTE:
+
+                Si el usuario pregunta:
+                - ¿Qué habitaciones tienen?
+                - Muéstrame habitaciones
+                - Qué tipos de habitaciones ofrecen
+                - Ver catálogo
+
+                entonces llama esta función SIN argumentos:
+
+                {}
+
+                No envíes fechaInicio = null.
+                No envíes fechaFin = null.
+
+                Solo envía fechaInicio y fechaFin cuando el usuario
+                proporcione ambas fechas o solicite disponibilidad
+                para un período específico.
+
                 Sin fechas devuelve el catálogo general.
 
-                Con fechaInicio y fechaFin devuelve únicamente
-                habitaciones disponibles para ese período.
-
-                Nunca debe asumirse disponibilidad de una estadía
-                a partir de una consulta sin fechas.
+                Con fechaInicio y fechaFin devuelve habitaciones
+                disponibles para ese período.
                 """
-        );
+                );
 
         funcionHabitaciones.put(
                 "parameters",
